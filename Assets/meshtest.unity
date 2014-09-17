@@ -187,6 +187,7 @@ GameObject:
   - 23: {fileID: 821829510}
   - 54: {fileID: 821829509}
   - 114: {fileID: 821829514}
+  - 114: {fileID: 821829515}
   m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
@@ -271,6 +272,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c548fa16393f44242a716521c45a8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &821829515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 821829508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a2a2c98cdc6d654184b09eae60061b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
+  currentPathIndex: 0
+  moveSpeed: 0
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  itemLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  selectionBox:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  selectBox: {fileID: 2800000, guid: f03f237df4c62f04fa20bae100b751d2, type: 3}
+  selected: []
 --- !u!1 &1556873963
 GameObject:
   m_ObjectHideFlags: 0
