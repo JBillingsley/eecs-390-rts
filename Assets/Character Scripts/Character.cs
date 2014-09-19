@@ -3,14 +3,15 @@ using System.Collections;
 
 public class Character : MonoBehaviour {
 
-
-	public Vector3 position;
+	protected Vector3 position;
 
 	//public Vector3 destination;
-	public int currentPathIndex;
-	public Route path;
+	protected int currentPathIndex;
+	protected Route path;
 
 	public float moveSpeed;
+	public float maxHealth;
+	public float currentHealth;
 
 	// Use this for initialization
 	void Start () {
