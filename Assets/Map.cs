@@ -65,6 +65,12 @@ public class Map : MonoBehaviour{
 		return (byte)(map[y, x]>>24);
 	}
 
+	public static IVector2 getMouseCoords(){
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		float sfac = ray.origin.z/ray.direction.z;
+		Vector2 pos = ray.origin + sfac * ray.direction;
+		return new IVector2 ((int)pos.x, (int)pos.y);
+	}
 	/********************/
 	/*                  */
 	/********************/
@@ -134,7 +140,7 @@ public class Map : MonoBehaviour{
 		public int yTiles = 1;
 	}
 
-	private class IVector2{
+	public class IVector2{
 		public int x, y;
 		public IVector2(int x, int y){
 			this.x=x;
