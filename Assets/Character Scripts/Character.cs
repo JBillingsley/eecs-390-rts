@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Character : MonoBehaviour {
 
@@ -38,6 +39,69 @@ public class Character : MonoBehaviour {
 			Vector3 nCenter = (p1+p2)/2;
 			path.locations[i] = (p + nCenter)/2;
 		}
+	}
+
+	public Route getPath(Vector3 start, Vector3 end){
+		//Create a list of leaves
+		List<ParentedNode> leaves = new List<ParentedNode>();
+
+		//Create a list of branches (used leaves)
+		List<ParentedNode> branches = new List<ParentedNode>();
+
+		//Add current position to the leaves
+		leaves.Add (new ParentedNode(null,start,0));
+
+		//While there are still leaves
+		while(leaves.Count > 0){
+			//Create a parented node
+			ParentedNode current = new ParentedNode(null,new Vector3(),1000000f);
+			bool flag = false;
+			//Check to find the lowest weighted leaf
+			foreach(ParentedNode p in leaves){
+				if(p.weight < current.weight){
+					current = p;
+					flag = true;
+				}				                             
+			}
+			//if one wasnt selected
+			if(!flag){
+				return null;
+			}
+
+			leaves.Remove(current);
+			branches.Add(current);
+			if(current.location == end){
+				return new Route(current);
+			}
+			foreach(Vector3 v in current.GetNeighbors()){
+				if(!ContainsNode(leaves,branches,v)){
+					leaves.Add(new ParentedNode(current,v,hueristic(v,end)));
+				}
+			}
+		}
+		return null;
+	}
+
+	static bool ContainsNode(List<ParentedNode> l,List<ParentedNode>b, Vector3 n){
+		//Check l
+		foreach(ParentedNode p in l){
+			if(p.location == n){
+				return true;
+			}
+		}
+		//check b
+		foreach(ParentedNode a in b){
+			if(a.location == n){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static float hueristic(Vector3 n, Vector3 destination){
+		float xdif = n.x - destination.x;
+		float ydif = n.y - destination.y;
+		return (Mathf.Abs(xdif)+Mathf.Abs(ydif));
 	}
 
 	//Moves this character along its route.

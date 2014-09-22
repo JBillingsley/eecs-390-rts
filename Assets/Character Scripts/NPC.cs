@@ -3,9 +3,33 @@ using System.Collections;
 
 public abstract class NPC : Character {
 
-	protected enum State {IDLE,TRAVELING,GATHERING,REPAIRING,ATTACKING,FOLLOWING};
-	public enum Team {USER,HUMAN,FISH,MOLE,BIRD,EVIL};
+	public enum State {ATTACKING,FOLLOWING,GATHERING,IDLE};
+	public enum Team {FRIENDLY,HUMAN,FISH,MOLE,BIRD,HOSTILE};
 
-	protected State myState;
-	protected Team myTeam;
+	public State myState;
+	public Team myTeam;
+
+	//Perform an action based on the current state
+	public void act(){
+		switch(myState){
+		case State.ATTACKING:
+			attack();
+			break;
+		case State.FOLLOWING:
+			follow();
+			break;
+		case State.GATHERING:
+			gather();
+			break;
+		case State.IDLE:
+			idle();
+			break;
+		}
+	}
+
+	protected abstract void attack();
+	protected abstract void follow();
+	protected abstract void gather();
+	protected abstract void idle();
+
 }
