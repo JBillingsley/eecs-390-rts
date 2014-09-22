@@ -38,7 +38,10 @@ public class Map : MonoBehaviour{
 	/********************/
 
 	public Tile getTile(int x, int y){
-		return Tile.tiles[getTileID(x, y)];
+		Tile t = Tile.tiles[getTileID(x, y)];
+		if (t == null)
+			return Tile.tiles[Tile.defaultTile];
+		return t;
 	}
 	public short getTileID(int x, int y){
 		if (x < 0 || x >= getWidth())
