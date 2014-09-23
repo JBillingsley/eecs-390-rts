@@ -7,8 +7,6 @@ public class TowerManager : MonoBehaviour {
 	public int maxHealth;
 	public GameObject[] towerLayers;
 	public Element towerType;
-	public GUIText healthText;
-	public float healthJumpDistance;
 	
 	/**
 	 * TODO:
@@ -34,9 +32,6 @@ public class TowerManager : MonoBehaviour {
 		 */
 		if(currentHealth < maxHealth){
 			currentHealth += hitpoints;
-			healthText.text = "" + hitpoints;
-			healthText.color = Color.green;
-			healthText.transform.Translate(0f, healthJumpDistance, 0f);
 		}
 		
 		// After the tower finishes being repaired we should make sure the current health never exceeds maxHealth
@@ -44,12 +39,6 @@ public class TowerManager : MonoBehaviour {
 			currentHealth = maxHealth;
 		}
 		// Somewhere here we should tell the units to stop working
-	}
-	
-	private void resetHealthText(){
-		healthText.text = "";
-		healthText.color = Color.white;
-		healthText.transform.Translate(0f, -healthJumpDistance, 0f);
 	}
 	
 	/**
@@ -94,14 +83,13 @@ public class TowerManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// When the tower is initialized it will be of type DIRT
-		towerType = Element.NONE;
+		towerType = Element.DIRT;
 		
 		// Runs through all the tower layers and deactivates their renderers and colliders
 		foreach(GameObject towerLayer in towerLayers){
 			towerLayer.renderer.enabled = false;
 			towerLayer.collider.enabled = false;
 		}
-		initiateTowerUpgrade();
 	}
 	
 	// Update is called once per frame

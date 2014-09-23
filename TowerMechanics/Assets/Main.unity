@@ -790,6 +790,7 @@ Transform:
   - {fileID: 1099572601}
   - {fileID: 1779581523}
   - {fileID: 353818804}
+  - {fileID: 1598013302}
   m_Father: {fileID: 0}
   m_RootOrder: 1
 --- !u!114 &1382008954
@@ -810,6 +811,8 @@ MonoBehaviour:
   - {fileID: 1779581522}
   - {fileID: 353818800}
   towerType: 0
+  healthText: {fileID: 1598013303}
+  healthJumpDistance: .100000001
 --- !u!1 &1454563277
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,6 +840,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 353818804}
   m_RootOrder: 0
+--- !u!1 &1598013301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1598013302}
+  - 132: {fileID: 1598013303}
+  m_Layer: 0
+  m_Name: HealthText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1598013302
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1598013301}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.21609163, y: 2.87687206, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1382008953}
+  m_RootOrder: 3
+--- !u!132 &1598013303
+GUIText:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1598013301}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Text: 
+  m_Anchor: 4
+  m_Alignment: 1
+  m_PixelOffset: {x: 0, y: 0}
+  m_LineSpacing: 1
+  m_TabSize: 4
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Material: {fileID: 0}
+  m_FontSize: 0
+  m_FontStyle: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_PixelCorrect: 1
+  m_RichText: 1
 --- !u!1 &1623358594
 GameObject:
   m_ObjectHideFlags: 0
