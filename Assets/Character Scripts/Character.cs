@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Character : MonoBehaviour {
 
-	protected Vector3 position;
+	public Vector2 position;
 
 	//public Vector3 destination;
 	protected int currentPathIndex;
@@ -16,6 +16,7 @@ public class Character : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 		//position = GameObject.FindObjectOfType<NavigationNode>();
 		//transform.position = position.transform.position;
 		//position.open = true;
@@ -31,17 +32,18 @@ public class Character : MonoBehaviour {
 		path = r;
 		//destination = r.nodes[r.nodes.Count-1];
 		currentPathIndex = 0;
-		for(int i = 1; i < path.locations.Count-1; i++){
+		/*for(int i = 1; i < path.locations.Count-1; i++){
 			Vector3 p = path.locations[i];
 			Vector3 p1 = path.locations[i-1];
 			Vector3 p2 = path.locations[i+1];
 
 			Vector3 nCenter = (p1+p2)/2;
 			path.locations[i] = (p + nCenter)/2;
-		}
+		}*/
 	}
 
-	public Route getPath(Vector3 start, Vector3 end){
+	public Route getPath(Vector2 start, Vector2 end){
+
 		//Create a list of leaves
 		List<ParentedNode> leaves = new List<ParentedNode>();
 
@@ -49,12 +51,14 @@ public class Character : MonoBehaviour {
 		List<ParentedNode> branches = new List<ParentedNode>();
 
 		//Add current position to the leaves
-		leaves.Add (new ParentedNode(null,start,0));
+		leaves.Add (new ParentedNode(null,position,0));
 
+		int count = 0;
 		//While there are still leaves
-		while(leaves.Count > 0){
+		while(leaves.Count > 0 && count < 100){
+
 			//Create a parented node
-			ParentedNode current = new ParentedNode(null,new Vector3(),1000000f);
+			ParentedNode current = new ParentedNode(null,new Vector2(100,100),1000000f);
 			bool flag = false;
 			//Check to find the lowest weighted leaf
 			foreach(ParentedNode p in leaves){
@@ -74,24 +78,26 @@ public class Character : MonoBehaviour {
 				return new Route(current);
 			}
 			foreach(Vector3 v in current.GetNeighbors()){
+
 				if(!ContainsNode(leaves,branches,v)){
-					leaves.Add(new ParentedNode(current,v,hueristic(v,end)));
+					leaves.Add(new ParentedNode(current,new Vector2((int)v.x,(int)v.y),hueristic(v,end)));
 				}
 			}
+			count ++;
 		}
 		return null;
 	}
 
-	static bool ContainsNode(List<ParentedNode> l,List<ParentedNode>b, Vector3 n){
+	static bool ContainsNode(List<ParentedNode> l,List<ParentedNode>b, Vector2 n){
 		//Check l
 		foreach(ParentedNode p in l){
-			if(p.location == n){
+			if((p.location - n).magnitude < 1){
 				return true;
 			}
 		}
 		//check b
 		foreach(ParentedNode a in b){
-			if(a.location == n){
+			if((a.location - n).magnitude < 1){
 				return true;
 			}
 		}
