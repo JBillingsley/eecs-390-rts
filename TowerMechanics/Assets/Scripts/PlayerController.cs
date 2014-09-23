@@ -3,49 +3,56 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-	// Maximum number of units the player can spawn
-	public int maxUnits;
-	public int currentUnits;
-	
-	public int currentHealth;
-	public int maxHealth;
-	
-	/**
-	 * This method is called from enemy units to the player when the player is being attacked
-	 */
-	public void hurt(int damage){
-		currentHealth -= damage;
-	}
-	
-	/**
-	 * This is called by the tower when a tower is upgraded
-	 * This will increase the maximum number of units the player is allowed to spawn
-	 */
-	public void incMaxUnitCount(){
-		// this is a temporary increase value
-		maxUnits += 5;
-	}
-	
-	/**
-	 * this spawns units for the player when the player is on the tower
-	 * Units can only be spawned up to the maximum number of units given as madUnits
-	 */
-	 public void spawnUnit(){
-	 	// We will probably need some input params
-	 	if(currentUnits < maxUnits){
-	 		currentUnits += 1;
-	 		// Spawn a unit
-	 	}
-	 	// else we are at maximum unit capacity and we cant spawn units 
-	 }
-	
+	public float speed;
+	public float jumpForce;
+	public bool canSummon = false;
+	public int avalibleResources = 0;
+	public int maxUnitCount = 5;
+	public bool healable = false;
+	public GameObject tower;
+	public int repairSpeed;
+
 	// Use this for initialization
 	void Start () {
 	
 	}
+
+	public void incResources(){
+		avalibleResources += 1;
+	}
+
+	public void decResources(){
+		avalibleResources -= 1;
+	}
 	
+	public void incMaxUnitCount(){
+		maxUnitCount += 5;
+	}
+	
+	public void canHeal(){
+		healable = true;
+	}
+	
+	public void cantHeal(){
+		healable = false;
+	}
+
 	// Update is called once per frame
 	void Update () {
-	
+		// This is the movement mechanic for the player
+		transform.Translate(new Vector3(Input.GetAxis("Horizontal")*speed,0, 0));
+		if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
+			rigidbody.AddForce(new Vector3(0f, jumpForce, 0f));
+		}
+
+		// This will summon a dude on Lmouse down if the conditions are met
+		if(canSummon && Input.GetKeyDown(KeyCode.Mouse0) && avalibleResources > 0){
+			transform.GetComponentInChildren<SpawnDude>().spawnDude();
+			decResources();
+		}
+		
+		if(healable && Input.GetKeyDown(KeyCode.Mouse1)){
+			tower.GetComponent<TowerManager>().repair(repairSpeed);
+		}
 	}
 }
