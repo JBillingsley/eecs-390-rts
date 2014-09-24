@@ -2,19 +2,21 @@
 using System.Collections;
 
 public class TowerManager : MonoBehaviour {
-
+	
 	public int currentHealth;
 	public int maxHealth;
 	public GameObject[] towerLayers;
 	public Element towerType;
-
+	public GUIText healthText;
+	public float healthJumpDistance;
+	
 	/**
 	 * TODO:
 	 * Send a message to player when tower is taking damage
 	 * add respawn point
 	 * make prgression system for tower (that might be part of crafting)
 	 */
-
+	
 	/**
 	 * removes an input amount of hitpoints from the tower
 	 */
@@ -22,7 +24,7 @@ public class TowerManager : MonoBehaviour {
 		// TODO First we should try and send a message to the player (we can do this on a timer or something)
 		this.currentHealth -= damage;
 	}
-
+	
 	/**
 	 * regenerates the tower health by the input amount
 	 */
@@ -30,8 +32,11 @@ public class TowerManager : MonoBehaviour {
 		/* TODO We also need to raise the effected tower layer by a constant amount
 		 * also tell all units to stop repairing
 		 */
-		 if(currentHealth < maxHealth){
+		if(currentHealth < maxHealth){
 			currentHealth += hitpoints;
+			healthText.text = "" + hitpoints;
+			healthText.color = Color.green;
+			healthText.transform.Translate(0f, healthJumpDistance, 0f);
 		}
 		
 		// After the tower finishes being repaired we should make sure the current health never exceeds maxHealth
@@ -40,7 +45,13 @@ public class TowerManager : MonoBehaviour {
 		}
 		// Somewhere here we should tell the units to stop working
 	}
-
+	
+	private void resetHealthText(){
+		healthText.text = "";
+		healthText.color = Color.white;
+		healthText.transform.Translate(0f, -healthJumpDistance, 0f);
+	}
+	
 	/**
 	 * Initiates the building process for the next layer of the tower
 	 * This will probably be called by some other method
@@ -50,7 +61,7 @@ public class TowerManager : MonoBehaviour {
 		// Calls the private upgrade tower method
 		this.upgradeTower ();
 	}
-
+	
 	/**
 	 * runs through the tower upgrade process
 	 */
@@ -70,7 +81,7 @@ public class TowerManager : MonoBehaviour {
 		// I think there is a better way to do this than gameObject.find
 		GameObject.Find("Player").GetComponent<PlayerController>().incMaxUnitCount();
 	}
-
+	
 	/**
 	 * updates the total ammount of units the player can spawn
 	 * TODO: determine if this function will be linear or use some other kind of scaling mechanism
@@ -79,21 +90,22 @@ public class TowerManager : MonoBehaviour {
 		// Calls an update method to the player controller with a number
 		return -1;
 	}
-
+	
 	// Use this for initialization
 	void Start () {
 		// When the tower is initialized it will be of type DIRT
-		towerType = Element.DIRT;
+		towerType = Element.NONE;
 		
 		// Runs through all the tower layers and deactivates their renderers and colliders
 		foreach(GameObject towerLayer in towerLayers){
 			towerLayer.renderer.enabled = false;
 			towerLayer.collider.enabled = false;
 		}
+		initiateTowerUpgrade();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		
 	}
 }

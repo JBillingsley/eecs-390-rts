@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 	public float jumpForce;
 	public bool canSummon = false;
 	public int avalibleResources = 0;
+	public int maxUnitCount = 5;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +20,10 @@ public class PlayerController : MonoBehaviour {
 
 	public void decResources(){
 		avalibleResources -= 1;
+	}
+	
+	public void incMaxUnitCount(){
+		maxUnitCount += 5;
 	}
 
 	// Update is called once per frame

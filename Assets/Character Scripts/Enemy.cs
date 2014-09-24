@@ -3,13 +3,19 @@ using System.Collections;
 
 public class Enemy : NPC {
 
-	// Use this for initialization
-	void Start () {
-	
+	protected override void attack(){
+
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	protected override void follow(){
+
+	}
+
+	protected override void gather(){
+
+	}
+
+	protected override void idle(){
+
 	}
 }

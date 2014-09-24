@@ -34,6 +34,7 @@ public class Player : Character {
 	// Use this for initialization
 	void Start () {
 		singleton = this;
+		position = new Vector2((int)this.transform.position.x,(int)this.transform.position.y);
 		selectionBox = new Rect(0,0,0,0);
 		drawSelection = false;
 		units = new List<Character>( GameObject.FindObjectsOfType<Character>());
@@ -162,7 +163,7 @@ public class Player : Character {
 
 		/*
 		if(Physics.Raycast(r,out hit,100f,myUnits.value)){
-			Debug.Log ("selected");
+
 			addToSelection(hit.collider.GetComponent<Unit>());
 			return;
 		}*/
@@ -171,12 +172,15 @@ public class Player : Character {
 	//Move the units to the specified place. (Mouse position)
 	void moveUnits() {
 
+		Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+		setPath(getPath(position,new Vector2((int)v.x,(int)v.y)));
 		//Move the selected units to the desired position (where the mouse is)
 
 		/*
 		RaycastHit hit;
 		Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
-		Debug.Log ("Ground");
+
 		
 		if(Physics.Raycast(r,out hit,100f,terrain.value)){
 			foreach(Unit u in selected){
@@ -205,7 +209,7 @@ public class Player : Character {
 	}
 
 	/*void pickupItem(RaycastHit2D hit){
-		Debug.Log ("equipped");
+
 		Item i = hit.collider.gameObject.GetComponent<Item>();
 		i.rigidbody2D.isKinematic = true;
 		equipped = i;
