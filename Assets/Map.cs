@@ -2,10 +2,7 @@
 using System.Collections;
 
 public class Map : MonoBehaviour{
-	private static readonly IVector2[] directions = new IVector2[]{new IVector2(-1, 1), new IVector2(0, 1), new IVector2(1, 1), new IVector2(1, 0), new IVector2(1, -1), new IVector2(0, -1), new IVector2(-1, -1), new IVector2(-1, 0)}; 
-	private static readonly uint[] adjBits = new uint[]{0x00800000, 0x00400000, 0x00200000, 0x00100000, 0x00080000, 0x00040000, 0x00020000, 0x00010000};
-	private static readonly uint[] pathBits = new uint[]{0x80000000, 0x40000000, 0x20000000, 0x10000000, 0x08000000, 0x04000000, 0x02000000, 0x01000000};
-	
+
 	public uint[,] map;
 
 	public bool[,] dirtyChunks;
@@ -30,24 +27,34 @@ public class Map : MonoBehaviour{
 			}
 		for (int y = 0; y < h*chunkSize; y++)
 			for (int x = 0; x < w*chunkSize; x++)
-				updateTile(x, y);
+				updateTileData(new IVector2(x, y));
 	}
 
 	/********************/
 	/*                  */
 	/********************/
 
-	public Tile getTile(int x, int y){
-		Tile t = Tile.tiles[getTileID(x, y)];
+	public bool isSolid(IVector2 v){
+		return getTileData (v).solid;
+	}
+
+	public TileData getTileData(IVector2 v){
+		TileData t = TileData.tiles[getTileID(v.x, v.y)];
 		if (t == null)
-			return Tile.tiles[Tile.defaultTile];
+			return TileData.tiles[TileData.defaultTile];
+		return t;
+	}
+	public TileData getTileData(int x, int y){
+		TileData t = TileData.tiles[getTileID(x, y)];
+		if (t == null)
+			return TileData.tiles[TileData.defaultTile];
 		return t;
 	}
 	public short getTileID(int x, int y){
 		if (x < 0 || x >= getWidth())
-			return Tile.defaultTile;
+			return TileData.defaultTile;
 		if (y < 0 || y >= getHeight())
-			return Tile.defaultTile;
+			return TileData.defaultTile;
 		return (short)map[y, x];
 	}
 	public byte getTileAdjacency(int x, int y){
@@ -75,23 +82,31 @@ public class Map : MonoBehaviour{
 	/*                  */
 	/********************/
 	
-	public void setAndUpdateTile(int x, int y, short id){
-		setTile (x, y, id);
-		updateTile(x, y);
+	public void setAndUpdateTileData(int x, int y, short id){
+		setTileData (x, y, id);
+		updateTileData(new IVector2 (x, y));
 	}
 
-	public void setTile(int x, int y, short id){
+	public void setTileData(int x, int y, short id){
 		map [y,x] = (uint)id;
 	}
 
-	public void updateTile(int x, int y){
-		map [y,x] &= 0x00FF;
-		for (int i = 0; i < 8; i++) {
-			if(getTile(x + directions[i].x, y + directions[i].y).solid)
-				map [y,x] |= adjBits[i];
-			else if(getTile(x + directions[i].x, y + directions[i].y - 1).solid)
-				map [y,x] |= pathBits[i];
-		}
+	public void updateTileData(IVector2 v){
+		map [v.y,v.x] &= 0x00FF;
+		int[] directions = new int[] {
+						Direction.TOPLEFT,
+						Direction.TOP,
+						Direction.TOPRIGHT,
+						Direction.RIGHT,
+						Direction.BOTTOMRIGHT,
+						Direction.BOTTOM,
+						Direction.BOTTOMLEFT,
+						Direction.LEFT
+				};
+		bool[] b = new bool[directions.Length];
+		for (int i = 0; i < directions.Length; i++)
+			b[i] = isSolid(v + Direction.getDirection(directions[i]));
+		map [v.y,v.x] |= (uint)Direction.packByte(directions, b) << 16;
 	}
 
 	/********************/
@@ -138,13 +153,5 @@ public class Map : MonoBehaviour{
 		public Material material;
 		public int xTiles = 1;
 		public int yTiles = 1;
-	}
-
-	public class IVector2{
-		public int x, y;
-		public IVector2(int x, int y){
-			this.x=x;
-			this.y=y;
-		}
 	}
 }

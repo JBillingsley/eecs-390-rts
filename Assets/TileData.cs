@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Tile {
+public class TileData {
 
-	public static readonly Tile[] tiles = new Tile[32];
+	public static readonly TileData[] tiles = new TileData[32];
 
-	public static readonly Tile air = new Tile (0, false);
-	public static readonly Tile dirt = new Tile (1, true, true);
-	public static readonly Tile thing = new Tile (49, true, true);
+	public static readonly TileData air = new TileData (0, false);
+	public static readonly TileData dirt = new TileData (1, true, true);
+	public static readonly TileData thing = new TileData (49, true, true);
 	
 	public static readonly short defaultTile = 1;
 
@@ -20,9 +20,9 @@ public class Tile {
 
 	private static short i = 0;
 
-	private Tile(int texID, bool solid) : this(texID, solid, false){}
+	private TileData(int texID, bool solid) : this(texID, solid, false){}
 
-	private Tile(int texID, bool solid, bool context){
+	private TileData(int texID, bool solid, bool context){
 		this.texID = texID;
 		this.solid = solid;
 		this.context = context;
@@ -138,7 +138,6 @@ public class Tile {
 			list.Add(i + 1);
 		}
 		return;	}
-//All American Furry Encounter
 
 	private int grey(byte val, byte lmask, byte rmask){
 		return mask(val, lmask) ? (mask(val, rmask) ? 1 : 2) : (mask(val, rmask) ? 0 : 3);
