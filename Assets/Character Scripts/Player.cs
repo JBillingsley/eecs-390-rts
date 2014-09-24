@@ -210,15 +210,6 @@ public class Player : Character {
 		//this.setPath(r);
 	}
 
-	/*void pickupItem(RaycastHit2D hit){
-
-		Item i = hit.collider.gameObject.GetComponent<Item>();
-		i.rigidbody2D.isKinematic = true;
-		equipped = i;
-		i.transform.position = this.transform.position;
-		i.transform.parent = this.transform;
-	}*/
-
 	RaycastHit2D getCollider(LayerMask l){
 		RaycastHit2D hit;
 		Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);

@@ -16,6 +16,7 @@ public class Character : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		position = new Vector2((int)this.transform.position.x,(int)this.transform.position.y);
 
 		//position = GameObject.FindObjectOfType<NavigationNode>();
 		//transform.position = position.transform.position;
@@ -62,7 +63,9 @@ public class Character : MonoBehaviour {
 		while(leaves.Count > 0 && count < 1000){
 			//Create a parented node
 			if(current.location == end){
+				//Move to the mouse, not last position
 				return new Route(current);
+				//return new Route(new ParentedNode(current.parent,end,0));
 			}
 			current.weight = float.MaxValue;
 			//Check to find the lowest weighted leaf

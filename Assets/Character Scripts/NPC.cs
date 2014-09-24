@@ -9,6 +9,9 @@ public abstract class NPC : Character {
 	public State myState;
 	public Team myTeam;
 
+	public Character characterTarget;
+	public Vector2 lastTargetPosition;
+
 	//Perform an action based on the current state
 	public void act(){
 		switch(myState){
