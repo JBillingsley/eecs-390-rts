@@ -76,8 +76,10 @@ public class Player : Character {
 	void OnGUI(){
 		if(drawSelection){
 			Rect r = selectionBox;
-			r.x = Screen.height - r.x;
-			GUI.DrawTexture(selectionBox,selectBox);
+			if (r != null){
+				r.x = Screen.height - r.x;
+				GUI.DrawTexture(selectionBox,selectBox);
+			}
 		}
 	}
 

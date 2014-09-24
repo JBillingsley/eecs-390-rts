@@ -58,7 +58,7 @@ public class Character : MonoBehaviour {
 		while(leaves.Count > 0 && count < 100){
 
 			//Create a parented node
-			ParentedNode current = new ParentedNode(null,new Vector2(100,100),1000000f);
+			ParentedNode current = new ParentedNode(null,new Vector2(0,0),float.MaxValue);
 			bool flag = false;
 			//Check to find the lowest weighted leaf
 			foreach(ParentedNode p in leaves){
