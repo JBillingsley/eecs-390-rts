@@ -88,7 +88,7 @@ public class Player : Character {
 		selectInput = Input.GetMouseButton(0);
 		selectInputDown = Input.GetMouseButtonDown(0);
 		selectInputUp = Input.GetMouseButtonUp(0);
-		moveInput = Input.GetMouseButton(1);
+		moveInput = Input.GetMouseButtonDown(1);
 		addSelect = Input.GetKey(KeyCode.LeftShift); 
 	}
 

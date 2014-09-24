@@ -43,6 +43,7 @@ public class Character : MonoBehaviour {
 	}
 
 	public Route getPath(Vector2 start, Vector2 end){
+		Debug.Log ("Trying to path from " + start + " to " + end + ".");
 
 		//Create a list of leaves
 		List<ParentedNode> leaves = new List<ParentedNode>();
@@ -55,36 +56,33 @@ public class Character : MonoBehaviour {
 
 		int count = 0;
 		//While there are still leaves
-		while(leaves.Count > 0 && count < 100){
 
+		ParentedNode current = new ParentedNode(null,start,float.MaxValue);
+
+		while(leaves.Count > 0 && count < 1000){
 			//Create a parented node
-			ParentedNode current = new ParentedNode(null,new Vector2(0,0),float.MaxValue);
-			bool flag = false;
+			if(current.location == end){
+				return new Route(current);
+			}
+			current.weight = float.MaxValue;
 			//Check to find the lowest weighted leaf
-			foreach(ParentedNode p in leaves){
+			foreach(ParentedNode p in leaves){	
 				if(p.weight < current.weight){
 					current = p;
-					flag = true;
 				}				                             
-			}
-			//if one wasnt selected
-			if(!flag){
-				return null;
 			}
 
 			leaves.Remove(current);
 			branches.Add(current);
-			if(current.location == end){
-				return new Route(current);
-			}
-			foreach(Vector3 v in current.GetNeighbors()){
 
+			foreach(Vector2 v in current.GetNeighbors()){
 				if(!ContainsNode(leaves,branches,v)){
-					leaves.Add(new ParentedNode(current,new Vector2((int)v.x,(int)v.y),hueristic(v,end)));
+					leaves.Add(new ParentedNode(current,v,hueristic(v,end)));
 				}
 			}
 			count ++;
 		}
+		Debug.Log ("Path not found");
 		return null;
 	}
 

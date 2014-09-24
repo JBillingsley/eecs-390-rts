@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}
-  moveSpeed: 0
+  moveSpeed: 1
   maxHealth: 0
   currentHealth: 0
   terrainLayer:

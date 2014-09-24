@@ -39,7 +39,7 @@ public class ParentedNode {
 		IVector2[] directions = Direction.getDirections(dirs);
 
 		byte adj = m.getTileAdjacency((int)location.x,(int)location.y);
-		bool[] passability = Direction.extractByte(dirs, adj);
+		bool[] passability = Direction.extractByte(dirs, (byte)(~adj));
 
 		if(passability[0]){
 			neighbors.Add (pos + directions[0]);
