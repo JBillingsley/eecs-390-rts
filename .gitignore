@@ -11,8 +11,9 @@
 /[Ee]xportedObj/
 /[Oo]bj
 
-/[Ll]ibrary
-/[Tt]emp
+
+[Ll]ibrary/
+[Tt]emp/
 
 .DS_Store?
 *.Trashes
