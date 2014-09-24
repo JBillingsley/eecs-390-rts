@@ -77,7 +77,7 @@ public class Character : MonoBehaviour {
 
 			foreach(Vector2 v in current.GetNeighbors()){
 				if(!ContainsNode(leaves,branches,v)){
-					leaves.Add(new ParentedNode(current,v,hueristic(v,end)));
+					leaves.Add(new ParentedNode(current,v,hueristic(v,start) + hueristic(v,end)));
 				}
 			}
 			count ++;
