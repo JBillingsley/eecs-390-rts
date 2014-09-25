@@ -56,23 +56,24 @@ public class Character : MonoBehaviour {
 		leaves.Add (new ParentedNode(null,position,0));
 
 		int count = 0;
+
+		//Create a parented node
+		ParentedNode current = new ParentedNode(null,position,float.MaxValue);
+
 		//While there are still leaves
-
-		ParentedNode current = new ParentedNode(null,start,float.MaxValue);
-
 		while(leaves.Count > 0 && count < 1000){
-			//Create a parented node
-			if(current.location == end){
-				//Move to the mouse, not last position
-				return new Route(current);
-				//return new Route(new ParentedNode(current.parent,end,0));
-			}
+
 			current.weight = float.MaxValue;
 			//Check to find the lowest weighted leaf
 			foreach(ParentedNode p in leaves){	
 				if(p.weight < current.weight){
 					current = p;
 				}				                             
+			}
+			if(current.location == end){
+				//Move to the mouse, not last position
+				return new Route(current);
+				//return new Route(new ParentedNode(current.parent,end,0));
 			}
 
 			leaves.Remove(current);

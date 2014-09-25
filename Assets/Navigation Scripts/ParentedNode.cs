@@ -21,24 +21,24 @@ public class ParentedNode {
 
 	public override string ToString ()
 	{
-		//string s = node.transform.position + " " + weight;
-		return ""; //s
+		string s = location + " " + weight;
+		return s; //s
 	}
 
 	public Vector2[] GetNeighbors(){
 
 		List<Vector2> neighbors = new List<Vector2>();
-		IVector2 pos = new Vector2((int)location.x,(int)location.y);
+		IVector2 pos = new IVector2(location.x,location.y);
 
 		if(m == null){
 			m = GameObject.FindObjectOfType<Map>();
 		}
 
 		//Clockwise from top, top,right,down,left
-		int[] dirs = new int[]{Direction.TOP, Direction.RIGHT, Direction.BOTTOM, Direction.LEFT, Direction.TOPLEFT};
+		int[] dirs = new int[]{Direction.TOP, Direction.RIGHT, Direction.BOTTOM, Direction.LEFT};
 		IVector2[] directions = Direction.getDirections(dirs);
 
-		byte adj = m.getTileNav(new Vector2(location.x, location.y));
+		byte adj = m.getTileNav(pos);
 		bool[] passability = Direction.extractByte(dirs, (byte)(~adj));
 
 		if(passability[0]){
