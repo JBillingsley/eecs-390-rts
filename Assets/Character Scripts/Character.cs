@@ -60,7 +60,7 @@ public class Character : MonoBehaviour {
 
 		ParentedNode current = new ParentedNode(null,start,float.MaxValue);
 
-		while(leaves.Count > 0 && count < 1000){
+		while(leaves.Count > 0 && count < 100000){
 			//Create a parented node
 			if(current.location == end){
 				//Move to the mouse, not last position
