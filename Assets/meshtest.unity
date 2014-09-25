@@ -209,6 +209,7 @@ MonoBehaviour:
   h: 3
   tileSize: 16
   chunkSize: 32
+  renderMode: 0
 --- !u!4 &92167672
 Transform:
   m_ObjectHideFlags: 0

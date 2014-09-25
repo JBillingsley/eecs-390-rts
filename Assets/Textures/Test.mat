@@ -39,7 +39,7 @@ Material:
       data:
         first:
           name: _Index
-        second: 0
+        second: 10
     m_Colors:
       data:
         first:

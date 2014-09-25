@@ -37,8 +37,6 @@ public class Chunk : MonoBehaviour {
 	public void refresh(){
 		if (map.isDirty (x, y)){
 			map.unDirty(x, y);
-			Destroy(renderData.GetComponent<MeshFilter>().sharedMesh);
-			Destroy(colliderData.GetComponent<MeshFilter>().sharedMesh);
 			renderData.GetComponent<MeshFilter>().sharedMesh.uv = makeTextures(x, y);
 			colliderData.GetComponent<MeshFilter>().sharedMesh.triangles = makeCollisionIndices(x, y);
 		}
@@ -158,7 +156,7 @@ public class Chunk : MonoBehaviour {
 		for (int y = 0; y < map.chunkSize; y++) {
 			for (int x = 0; x < map.chunkSize; x++) {
 				IVector2 v = new IVector2(cx*map.chunkSize + x, cy*map.chunkSize + y);
-				int texID = map.getTileData(v).getTexID(map.getTileRender(v));
+				int texID = map.getTileRenderData(v).getTexID(map.getTileRender(v));
 				float tx = (texID % map.tileset.xTiles) * ix;
 				float ty = (texID / map.tileset.xTiles) * iy;
 				float tx1 = ((texID % map.tileset.xTiles) + 1) * ix;

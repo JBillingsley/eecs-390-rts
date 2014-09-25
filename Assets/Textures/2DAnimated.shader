@@ -1,4 +1,4 @@
-﻿Shader "Custom/Animated 2D Shader" {
+﻿Shader "Custom/2D Tile Shader" {
 	Properties {
 		_Tex ("Tileset", 2D) = "white" {} 
 		_Width ("Width", Float) = 3 

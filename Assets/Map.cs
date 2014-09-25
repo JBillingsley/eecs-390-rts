@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Map : MonoBehaviour{
+public class Map : MonoBehaviour {
 
 	public ulong[,] map;
 
 	public bool[,] dirtyChunks;
 
-	public Tileset tileset;
+	public Tilesetx tileset;
 
 	public int w = 1;
 	public int h = 1;
@@ -57,29 +57,54 @@ public class Map : MonoBehaviour{
 		return t;
 	}
 	public byte getTileID(IVector2 v){
-		if (v.x < 0 || v.x >= getWidth())
-			return TileData.defaultTile;
-		if (v.y < 0 || v.y >= getHeight())
+		if (!inBounds(v))
 			return TileData.defaultTile;
 		return getByte(v, 0);
 	}
 	public byte getTileSolid(IVector2 v){
-		if (v.x < 0 || v.x >= getWidth())
-			return 0;
-		if (v.y < 0 || v.y >= getHeight())
+		if (!inBounds(v))
 			return 0;
 		return getByte(v, 2);
 	}
 	public byte getTileNav(IVector2 v){
-		if (v.x < 0 || v.x >= getWidth())
-			return 0;
-		if (v.y < 0 || v.y >= getHeight())
+		if (!inBounds(v))
 			return 0;
 		return getByte(v, 3);
 	}
+
 	public byte getTileRender(IVector2 v){
-		return getTileSolid(v);
+		switch(renderMode){
+			case NAVMESH:
+				return getTileNav(v);
+			default:
+				return getTileSolid(v);
+		}
 	}
+	public TileData getTileRenderData(IVector2 v){
+		switch(renderMode){
+			case NAVMESH:
+				return (!isSolid(v) && isSolid(v + Direction.getDirection(Direction.BOTTOM)))? TileData.air : TileData.tiles[TileData.defaultTile];
+			default:
+				return getTileData(v);
+		}
+	}
+	public const byte TERRAIN = 0;
+	public const byte NAVMESH = 1;
+	public byte renderMode = NAVMESH;
+	public void setRenderMode(byte mode){
+		if (renderMode == mode)
+			return;
+		renderMode = mode;
+		for (int y = 0; y < dirtyChunks.GetLength(0); y++)
+			for (int x = 0; x < dirtyChunks.GetLength(1); x++)
+				dirtyChunks[y,x] = true;
+	}
+
+	private bool inBounds(IVector2 v){
+		return !((v.x < 0 || v.x >= getWidth()) || (v.y < 0 || v.y >= getHeight()));
+	}
+	/************************************/
+	/************************************/
 
 	public static IVector2 getMouseCoords(){
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -116,7 +141,7 @@ public class Map : MonoBehaviour{
 		map [v.y,v.x] |= (uint)Direction.packByte(directions, b) << 16;
 
 		for (int i = 0; i < directions.Length; i++)
-			b[i] = !b[i] || isSolid(v + Direction.getDirection(directions[i]) + new IVector2(0, -1));
+			b[i] = isSolid(v + Direction.getDirection(directions[i])) || !isSolid(v + Direction.getDirection(directions[i]) + Direction.getDirection(Direction.BOTTOM));
 		map [v.y,v.x] |= (uint)Direction.packByte(directions, b) << 24;
 	}
 
@@ -153,7 +178,7 @@ public class Map : MonoBehaviour{
 	/*                  */
 	/********************/
 
-	public Tileset getTileset(){
+	public Tilesetx getTileset(){
 		return tileset;
 	}
 
@@ -161,7 +186,7 @@ public class Map : MonoBehaviour{
 	/*                  */
 	/********************/
 	[System.Serializable]
-	public class Tileset{
+	public class Tilesetx{
 		public Material material;
 		public int xTiles = 1;
 		public int yTiles = 1;
