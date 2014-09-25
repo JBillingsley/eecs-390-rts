@@ -35,10 +35,10 @@ public class ParentedNode {
 		}
 
 		//Clockwise from top, top,right,down,left
-		int[] dirs = new int[]{Direction.TOP, Direction.RIGHT, Direction.BOTTOM, Direction.LEFT};
+		int[] dirs = new int[]{Direction.TOP, Direction.RIGHT, Direction.BOTTOM, Direction.LEFT, Direction.TOPLEFT};
 		IVector2[] directions = Direction.getDirections(dirs);
 
-		byte adj = m.getTileAdjacency((int)location.x,(int)location.y);
+		byte adj = m.getTileNav(new Vector2(location.x, location.y));
 		bool[] passability = Direction.extractByte(dirs, (byte)(~adj));
 
 		if(passability[0]){
