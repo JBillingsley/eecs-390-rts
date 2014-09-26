@@ -4,17 +4,15 @@ using UnityEditor;
 
 [CustomPropertyDrawer (typeof (Tileset))]
 public class TilesetDrawer : PropertyDrawer {
-
-	public void Update(){
-		Debug.Log ("UPDATAE");
-	}
 	
-	const int texSize = 100;
-	const int padding = 10;
+	public const int texSize = 100;
+	public const int padding = 10;
+	public static float dy = 16;
 	private GUIStyle style = new GUIStyle();
 
 	public override float GetPropertyHeight (SerializedProperty property, GUIContent label) {
-		return Mathf.Max(5 * base.GetPropertyHeight (property, label), texSize);
+		dy = base.GetPropertyHeight (property, label);
+		return Mathf.Max(5 * dy, texSize);
 	}
 
 	public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label) {
@@ -25,15 +23,16 @@ public class TilesetDrawer : PropertyDrawer {
 		SerializedProperty texture = prop.FindPropertyRelative ("texture");
 		float dy = base.GetPropertyHeight(prop, label);
 		EditorGUIUtility.labelWidth = 75;
-		EditorGUI.PropertyField (new Rect (pos.x, pos.y + dy, pos.width - texSize - pos.x - padding, dy), name, new GUIContent("Name"));
-		EditorGUI.PropertyField (new Rect (pos.x, pos.y + 3*dy, pos.width - texSize - pos.x - padding, dy), width, new GUIContent("Width"));
-		EditorGUI.PropertyField (new Rect (pos.x, pos.y + 4*dy, pos.width - texSize - pos.x - padding, dy), height, new GUIContent("Height"));
-		EditorGUI.PropertyField (new Rect (pos.x, pos.y + 2*dy, pos.width - texSize - pos.x - padding, dy), texture, new GUIContent("Texture"));
+		if (name == null || width == null || height == null)
+			return;
+		EditorGUI.PropertyField (new Rect (pos.x, pos.y, pos.width - texSize - pos.x - padding, dy), name, new GUIContent("Name"));
+		EditorGUI.PropertyField (new Rect (pos.x, pos.y + 1*dy, pos.width - texSize - pos.x - padding, dy), texture, new GUIContent("Texture"));
+		EditorGUI.PropertyField (new Rect (pos.x, pos.y + 2*dy, pos.width - texSize - pos.x - padding, dy), width, new GUIContent("Width"));
+		EditorGUI.PropertyField (new Rect (pos.x, pos.y + 3*dy, pos.width - texSize - pos.x - padding, dy), height, new GUIContent("Height"));
 		style.normal.background = (Texture2D)texture.objectReferenceValue;
 		if (Event.current.type == EventType.Repaint) { 
 			GUI.Box (new Rect (pos.width - texSize, pos.y, texSize, texSize), (Texture2D)texture.objectReferenceValue);
 		}
-//		prop.serializedObject.Update();
 		prop.serializedObject.ApplyModifiedProperties ();
 	}
 	
