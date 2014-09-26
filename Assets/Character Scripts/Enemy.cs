@@ -16,7 +16,7 @@ public class Enemy : NPC {
 		Vector2 targetPos = characterTarget.position;
 		if((lastTargetPosition-targetPos).magnitude > 4f){
 			lastTargetPosition = targetPos;
-			setPath(getPath(position,targetPos));
+			findPath(targetPos);
 		}
 		if((targetPos - position).magnitude < 1f){
 			hit(characterTarget);
@@ -30,7 +30,7 @@ public class Enemy : NPC {
 		Vector2 targetPos = characterTarget.position;
 		if((lastTargetPosition-targetPos).magnitude > 2f){
 			lastTargetPosition = targetPos;
-			setPath(getPath(position,new Vector2((int)targetPos.x,(int)targetPos.y)));
+			StartCoroutine("findPath",targetPos);
 		}
 	}
 

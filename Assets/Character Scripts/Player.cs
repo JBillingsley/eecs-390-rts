@@ -174,21 +174,9 @@ public class Player : Character {
 	//Move the units to the specified place. (Mouse position)
 	void moveUnits() {
 
-		Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-		setPath(getPath(position,new Vector2((int)v.x,(int)v.y)));
-		//Move the selected units to the desired position (where the mouse is)
-
-		/*
-		RaycastHit hit;
-		Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
-
+		Vector2 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		
-		if(Physics.Raycast(r,out hit,100f,terrain.value)){
-			foreach(Unit u in selected){
-				u.changeDestination(hit.point);
-			}
-		}*/
+		StartCoroutine("findPath",v);
 	}
 
 	//Add the unit to the selection list
