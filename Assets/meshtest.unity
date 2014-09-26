@@ -246,18 +246,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 601693636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09fb67868ae1e68428b762a81916e56f, type: 3}
+  m_Script: {fileID: 11500000, guid: 84fe7ee416424634c81432d56d8cb8f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  jumpForce: 0
-  canSummon: 0
-  avalibleResources: 
-  maxUnitCount: 5
-  healable: 0
-  tower: {fileID: 0}
-  repairSpeed: 0
-  dudeSpawnType: 0
+  tilesets: []
 --- !u!4 &601693638
 Transform:
   m_ObjectHideFlags: 0

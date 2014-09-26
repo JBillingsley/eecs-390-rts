@@ -3,16 +3,19 @@ using System.Collections.Generic;
 
 [System.Serializable]
 public class Tileset {
-
-	public string name;
+	[SerializeField]
+	public string name = "Tileset Name";
+	[SerializeField]
 	public Texture texture;
-	public int width;
-	public int height;
+	[SerializeField, Range(1, 32)]
+	public int width = 1;
+	[SerializeField, Range(1, 32)]
+	public int height = 1;
 
-	public Material material;
+	public Material material = new Material(Shader.Find("Custom/2D Tile Shader"));
 
-	public void Awake(){
-		material = new Material(Shader.Find("Custom/2D Tile Shader"));
+	public Tileset(){
+	
 	}
 
 	public void setTexture(Texture texture){
