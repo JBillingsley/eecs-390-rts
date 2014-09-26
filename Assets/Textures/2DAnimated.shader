@@ -1,12 +1,17 @@
-﻿Shader "Custom/Animated 2D Shader" {
+﻿Shader "Custom/2D Tile Shader" {
 	Properties {
-		_Tex ("Texture Image", 2D) = "white" {} 
+		_Tex ("Tileset", 2D) = "white" {} 
 		_Width ("Width", Float) = 3 
 		_Height ("Height", Float) = 3 
-		_Index ("Height", Float) = 0 
+		_Index ("Index", Float) = 0 
 	}
+	
 	SubShader {
+		Tags { "Queue" = "Transparent" } 
 		Pass {
+			Cull Off
+			Blend SrcAlpha OneMinusSrcAlpha
+	
 			CGPROGRAM 
 			
  			#pragma vertex vert 
@@ -29,8 +34,8 @@
 			v2f vert(vin v) {
 				v2f vf;
 				vf.pos = mul(UNITY_MATRIX_MVP, v.vertex);
-				float i = _Index % _Width * _Height;
-				float2 t = float2(i%_Width, _Height - i/_Width) + v.texcoord;
+				float i = _Index % (_Width * _Height);
+				float2 t = float2(i%_Width, _Height - floor(i/_Width) - 1) + v.texcoord;
 				vf.tex = t * float2(1/_Width, 1/_Height);
 				return vf;
 			}

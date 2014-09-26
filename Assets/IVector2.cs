@@ -11,6 +11,11 @@ public class IVector2 {
 		this.y = y;
 	}
 
+	public IVector2(float x, float y){
+		this.x = (int)x;
+		this.y = (int)y;
+	}
+	
 	/*****/
 
 	public static implicit operator Vector2(IVector2 v){

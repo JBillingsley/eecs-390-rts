@@ -260,6 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInteractable: 0
+  elementType: 2
   player: {fileID: 1623358594}
   resourceTaken: 0
   resourceRespawnTime: 5
@@ -813,6 +814,7 @@ MonoBehaviour:
   towerType: 0
   healthText: {fileID: 1598013303}
   healthJumpDistance: .100000001
+  playersResources: 
 --- !u!1 &1454563277
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,11 +942,12 @@ MonoBehaviour:
   speed: .200000003
   jumpForce: 100
   canSummon: 0
-  avalibleResources: 0
+  avalibleResources: 
   maxUnitCount: 5
   healable: 0
   tower: {fileID: 1382008952}
   repairSpeed: 5
+  dudeSpawnType: 0
 --- !u!54 &1623358597
 Rigidbody:
   m_ObjectHideFlags: 0
