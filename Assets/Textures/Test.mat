@@ -31,15 +31,15 @@ Material:
       data:
         first:
           name: _Width
-        second: 1
+        second: 16
       data:
         first:
           name: _Height
-        second: 1
+        second: 16
       data:
         first:
           name: _Index
-        second: 0
+        second: 10
     m_Colors:
       data:
         first:

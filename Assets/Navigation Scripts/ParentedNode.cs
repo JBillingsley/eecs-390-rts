@@ -21,39 +21,38 @@ public class ParentedNode {
 
 	public override string ToString ()
 	{
-		//string s = node.transform.position + " " + weight;
-		return ""; //s
+		string s = location + " " + weight;
+		return s; //s
 	}
 
 	public Vector2[] GetNeighbors(){
 
 		List<Vector2> neighbors = new List<Vector2>();
-		IVector2 pos = new Vector2((int)location.x,(int)location.y);
+		IVector2 pos = new IVector2(location.x,location.y);
 
 		if(m == null){
 			m = GameObject.FindObjectOfType<Map>();
 		}
 
-		//Clockwise from top, top,right,down,left
-		int[] dirs = new int[]{Direction.TOP, Direction.RIGHT, Direction.BOTTOM, Direction.LEFT};
+
+		int[] dirs = new int[]{Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT, Direction.TOPLEFT, Direction.TOPRIGHT, Direction.BOTTOMLEFT, Direction.BOTTOMRIGHT};
+
+		bool[] passability = Direction.extractByte(dirs, (byte)(~m.getTileNav(pos)));
+		bool[] solid = Direction.extractByte(dirs, (byte)(~m.getTileSolid(pos)));
 		IVector2[] directions = Direction.getDirections(dirs);
 
-		byte adj = m.getTileAdjacency((int)location.x,(int)location.y);
-		bool[] passability = Direction.extractByte(dirs, (byte)(~adj));
-
-		if(passability[0]){
-			neighbors.Add (pos + directions[0]);
+		for (int i = 0; i < 4; i++){
+			if(passability[i])
+				neighbors.Add (pos + directions[i]);
 		}
-		if(passability[1]){
-			neighbors.Add (pos + directions[1]);
+		for (int i = 4; i < 6; i++){
+			if(passability[i] && solid[0])
+				neighbors.Add (pos + directions[i]);
 		}
-		if(passability[2]){
-			neighbors.Add (pos + directions[2]);
+		for (int i = 6; i < 8; i++){
+			if(passability[i] && solid[i - 4])
+				neighbors.Add (pos + directions[i]);
 		}
-		if(passability[3]){
-			neighbors.Add (pos + directions[3]);
-		}
-
 		return neighbors.ToArray();
 	}
 }
