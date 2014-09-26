@@ -2,31 +2,34 @@
 using System.Collections.Generic;
 
 [System.Serializable]
-public class Tileset : Object {
+public class Tileset {
 
+	public string name;
 	public Texture texture;
 	public int width;
 	public int height;
 
+	public Material material;
 
-	public static Material getMaterial(Tileset t){
-		Material m = new Material(Shader.Find("Custom/2D Tile Shader"));
-		m.SetTexture (0, t.texture);
-		m.SetFloat("_Width", t.width);
-		m.SetFloat("_Height", t.height);
-		return m;
+	public void Awake(){
+		material = new Material(Shader.Find("Custom/2D Tile Shader"));
 	}
-
 
 	public void setTexture(Texture texture){
 		this.texture = texture;
+		if (material != null)
+			material.SetTexture (0, texture);
 	}
 
 	public void setWidth(int width){
 		this.width = width;
+		if (material != null)
+			material.SetFloat("_Width", width);
 	}
 	
 	public void setHeight(int height){
 		this.height = height;
+		if (material != null)
+			material.SetFloat("_Height", height);
 	}
 }
