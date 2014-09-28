@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 //Author: Henry Eastman
 //Controls the player, including inputs and movement.
+[RequireComponent(typeof(CharacterController))]
 public class Player : Character {
 	
 	public static Player singleton;
@@ -15,6 +16,8 @@ public class Player : Character {
 	public Rect selectionBox;
 	
 	public Texture selectBox;
+
+	CharacterController cc;
 
 	//The current units
 	public List<Character> selected; /* Will be multiple units */
@@ -33,6 +36,7 @@ public class Player : Character {
 
 	// Use this for initialization
 	void Start () {
+		cc = this.GetComponent<CharacterController>();
 		singleton = this;
 		position = new Vector2((int)this.transform.position.x,(int)this.transform.position.y);
 		selectionBox = new Rect(0,0,0,0);
@@ -202,6 +206,10 @@ public class Player : Character {
 		RaycastHit2D hit;
 		Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
 		return (hit = Physics2D.GetRayIntersection(r,100f,l.value));
+	}
+
+	public override void move(){
+
 	}
 
 	/*void revealArea(int i){

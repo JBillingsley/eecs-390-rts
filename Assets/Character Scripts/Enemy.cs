@@ -7,8 +7,7 @@ public class Enemy : NPC {
 		act ();
 		move ();
 	}
-
-
+	
 	protected override void attack(){
 		if(!characterTarget){
 			myState = State.IDLE;

@@ -116,7 +116,7 @@ public class Character : MonoBehaviour {
 	}
 
 	//Moves this character along its route.
-	protected void move(){
+	public virtual void move(){
 		if(path != null){
 			if(currentPathIndex >= path.length){
 				return;
