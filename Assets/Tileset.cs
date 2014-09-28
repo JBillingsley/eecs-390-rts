@@ -12,11 +12,8 @@ public class Tileset {
 	[SerializeField, Range(1, 32)]
 	public int height = 1;
 
-	public Material material = new Material(Shader.Find("Custom/2D Tile Shader"));
-
-	public Tileset(){
-	
-	}
+	public Material material;
+	//= new Material(Shader.Find("Custom/2D Tile Shader"));
 
 	public void setTexture(Texture2D texture){
 		this.texture = texture;

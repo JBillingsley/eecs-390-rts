@@ -9,7 +9,7 @@ public class Global : MonoBehaviour{
 	public List<AnimationSet> animationSets = new List<AnimationSet>();
 
 
-	protected Global(){
+	protected void Awake(){
 		if (instance == null)
 			instance = this;
 		tilesets.Add (new Tileset());
