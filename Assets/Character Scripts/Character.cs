@@ -61,12 +61,6 @@ public class Character : MonoBehaviour {
 		ParentedNode current = new ParentedNode(null,start,float.MaxValue);
 		while(leaves.Count > 0 && count < 100000 && !flag){
 			//Create a parented node
-			if(current.location == end){
-				//Move to the mouse, not last position
-				setPath(new Route(current));
-				flag = true;
-				//return new Route(new ParentedNode(current.parent,end,0));
-			}
 			current.weight = float.MaxValue;
 			//Check to find the lowest weighted leaf
 			foreach(ParentedNode p in leaves){	
@@ -77,6 +71,13 @@ public class Character : MonoBehaviour {
 
 			leaves.Remove(current);
 			branches.Add(current);
+
+			if(current.location == end){
+				//Move to the mouse, not last position
+				setPath(new Route(current));
+				yield break;
+			}
+
 
 			foreach(Vector2 v in current.GetNeighbors()){
 				if(!ContainsNode(leaves,branches,v)){
