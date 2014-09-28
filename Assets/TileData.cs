@@ -98,7 +98,7 @@ public class TileData {
 	}
 	
 	public void getCollisionIndices(int i, int off, byte adj, List<int> list){
-		if (!context){
+		if (context == NOCONTEXT){
 			list.Add(i + 1);
 			list.Add(i + 1 + off);
 			list.Add(i + 2);
