@@ -6,12 +6,14 @@ public class Global : MonoBehaviour{
 	public static Global instance;
 
 	public List<Tileset> tilesets = new List<Tileset>();
+	public List<AnimationSet> animationSets = new List<AnimationSet>();
 
 
 	protected Global(){
 		if (instance == null)
 			instance = this;
 		tilesets.Add (new Tileset());
+		animationSets.Add (new AnimationSet());
 	}
 
 	public static Tileset getTileset(string name){
