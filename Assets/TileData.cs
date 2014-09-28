@@ -4,11 +4,22 @@ using System.Collections.Generic;
 
 public class TileData {
 
+	const byte NOCONTEXT = 0;
+	const byte PARTIALCONTEXT = 1;
+	const byte FULLCONTEXT = 2;
+
+	/**
+	 * Context specifies how the tile is to be rendered to the screen. 
+	 * Tiles with no context require only one texture tile.
+	 * Tiles with partial context should occupy the whole texture tiles. Requires 16 texture tiles.
+	 * Tiles with full context can occupy partial texture tiles. Requires 48 texture tiles.
+	 **/
+
 	public static readonly TileData[] tiles = new TileData[32];
 
 	public static readonly TileData air = new TileData (0, false);
-	public static readonly TileData dirt = new TileData (1, true, true);
-	public static readonly TileData thing = new TileData (49, true, true);
+	public static readonly TileData dirt = new TileData (1, true, FULLCONTEXT);
+	public static readonly TileData thing = new TileData (49, true, FULLCONTEXT);
 	
 	public static readonly byte defaultTile = 1;
 
@@ -16,13 +27,13 @@ public class TileData {
 	public readonly short id;
 	public readonly byte texID;
 	public readonly bool solid;
-	public readonly bool context;
+	public readonly byte context;
 
 	private static byte i = 0;
 
-	private TileData(byte texID, bool solid) : this(texID, solid, false){}
+	private TileData(byte texID, bool solid) : this(texID, solid, NOCONTEXT){}
 
-	private TileData(byte texID, bool solid, bool context){
+	private TileData(byte texID, bool solid, byte context){
 		this.texID = texID;
 		this.solid = solid;
 		this.context = context;
@@ -31,13 +42,17 @@ public class TileData {
 	}
 
 	public int getTexID(byte adj){
-		if (!context)
-			return texID;
-		return getFullContext (adj);
+		switch (context){
+		case PARTIALCONTEXT:
+			return getPartialContext(adj);
+		case FULLCONTEXT:
+			return getFullContext (adj);
+		}
+		return texID;
 	}
 
 	public int getPartialContext(byte adj){
-		return 4 * grey(adj, 0x40, 0x04) + grey(adj, 0x01, 0x10);
+		return texID + 4 * grey(adj, 0x40, 0x04) + grey(adj, 0x01, 0x10);
 	}
 		
 	public int getFullContext(byte adj){
@@ -83,7 +98,7 @@ public class TileData {
 	}
 	
 	public void getCollisionIndices(int i, int off, byte adj, List<int> list){
-		if (!context){
+		if (context == NOCONTEXT){
 			list.Add(i + 1);
 			list.Add(i + 1 + off);
 			list.Add(i + 2);
