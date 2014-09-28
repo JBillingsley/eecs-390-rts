@@ -29,7 +29,7 @@ public class Character : MonoBehaviour {
 	}
 
 	protected void findPath(Vector2 v){
-		StopCoroutine("getPath");
+		//StopCoroutine("getPath");
 		//StartCoroutine("getPath",new Vector2((int)v.x,(int)v.y));
 		StartCoroutine(getPath(new Vector2((int)v.x,(int)v.y)));
 	}
