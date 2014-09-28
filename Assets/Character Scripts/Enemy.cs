@@ -12,6 +12,7 @@ public class Enemy : NPC {
 	protected override void attack(){
 		if(!characterTarget){
 			myState = State.IDLE;
+			return;
 		}
 		Vector2 targetPos = characterTarget.position;
 		if((lastTargetPosition-targetPos).magnitude > 4f){
