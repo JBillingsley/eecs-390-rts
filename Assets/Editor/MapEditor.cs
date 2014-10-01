@@ -26,10 +26,9 @@ public class MapEditor : Editor {
 		map.setRenderMode((byte)EditorGUILayout.Popup("RenderMode", map.renderMode, new string[]{"Terrain", "Navmesh"}));
 
 		EditorGUI.indentLevel++;
-		EditorGUI.BeginChangeCheck();
 		EditorGUILayout.PropertyField(serializedObject.FindProperty("tileset"), true);
-		if (EditorGUI.EndChangeCheck())
-			serializedObject.ApplyModifiedProperties();
+	
+		serializedObject.ApplyModifiedProperties();
 		EditorGUIUtility.LookLikeControls();
 		EditorGUI.indentLevel--;
 

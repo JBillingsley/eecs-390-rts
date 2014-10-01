@@ -222,40 +222,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
---- !u!21 &143059616
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Custom/2D Tile Shader
-  m_Shader: {fileID: 4800000, guid: eabb77c920128e940be621c79b888a70, type: 3}
-  m_ShaderKeywords: []
-  m_CustomRenderQueue: -1
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _Tex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats:
-      data:
-        first:
-          name: _Width
-        second: 3
-      data:
-        first:
-          name: _Height
-        second: 3
-      data:
-        first:
-          name: _Index
-        second: 0
-    m_Colors: {}
 --- !u!1 &601693636
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,72 +246,64 @@ MonoBehaviour:
   m_GameObject: {fileID: 601693636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84fe7ee416424634c81432d56d8cb8f2, type: 3}
+  m_Script: {fileID: 11500000, guid: 8844571fa58c1d64f8579a6b286ea2ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilesets:
-  - name: Bane
-    texture: {fileID: 2800000, guid: 2bdd6686f272e064db290861245ec6e0, type: 3}
-    width: 16
-    height: 16
-    material: {fileID: 143059616}
-  animationSets:
-  - name: Player Animations
-    tilesetName: Bane
-    animations:
-    - name: Running
-      tileSequence: 01000000
-      frameSkip: 1
-      folded: 0
-    - name: Walking
-      tileSequence: 00000000
-      frameSkip: 1
-      folded: 0
-    folded: 0
-    preview: 0
-    previewIndex: 0
-  - name: Player Animations
-    tilesetName: Tileset Name
-    animations:
-    - name: Walking
-      tileSequence: 00000000
-      frameSkip: 1
-      folded: 0
-    - name: Running
-      tileSequence: 00000000
-      frameSkip: 1
-      folded: 0
-    folded: 1
-    preview: 0
-    previewIndex: 0
-  - name: Player Animations
-    tilesetName: Tileset Name
-    animations:
-    - name: Walking
-      tileSequence: 00000000
-      frameSkip: 1
-      folded: 0
-    - name: Running
-      tileSequence: 00000000
-      frameSkip: 1
-      folded: 0
-    folded: 1
-    preview: 0
-    previewIndex: 0
-  - name: Player Animations
-    tilesetName: Tileset Name
-    animations:
-    - name: Walking
-      tileSequence: 00000000
-      frameSkip: 1
-      folded: 0
-    - name: Running
-      tileSequence: 00000000
-      frameSkip: 1
-      folded: 0
-    folded: 1
-    preview: 0
-    previewIndex: 0
+  globalData:
+    tilesets:
+    - name: Tiles
+      texture: {fileID: 2800000, guid: 2bdd6686f272e064db290861245ec6e0, type: 3}
+      width: 8
+      height: 16
+      folded: 1
+      material: {fileID: 0}
+    - name: 1
+      texture: {fileID: 2800000, guid: 2bdd6686f272e064db290861245ec6e0, type: 3}
+      width: 7
+      height: 16
+      folded: 1
+      material: {fileID: 0}
+    - name: 2
+      texture: {fileID: 2800000, guid: 2bdd6686f272e064db290861245ec6e0, type: 3}
+      width: 6
+      height: 8
+      folded: 1
+      material: {fileID: 0}
+    animationsets:
+    - name: Player
+      tilesetName: Tiles
+      animations:
+      - name: Run
+        tileSequence: 030000000200000001000000080000000600000004000000090000000100000008000000100000000100000006000000010000000200000001000000040000001f000000040000000100000003000000
+        frameSkip: 10
+        folded: 0
+      - name: Walk
+        tileSequence: 00000000
+        frameSkip: 3
+        folded: 0
+      - name: Dance
+        tileSequence: 00000000
+        frameSkip: 1
+        folded: 0
+      tileset: 0
+      lastFrame: 3585.17212
+      folded: 1
+      preview: 0
+      previewIndex: 11
+    - name: Animation Set Name
+      tilesetName: Tileset Name
+      animations:
+      - name: Animation Name
+        tileSequence: 03000000
+        frameSkip: 1
+        folded: 0
+      tileset: 0
+      lastFrame: 3588.28296
+      folded: 1
+      preview: 0
+      previewIndex: 0
+    tilesetFolded: 0
+    animationsetFolded: 0
 --- !u!4 &601693638
 Transform:
   m_ObjectHideFlags: 0

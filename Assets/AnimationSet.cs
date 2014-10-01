@@ -8,8 +8,10 @@ public class AnimationSet {
 	public string name = "Animation Set Name";
 	public string tilesetName = "Tileset Name";
 	public Animation[] animations = new Animation[1];
-
-	private Tileset tileset;
+	[SerializeField]
+	private int tileset = 0;
+	[SerializeField]
+	private float lastFrame = Time.realtimeSinceStartup;
 
 	[SerializeField]
 	private bool folded;
@@ -19,16 +21,15 @@ public class AnimationSet {
 	private int previewIndex;
 
 	public Tileset getTileset(){
-		if (tileset == null)
-			tileset = Global.getTileset (tilesetName);
-		return tileset;
+		return GlobalData.getTileset (tileset);
 	}
 
 	public static void construct(SerializedProperty prop){
 		prop.FindPropertyRelative("name").stringValue = "Animation Set Name";                
 		prop.FindPropertyRelative ("tilesetName").stringValue = "Tileset Name";      
-		prop.FindPropertyRelative ("animations").arraySize = 1;
-		Animation.construct (prop.FindPropertyRelative ("animations").GetArrayElementAtIndex(0));
+		SerializedProperty animations = prop.FindPropertyRelative ("animations");
+		animations.arraySize = 1;
+		Animation.construct (animations.GetArrayElementAtIndex(0));
 		prop.serializedObject.ApplyModifiedProperties();
 	}
 

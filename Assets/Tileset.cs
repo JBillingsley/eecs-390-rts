@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor;
 
 [System.Serializable]
 public class Tileset {
-	[SerializeField]
 	public string name = "Tileset Name";
-	[SerializeField]
 	public Texture2D texture;
-	[SerializeField, Range(1, 32)]
+	[Range(1, 32)]
 	public int width = 1;
-	[SerializeField, Range(1, 32)]
+	[Range(1, 32)]
 	public int height = 1;
+	[SerializeField]
+	private bool folded;
 
 	public Material material;
 	//= new Material(Shader.Find("Custom/2D Tile Shader"));
@@ -33,20 +34,43 @@ public class Tileset {
 			material.SetFloat("_Height", height);
 	}
 
-	public Texture2D getSubtexture(int i){
+	public Texture2D getSubtexture(Texture2D tex, int i){
+		if (texture == null) {
+			Debug.Log ("Cannot get subTexture from null texture.");
+			return null;
+		}
 		float w = texture.width / width;
 		float h = texture.height / height;
 		int x = i % width;
 		int y = i / width;
-		Debug.Log ("Drawing ["+w+","+h+"] ["+x+","+y+"]");
-		Texture2D tex = null; 
-		try {
+
+		if (tex == null)
 			tex = new Texture2D((int)w, (int)h);
-			Color[] pixels = texture.GetPixels((int)(x*w), (int)(y*h), (int)w, (int)h);
-			tex.SetPixels(pixels);
+		else if(tex.width != (int)w || tex.height != (int)h){
+			tex = new Texture2D((int)w, (int)h);
+		}
+		try {
+			tex.SetPixels(texture.GetPixels((int)(x*w), texture.height - (int)h - (int)(y*h), (int)w, (int)h));
 		}
 		catch (UnityException e){
+			return null;
 		}
+		tex.filterMode = texture.filterMode;
+		tex.Apply();
 		return tex;
 	}
+
+	public float aspect(){
+		float w = texture.width / width;
+		float h = texture.height / height;
+		return w / h;
+	}
+
+	public static void construct(SerializedProperty prop){
+		prop.FindPropertyRelative("name").stringValue = "Tileset Name";
+		prop.FindPropertyRelative("width").intValue = 1;
+		prop.FindPropertyRelative("height").intValue = 1;
+		prop.serializedObject.ApplyModifiedProperties();
+	}
+
 }
