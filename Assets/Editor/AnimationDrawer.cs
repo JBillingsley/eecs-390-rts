@@ -5,22 +5,19 @@ using UnityEditor;
 [CustomPropertyDrawer (typeof (Animation))]
 public class AnimationDrawer : PropertyDrawer {
 
-	public const int row = 6;
-	public const int buttonWidth = 20;
+	public const int row = 10;
 	public const int previewWidth = 60;
-	public static float dy = 16;
 	private GUIStyle style = new GUIStyle();
 	
 	public override float GetPropertyHeight (SerializedProperty prop, GUIContent label) {
-		dy = base.GetPropertyHeight (prop, label);
 		return calculateHeight (prop);
 	}
 	
 	public static float calculateHeight(SerializedProperty prop){
 		SerializedProperty tileSequence = prop.FindPropertyRelative ("tileSequence");
 		if (prop.FindPropertyRelative ("folded").boolValue)
-			return dy;
-		return (((tileSequence.arraySize - 1) / row) + 4) * dy;
+			return EditorUtil.row;
+		return (((tileSequence.arraySize - 1) / row) + 4) * EditorUtil.row;
 	}
 	
 	public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label) {
@@ -31,48 +28,40 @@ public class AnimationDrawer : PropertyDrawer {
 
 		if (name == null || frameSkip == null || tileSequence == null)
 			return;
-		
-		dy = base.GetPropertyHeight(prop, label);
 
-		if (!folded.boolValue){
-			if (GUI.Button (new Rect (pos.x + EditorGUI.indentLevel * 12, pos.y, buttonWidth, dy), new GUIContent("", "Collapse"), (GUIStyle)"OL Minus"))
-				folded.boolValue = true;
-			EditorGUI.PropertyField (new Rect (pos.x + buttonWidth, pos.y, pos.width - 2 * buttonWidth - previewWidth, dy), name, new GUIContent ("", "Animation Name"));
-		}
-		else{
-			if (GUI.Button (new Rect (pos.x + EditorGUI.indentLevel * 12, pos.y, buttonWidth, dy), new GUIContent("", "Expand"), (GUIStyle)"OL Plus"))
-				folded.boolValue = false;
-			EditorGUI.LabelField (new Rect (pos.x + buttonWidth, pos.y, pos.width - buttonWidth - previewWidth, dy), new GUIContent (name.stringValue, "Animation Name"));
-		}
+		bool fold = folded.boolValue;
+
+		EditorUtil.folder (pos.x + EditorGUI.indentLevel * 12, pos.y, folded);
+		EditorUtil.textField (new Rect (pos.x + EditorUtil.buttonSize, pos.y, pos.width - 2 * EditorUtil.buttonSize - previewWidth, EditorUtil.height), name, !fold, "Animation Name");
+	
 		EditorGUI.indentLevel++;
 		if (!folded.boolValue){
-			EditorGUI.PropertyField (new Rect (pos.x, pos.y + dy, pos.width, dy), frameSkip, new GUIContent("Frame Rate"));
-			EditorGUI.LabelField (new Rect (pos.x, pos.y + 2 * dy, pos.width, dy), new GUIContent("Frame Sequence"));
+			//Draw Frame Rate
+			EditorGUI.PropertyField (new Rect (pos.x, pos.y + EditorUtil.row, pos.width, EditorUtil.height), frameSkip, new GUIContent("Framerate"));
+			//Draw Frame Sequence
+			EditorGUI.LabelField (new Rect (pos.x, pos.y + 2 * EditorUtil.row, pos.width, EditorUtil.height), new GUIContent("Frame Sequence"));
 			
-			if (GUI.Button (new Rect (pos.x + pos.width - buttonWidth, pos.y + 2 * dy, buttonWidth, dy), new GUIContent ("+"), EditorStyles.miniButtonRight)) {
+			if (GUI.Button (new Rect (pos.x + pos.width - EditorUtil.buttonSize, pos.y + 2 * EditorUtil.row, EditorUtil.buttonSize, EditorUtil.height), new GUIContent ("+"), EditorStyles.miniButtonRight)) {
 					tileSequence.arraySize++;
 			}
-			if (GUI.Button (new Rect (pos.x + pos.width - 2 * buttonWidth, pos.y + 2 * dy, buttonWidth, dy), new GUIContent ("-"), EditorStyles.miniButtonLeft)) {
+			if (GUI.Button (new Rect (pos.x + pos.width - 2 * EditorUtil.row, pos.y + 2 * EditorUtil.row, EditorUtil.buttonSize, EditorUtil.height), new GUIContent ("-"), EditorStyles.miniButtonLeft)) {
 				if (tileSequence.arraySize > 1)
 					tileSequence.arraySize--;
 			}
+
 			float w = pos.width;
 			
 			float width = w / row;
 			float adjSize = 45;
 			float adj = adjSize / row;
+
 			for (int i = 0; i < tileSequence.arraySize; i++){
-				EditorGUI.PropertyField (new Rect (pos.x + (i % row) * (width - adj), pos.y + (3 + i / row) * dy, width - adj + adjSize, dy), tileSequence.GetArrayElementAtIndex(i), GUIContent.none);
+				int xx = (i % row);
+				int yy = (i / row);
+				EditorGUI.PropertyField (new Rect (pos.x + xx * (width - adj), pos.y + (3 + yy) * EditorUtil.row, width - adj + adjSize, EditorUtil.height), tileSequence.GetArrayElementAtIndex(i), GUIContent.none);
 			}
 		}
 		EditorGUI.indentLevel--;
-
-
-
-
-
-
-
 
 		prop.serializedObject.ApplyModifiedProperties ();
 	}
