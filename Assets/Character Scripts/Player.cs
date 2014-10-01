@@ -46,7 +46,7 @@ public class Player : Character {
 		position = new Vector2((int)this.transform.position.x,(int)this.transform.position.y);
 		selectionBox = new Rect(0,0,0,0);
 		drawSelection = false;
-		units = new List<Character>( GameObject.FindObjectsOfType<Character>());
+		units = new List<Character>( GameObject.FindObjectsOfType<Unit>());
 		//position = null;
 	}
 
