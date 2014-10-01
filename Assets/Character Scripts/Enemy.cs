@@ -26,6 +26,7 @@ public class Enemy : NPC {
 	protected override void follow(){
 		if(!characterTarget){
 			myState = State.IDLE;
+			return;
 		}
 		Vector2 targetPos = characterTarget.position;
 		if((lastTargetPosition-targetPos).magnitude > 2f){

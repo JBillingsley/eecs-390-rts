@@ -4,23 +4,24 @@ using System.Collections.Generic;
 
 public class Character : MonoBehaviour {
 
+	//For pathing:
+	[HideInInspector]
 	public Vector2 position;
-
-	//public Vector3 destination;
+	[HideInInspector]
+	public Vector2 destination;
 	protected int currentPathIndex;
 	protected Route path;
 
+	//Standard Character variables.
 	public float moveSpeed;
 	public float maxHealth;
 	public float currentHealth;
 
 	// Use this for initialization
 	void Start () {
+		//Start the pathing coroutine
+		StartCoroutine(getPath());
 		position = new Vector2((int)this.transform.position.x,(int)this.transform.position.y);
-
-		//position = GameObject.FindObjectOfType<NavigationNode>();
-		//transform.position = position.transform.position;
-		//position.open = true;
 	}
 	
 	// Update is called once per frame
@@ -29,70 +30,89 @@ public class Character : MonoBehaviour {
 	}
 
 	protected void findPath(Vector2 v){
-		//StopCoroutine("getPath");
-		//StartCoroutine("getPath",new Vector2((int)v.x,(int)v.y));
-		StartCoroutine(getPath(new Vector2((int)v.x,(int)v.y)));
+		destination = new IVector2(v.x,v.y);
 	}
 
 	//Sets the route for this character to follow
 	public void setPath(Route r){
 		path = r;
-		//destination = r.nodes[r.nodes.Count-1];
 		currentPathIndex = 0;
 
 	}
 
-	public IEnumerator getPath(Vector2 end){
-		Vector2 start = position;
-		Debug.Log ("Trying to path from " + start + " to " + end + ".");
+	//Coroutine which calculates the path to the destination.
+	public IEnumerator getPath(){
+		Vector2 lastDest = position;
 
-		//Create a list of leaves
-		List<ParentedNode> leaves = new List<ParentedNode>();
+	reset:
+		while(true){
+			//This routine happens every second.
+			yield return new WaitForSeconds(1);
 
-		//Create a list of branches (used leaves)
-		List<ParentedNode> branches = new List<ParentedNode>();
-
-		//Add current position to the leaves
-		leaves.Add (new ParentedNode(null,position,0));
-		bool flag = false;
-		int count = 0;
-		//While there are still leaves
-
-		ParentedNode current = new ParentedNode(null,start,float.MaxValue);
-		while(leaves.Count > 0 && count < 100000 && !flag){
-			//Create a parented node
-			current.weight = float.MaxValue;
-			//Check to find the lowest weighted leaf
-			foreach(ParentedNode p in leaves){	
-				if(p.weight < current.weight){
-					current = p;
-				}				                             
+			//If the destination hasn't changed...
+			if(lastDest == destination){
+				//...Go back to start of the loop.
+				continue;
 			}
+			Vector2 start = position;
+			Vector2 end = destination;
+			Debug.Log ("Trying to path from " + start + " to " + end + ".");
 
-			leaves.Remove(current);
-			branches.Add(current);
+			//Create a list of leaves
+			List<ParentedNode> leaves = new List<ParentedNode>();
 
-			if(current.location == end){
-				//Move to the mouse, not last position
-				setPath(new Route(current));
-				yield break;
-			}
+			//Create a list of branches (used leaves)
+			List<ParentedNode> branches = new List<ParentedNode>();
 
+			//Add current position to the leaves
+			leaves.Add (new ParentedNode(null,position,0));
+			int count = 0;
+			ParentedNode current = new ParentedNode(null,start,float.MaxValue);
 
-			foreach(Vector2 v in current.GetNeighbors()){
-				if(!ContainsNode(leaves,branches,v)){
-					leaves.Add(new ParentedNode(current,v,hueristic(v,start) + hueristic(v,end)));
+			//While there are still leaves, and the destination hasn't changed.
+			while(leaves.Count > 0 && end.Equals(destination)){
+				//Create a parented node
+				current.weight = float.MaxValue;
+				//Check to find the lowest weighted leaf
+				foreach(ParentedNode p in leaves){	
+					if(p.weight < current.weight){
+						current = p;
+					}				                             
+				}
+
+				leaves.Remove(current);
+				branches.Add(current);
+
+				//If it found the path...
+				if(current.location == end){
+					//...Create a new route based on that last node.
+					setPath(new Route(current));
+					lastDest = end;
+					//Break out of this while loop.
+					goto reset;
+				}
+
+				//Get the neighbors and add them to leaves, parented to the current node.
+				foreach(Vector2 v in current.GetNeighbors()){
+					///Dont add it if it was already dealt with.
+					if(!ContainsNode(leaves,branches,v)){
+						leaves.Add(new ParentedNode(current,v,hueristic(v,start) + hueristic(v,end)));
+					}
+				}
+
+				//Only do 20 cycles per frame
+				if(count % 20 == 0){
+					yield return null;
 				}
 			}
-			count ++;
-			if(count % 20 == 0){
-				yield return null;
-			}
-		}
-		if(!flag)
+
+			//If it goes through and cant find anything, 
 			Debug.Log ("Path not found");
+
+		}
 	}
 
+	//Checks if the vector is in either list.
 	static bool ContainsNode(List<ParentedNode> l,List<ParentedNode>b, Vector2 n){
 		//Check l
 		foreach(ParentedNode p in l){
@@ -109,6 +129,7 @@ public class Character : MonoBehaviour {
 		return false;
 	}
 
+	//Provides a hueristic weight based on the distance from the destination.
 	public static float hueristic(Vector3 n, Vector3 destination){
 		float xdif = n.x - destination.x;
 		float ydif = n.y - destination.y;
