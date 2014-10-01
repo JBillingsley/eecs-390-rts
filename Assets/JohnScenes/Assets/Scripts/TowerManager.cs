@@ -123,7 +123,7 @@ public class TowerManager : MonoBehaviour {
 		this.maxHealth += 50;
 		
 		// gets the next tower layer and enables its colliders and renderers
-		GameObject nextTowerLayer = towerLayers[(int)towerType];
+		GameObject nextTowerLayer = towerLayers[(int)towerType-1];
 		nextTowerLayer.renderer.enabled = true;
 		nextTowerLayer.collider.enabled = true;
 		// Should also probably change the textures when those are a thing
