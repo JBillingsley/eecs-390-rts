@@ -28,22 +28,22 @@ public class Character : MonoBehaviour {
 		move ();
 	}
 
+	protected void findPath(Vector2 v){
+		//StopCoroutine("getPath");
+		//StartCoroutine("getPath",new Vector2((int)v.x,(int)v.y));
+		StartCoroutine(getPath(new Vector2((int)v.x,(int)v.y)));
+	}
+
 	//Sets the route for this character to follow
 	public void setPath(Route r){
 		path = r;
 		//destination = r.nodes[r.nodes.Count-1];
 		currentPathIndex = 0;
-		/*for(int i = 1; i < path.locations.Count-1; i++){
-			Vector3 p = path.locations[i];
-			Vector3 p1 = path.locations[i-1];
-			Vector3 p2 = path.locations[i+1];
 
-			Vector3 nCenter = (p1+p2)/2;
-			path.locations[i] = (p + nCenter)/2;
-		}*/
 	}
 
-	public Route getPath(Vector2 start, Vector2 end){
+	public IEnumerator getPath(Vector2 end){
+		Vector2 start = position;
 		Debug.Log ("Trying to path from " + start + " to " + end + ".");
 
 		//Create a list of leaves
@@ -54,15 +54,13 @@ public class Character : MonoBehaviour {
 
 		//Add current position to the leaves
 		leaves.Add (new ParentedNode(null,position,0));
-
+		bool flag = false;
 		int count = 0;
-
-		//Create a parented node
-		ParentedNode current = new ParentedNode(null,position,float.MaxValue);
-
 		//While there are still leaves
-		while(leaves.Count > 0 && count < 1000){
 
+		ParentedNode current = new ParentedNode(null,start,float.MaxValue);
+		while(leaves.Count > 0 && count < 100000 && !flag){
+			//Create a parented node
 			current.weight = float.MaxValue;
 			//Check to find the lowest weighted leaf
 			foreach(ParentedNode p in leaves){	
@@ -70,14 +68,16 @@ public class Character : MonoBehaviour {
 					current = p;
 				}				                             
 			}
-			if(current.location == end){
-				//Move to the mouse, not last position
-				return new Route(current);
-				//return new Route(new ParentedNode(current.parent,end,0));
-			}
 
 			leaves.Remove(current);
 			branches.Add(current);
+
+			if(current.location == end){
+				//Move to the mouse, not last position
+				setPath(new Route(current));
+				yield break;
+			}
+
 
 			foreach(Vector2 v in current.GetNeighbors()){
 				if(!ContainsNode(leaves,branches,v)){
@@ -85,9 +85,12 @@ public class Character : MonoBehaviour {
 				}
 			}
 			count ++;
+			if(count % 20 == 0){
+				yield return null;
+			}
 		}
-		Debug.Log ("Path not found");
-		return null;
+		if(!flag)
+			Debug.Log ("Path not found");
 	}
 
 	static bool ContainsNode(List<ParentedNode> l,List<ParentedNode>b, Vector2 n){
@@ -113,7 +116,7 @@ public class Character : MonoBehaviour {
 	}
 
 	//Moves this character along its route.
-	protected void move(){
+	public virtual void move(){
 		if(path != null){
 			if(currentPathIndex >= path.length){
 				return;

@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 
-public class Animation : MonoBehaviour {
+[System.Serializable]
+public class Animation {
+	public string name = "Animation Name";
+	[FixedAttribute()]
+	public int[] tileSequence = new int[1];
+	[Range(1, 60)]
+	public int frameSkip = 1;
+	[SerializeField]
+	private bool folded;
 
-	// Use this for initialization
-	void Start () {
-	
+	public static void construct(SerializedProperty prop){
+		prop.FindPropertyRelative("name").stringValue = "Animation Name";                
+		prop.FindPropertyRelative ("tileSequence").arraySize = 1;
+		prop.FindPropertyRelative ("frameSkip").intValue = 1;
+		prop.serializedObject.ApplyModifiedProperties();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+
 }

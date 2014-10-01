@@ -21,7 +21,7 @@ public class TilesetDrawer : PropertyDrawer {
 		SerializedProperty width = prop.FindPropertyRelative ("width");
 		SerializedProperty height = prop.FindPropertyRelative ("height");
 		SerializedProperty texture = prop.FindPropertyRelative ("texture");
-		float dy = base.GetPropertyHeight(prop, label);
+		dy = base.GetPropertyHeight(prop, label);
 		EditorGUIUtility.labelWidth = 75;
 		if (name == null || width == null || height == null)
 			return;

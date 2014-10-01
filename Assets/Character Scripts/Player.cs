@@ -4,9 +4,13 @@ using System.Collections.Generic;
 
 //Author: Henry Eastman
 //Controls the player, including inputs and movement.
+[RequireComponent(typeof(CharacterController))]
 public class Player : Character {
 	
 	public static Player singleton;
+
+	public float jumpSpeed = 100;
+	public float gravity = 9.81f;
 
 	public LayerMask terrainLayer;
 	public LayerMask itemLayer;
@@ -15,6 +19,10 @@ public class Player : Character {
 	public Rect selectionBox;
 	
 	public Texture selectBox;
+
+	CharacterController cc;
+
+	Vector2 movement = new Vector2();
 
 	//The current units
 	public List<Character> selected; /* Will be multiple units */
@@ -33,6 +41,7 @@ public class Player : Character {
 
 	// Use this for initialization
 	void Start () {
+		cc = this.GetComponent<CharacterController>();
 		singleton = this;
 		position = new Vector2((int)this.transform.position.x,(int)this.transform.position.y);
 		selectionBox = new Rect(0,0,0,0);
@@ -40,9 +49,8 @@ public class Player : Character {
 		units = new List<Character>( GameObject.FindObjectsOfType<Character>());
 		//position = null;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	void Update(){
 		getInputs();
 		if(selectInputDown){
 			startBox();
@@ -50,26 +58,17 @@ public class Player : Character {
 		if(selectInput){
 			continueBox();
 		}
-		if(selectInputUp){
+		else{
 			endBox();
 		}
 		if(moveInput){
 			moveUnits();
 		}
-		/*
-		else if(Input.GetMouseButtonDown(1)){
-			//Check what tile is under here.
-			RaycastHit2D hit = new RaycastHit2D();
-			if(hit = getCollider(terrainLayer)){
-				Collider2D col = hit.collider;
-				//NavigationNode node = col.GetComponent<NavigationNode>();
-				Character c = this;
-				if(node.open){
-					position.goal = node;
-					Invoke("makeRoute",0f);
-				}
-			}
-		}*/
+	}
+
+	// Update is called once per frame
+	void FixedUpdate () {
+
 		move();
 	}
 
@@ -174,21 +173,11 @@ public class Player : Character {
 	//Move the units to the specified place. (Mouse position)
 	void moveUnits() {
 
-		Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-		setPath(getPath(position,new Vector2((int)v.x,(int)v.y)));
-		//Move the selected units to the desired position (where the mouse is)
-
-		/*
-		RaycastHit hit;
-		Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-		
-		if(Physics.Raycast(r,out hit,100f,terrain.value)){
-			foreach(Unit u in selected){
-				u.changeDestination(hit.point);
-			}
-		}*/
+		Vector2 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		//StartCoroutine("findPath",v);
+		foreach(Character c in selected){
+			c.StartCoroutine("findPath",v);
+		}
 	}
 
 	//Add the unit to the selection list
@@ -216,20 +205,21 @@ public class Player : Character {
 		return (hit = Physics2D.GetRayIntersection(r,100f,l.value));
 	}
 
-	/*void revealArea(int i){
-		List<NavigationNode> nodes = new List<NavigationNode>();
-		nodes.Add(position);
-		for(int j = 0; j < i; j++){
-			List<NavigationNode> newNodes = new List<NavigationNode>();
-			foreach(NavigationNode n in nodes){
-				foreach(NavigationNode o in n.GetNeighbors()){
-					newNodes.Add(o);
-				}
-			}
-			foreach(NavigationNode b in newNodes){
-				nodes.Add(b);
-				b.setVisibility(true);
+	public override void move(){
+		movement.x /= 2f;
+		movement.x = Mathf.Clamp(movement.x + Input.GetAxis("Horizontal") * moveSpeed * Time.fixedDeltaTime,-1,1);
+		if(cc.isGrounded){
+			movement.y = 0;
+			if(Input.GetAxis("Jump") > .5f){
+				movement.y = jumpSpeed;
 			}
 		}
-	}*/
+		if(!cc.isGrounded){
+			movement.y -= gravity * Time.fixedDeltaTime;
+		}
+		Vector2 mov = transform.TransformDirection(movement);
+		mov *= moveSpeed;
+		cc.Move(mov * Time.deltaTime);
+
+	}
 }
