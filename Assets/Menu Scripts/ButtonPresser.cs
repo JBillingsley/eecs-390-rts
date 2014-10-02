@@ -4,6 +4,7 @@ using System.Collections;
 public class ButtonPresser : MonoBehaviour {
 
 	public LayerMask buttons;
+	private Button lastButton;
 
 	void Start(){
 		Time.timeScale = 1;
@@ -13,12 +14,27 @@ public class ButtonPresser : MonoBehaviour {
 	void OnGUI(){
 		RaycastHit2D hit;
 		Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
-		
-		if(Input.GetMouseButtonDown(0)){
-			if(hit = Physics2D.GetRayIntersection(r,100f,buttons.value)){
-				(hit.collider.GetComponent(typeof(Button)) as Button).press();
-				return;
+		Button b = null;
+
+		if(hit = Physics2D.GetRayIntersection(r,100f,buttons.value)){
+			b = (hit.collider.GetComponent(typeof(Button)) as Button);
+		}
+		if(b != null){
+			if(Input.GetMouseButtonDown(0)){
+				if(hit = Physics2D.GetRayIntersection(r,100f,buttons.value)){
+					b.press();
+					return;
+				}
 			}
+			else{
+				b.mouseOver();
+			}
+		}
+		if(b != lastButton){
+			if(lastButton){
+				lastButton.mouseOff();
+			}
+			lastButton = b;
 		}
 	}
 }
