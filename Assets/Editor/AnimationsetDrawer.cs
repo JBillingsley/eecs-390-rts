@@ -60,9 +60,13 @@ public class AnimationsetDrawer : PropertyDrawer {
 			SerializedProperty sequence = animation.FindPropertyRelative("tileSequence");
 			SerializedProperty frameskip = animation.FindPropertyRelative("frameSkip");
 			SerializedProperty lastFrame = prop.FindPropertyRelative("lastFrame");
-			if (Time.realtimeSinceStartup - lastFrame.floatValue > frameskip.intValue * Time.fixedDeltaTime){
+
+			float time = Time.realtimeSinceStartup;
+			if (time - lastFrame.floatValue < 0)
+				lastFrame.floatValue = time;
+			if (time - lastFrame.floatValue > frameskip.intValue * Time.fixedDeltaTime){
 				previewIndex.intValue = (previewIndex.intValue + 1) % (sequence.arraySize);
-				lastFrame.floatValue = Time.realtimeSinceStartup;
+				lastFrame.floatValue = time;
 			}
 
 			GUIContent content = getPreview(tileset, previewIndex.intValue, sequence);

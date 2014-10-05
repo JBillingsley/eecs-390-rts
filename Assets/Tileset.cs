@@ -13,13 +13,22 @@ public class Tileset {
 	[SerializeField]
 	private bool folded;
 
-	public Material material;
-	//= new Material(Shader.Find("Custom/2D Tile Shader"));
+	private Material material;
 
 	public void setTexture(Texture2D texture){
 		this.texture = texture;
 		if (material != null)
 			material.SetTexture (0, texture);
+	}
+
+	public Material getMaterial(){
+		if (material == null) {
+			material = new Material(Shader.Find("Custom/2D Tile Shader"));
+			material.SetTexture("_Tex", texture);
+			material.SetFloat("_Width", width);
+			material.SetFloat("_Height", height);
+		}
+		return material;
 	}
 
 	public void setWidth(int width){

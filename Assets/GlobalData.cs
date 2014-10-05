@@ -45,4 +45,10 @@ public class GlobalData {
 		return null;
 	}
 
+	public static AnimationSet getAnimationSet(string name){
+		foreach (AnimationSet a in instance.animationsets)
+			if (a.name.Equals (name))
+				return a;
+		return null;
+	}
 }

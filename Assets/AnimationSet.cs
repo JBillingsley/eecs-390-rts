@@ -6,7 +6,6 @@ using System.Collections;
 public class AnimationSet {
 
 	public string name = "Animation Set Name";
-	public string tilesetName = "Tileset Name";
 	public Animation[] animations = new Animation[1];
 	[SerializeField]
 	private int tileset = 0;
@@ -25,8 +24,7 @@ public class AnimationSet {
 	}
 
 	public static void construct(SerializedProperty prop){
-		prop.FindPropertyRelative("name").stringValue = "Animation Set Name";                
-		prop.FindPropertyRelative ("tilesetName").stringValue = "Tileset Name";      
+		prop.FindPropertyRelative("name").stringValue = "Animation Set Name";         
 		SerializedProperty animations = prop.FindPropertyRelative ("animations");
 		animations.arraySize = 1;
 		Animation.construct (animations.GetArrayElementAtIndex(0));
