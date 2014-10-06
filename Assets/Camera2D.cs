@@ -13,44 +13,28 @@ public class Camera2D : MonoBehaviour {
 	public float cameraSpeed = 0.5f;
 
 	private static Dictionary<int, Chunk> chunks = new Dictionary<int, Chunk>();
-
-	void Start () {
-	
-	}	
 	
 	void Update () {
 		camera.orthographicSize = tileHeight()/2;
 		chunkManagement();
 	}
 
-	void FixedUpdate(){
-		Vector3 delta = new Vector2();
-		if (Input.GetKey(KeyCode.UpArrow))
-			delta.y += cameraSpeed * zoom;
-		if (Input.GetKey(KeyCode.DownArrow))
-			delta.y -= cameraSpeed * zoom;
-		if (Input.GetKey(KeyCode.LeftArrow))
-			delta.x -= cameraSpeed * zoom;
-		if (Input.GetKey(KeyCode.RightArrow))
-			delta.x += cameraSpeed * zoom;
-		camera.transform.position += delta;
-
-		float f = Input.GetAxis("Mouse ScrollWheel");
-		if (f != 0){
-			float newZoom = targetZoom;
-			if (f > 0)
-				newZoom /= 2f;
-			else
-				newZoom *= 2f;
-			targetZoom = Mathf.Min(maxZoom, Mathf.Max(minZoom, newZoom));
-		}
-		if (Mathf.Abs(zoom - targetZoom) < 0.1f * zoom)
-			zoom = targetZoom;
-		else
-			zoom = Mathf.Lerp (zoom, targetZoom, 0.1f);
+	public void move(Vector2 delta){
+		camera.transform.position += (Vector3)(delta * cameraSpeed * zoom);
 	}
 
-	void chunkManagement(){
+	public void zoomIn(){
+		float newZoom = targetZoom;
+		newZoom /= 2f;
+		targetZoom = Mathf.Min(maxZoom, Mathf.Max(minZoom, newZoom));
+	}
+	public void zoomOut(){
+		float newZoom = targetZoom;
+		newZoom *= 2f;
+		targetZoom = Mathf.Min(maxZoom, Mathf.Max(minZoom, newZoom));	
+	}
+
+	private void chunkManagement(){
 		int xChunks = chunkWidth() / 2 + 1;
 		int yChunks = chunkHeight() / 2 + 1;
 		short x0 = (short)(transform.position.x / map.chunkSize);
@@ -71,7 +55,7 @@ public class Camera2D : MonoBehaviour {
 		}
 	}
 
-	public static void showChunk(Map map, short x, short y){
+	private static void showChunk(Map map, short x, short y){
 		int key = (x << 16) + y;
 		if (!chunks.ContainsKey(key)){
 			chunks [(x << 16) + y] = Chunk.makeChunk (map, x, y);

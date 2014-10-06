@@ -31,11 +31,9 @@ public class Map : MonoBehaviour {
 		name = name + Util.pair(getWidth(), getHeight());
 		map = new ulong[h*chunkSize, w*chunkSize];
 		dirtyChunks = new bool[h, w];
-		for (int y = 0; y < h*chunkSize; y++)
-			for (int x = 0; x < w*chunkSize; x++){
-				bool solid = Random.value > (float)y / (h*chunkSize);
-				if (solid)
-					map [y, x] = (ulong)(Random.value * 2) + 1;
+		for (int x = 0; x < w*chunkSize; x++)
+			for (int y = 60 + (int)(Random.value * 4); y >= 0; y--){
+				map [y, x] = (ulong)(Random.value * 2) + 1;
 			}
 		for (int y = 0; y < h*chunkSize; y++)
 			for (int x = 0; x < w*chunkSize; x++)
