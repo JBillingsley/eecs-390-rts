@@ -376,8 +376,8 @@ MonoBehaviour:
   moveSpeed: 10
   maxHealth: 0
   currentHealth: 0
-  jumpSpeed: 100
-  gravity: 9.81000042
+  jumpSpeed: 1
+  gravity: 2
   terrainLayer:
     serializedVersion: 2
     m_Bits: 0
