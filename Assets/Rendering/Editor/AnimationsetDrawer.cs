@@ -8,7 +8,6 @@ public class AnimationsetDrawer : PropertyDrawer {
 	public const int texSize = 100;
 	public const int padding = 10;
 	private static GUIStyle style = new GUIStyle();
-	private static Texture2D cache;
 
 	public override float GetPropertyHeight (SerializedProperty prop, GUIContent label) {
 		return calculateHeight (prop);
@@ -31,11 +30,10 @@ public class AnimationsetDrawer : PropertyDrawer {
 	public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label) {
 		
 		SerializedProperty name = prop.FindPropertyRelative ("name");
-		SerializedProperty tilesetName = prop.FindPropertyRelative ("tilesetName");
 		SerializedProperty animations = prop.FindPropertyRelative ("animations");
 		SerializedProperty preview = prop.FindPropertyRelative ("preview");
 		SerializedProperty previewIndex = prop.FindPropertyRelative ("previewIndex");
-		SerializedProperty tilesetID = prop.FindPropertyRelative ("tileset");
+		SerializedProperty textureAtlasID = prop.FindPropertyRelative ("textureAtlasID");
 
 		SerializedProperty folded = prop.FindPropertyRelative ("folded");
 		bool fold = folded.boolValue;
@@ -50,36 +48,38 @@ public class AnimationsetDrawer : PropertyDrawer {
 	
 		EditorGUI.indentLevel++;
 		if (!fold){
-			tilesetID.intValue = EditorGUI.Popup(new Rect (pos.x, pos.y + 2 * EditorUtil.row, pos.width - texSize - padding, EditorUtil.height), "Tileset", tilesetID.intValue, GlobalData.getTilesetNames());
+			textureAtlasID.intValue = EditorGUI.Popup(new Rect (pos.x, pos.y + 2 * EditorUtil.row, pos.width - texSize - padding, EditorUtil.height), "Tileset", textureAtlasID.intValue, TextureAtlasList.getTextureAtlasNames());
 
-			Tileset tileset = GlobalData.getTileset(tilesetID.intValue);
+			TextureAtlas tileset = TextureAtlasList.getTextureAtlas(textureAtlasID.intValue);
 
 			preview.intValue = Mathf.Max (-1, Mathf.Min(preview.intValue, animations.arraySize - 1));
+			if (preview.intValue != -1){
+				SerializedProperty animation = animations.GetArrayElementAtIndex(preview.intValue);
+				SerializedProperty sequence = animation.FindPropertyRelative("tileSequence");
+				SerializedProperty frameskip = animation.FindPropertyRelative("frameSkip");
+				SerializedProperty lastFrame = prop.FindPropertyRelative("lastFrame");
 
-			SerializedProperty animation = animations.GetArrayElementAtIndex(preview.intValue);
-			SerializedProperty sequence = animation.FindPropertyRelative("tileSequence");
-			SerializedProperty frameskip = animation.FindPropertyRelative("frameSkip");
-			SerializedProperty lastFrame = prop.FindPropertyRelative("lastFrame");
+				float time = Time.realtimeSinceStartup;
+				if (time - lastFrame.floatValue < 0)
+					lastFrame.floatValue = time;
+				else if (time - lastFrame.floatValue > frameskip.intValue * Time.fixedDeltaTime){
+					previewIndex.intValue = (previewIndex.intValue + 1) % (sequence.arraySize);
+					lastFrame.floatValue = time;
+				}
 
-			float time = Time.realtimeSinceStartup;
-			if (time - lastFrame.floatValue < 0)
-				lastFrame.floatValue = time;
-			if (time - lastFrame.floatValue > frameskip.intValue * Time.fixedDeltaTime){
-				previewIndex.intValue = (previewIndex.intValue + 1) % (sequence.arraySize);
-				lastFrame.floatValue = time;
-			}
-
-			GUIContent content = getPreview(tileset, previewIndex.intValue, sequence);
-			if (content == null){
-				float aspect = tileset.aspect();
-				if (aspect < 1)
-					GUI.Box(new Rect (pos.x + pos.width - texSize*aspect, pos.y + EditorUtil.row, texSize*aspect, texSize), GUIContent.none, style);
+				GUIContent content = getPreview(tileset, previewIndex.intValue, sequence);
+				if (content == null){
+					float aspect = tileset.aspect();
+					if (aspect < 1)
+						GUI.Box(new Rect (pos.x + pos.width - texSize*aspect, pos.y + EditorUtil.row, texSize*aspect, texSize), GUIContent.none, style);
+					else
+						GUI.Box(new Rect (pos.x + pos.width - texSize, pos.y + EditorUtil.row + (1 - 1/aspect) *  texSize / 2, texSize, texSize/aspect), GUIContent.none, style);
+				}
 				else
-					GUI.Box(new Rect (pos.x + pos.width - texSize, pos.y + EditorUtil.row + (1 - 1/aspect) *  texSize / 2, texSize, texSize/aspect), GUIContent.none, style);
+					GUI.Box(new Rect (pos.x + pos.width - texSize, pos.y + EditorUtil.row, texSize, texSize), content);
+
 			}
-			else
-				GUI.Box(new Rect (pos.x + pos.width - texSize, pos.y + EditorUtil.row, texSize, texSize), content);
-		
+
 			/*Draw Animations*/
 			float ay = EditorUtil.row + EditorUtil.texSize + EditorUtil.padding;
 			float[] h = new float[animations.arraySize];
@@ -105,7 +105,7 @@ public class AnimationsetDrawer : PropertyDrawer {
 		prop.serializedObject.ApplyModifiedProperties ();
 	}
 
-	private GUIContent getPreview(Tileset tileset, int index, SerializedProperty sequence){
+	private GUIContent getPreview(TextureAtlas tileset, int index, SerializedProperty sequence){
 		if (tileset == null)
 			return new GUIContent("No valid Tileset found");
 		if (tileset.texture == null)
@@ -113,7 +113,7 @@ public class AnimationsetDrawer : PropertyDrawer {
 		if (index == -1)
 			return new GUIContent(tileset.texture);
 		index = (index+1)%sequence.arraySize;
-		Texture2D tex = tileset.getSubtexture(cache, sequence.GetArrayElementAtIndex(index).intValue % (tileset.width * tileset.height));
+		Texture2D tex = tileset.getSubtexture(null, sequence.GetArrayElementAtIndex(index).intValue % (tileset.width * tileset.height));
 		if (style.normal.background != tex)
 			style.normal.background = tex;
 		return tex == null ? new GUIContent("Texture cannot be read") : null;

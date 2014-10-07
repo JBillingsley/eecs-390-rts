@@ -63,7 +63,8 @@ public class Player : Character {
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	public void FixedUpdate () {
+		base.FixedUpdate();
 		move();
 	}
 
