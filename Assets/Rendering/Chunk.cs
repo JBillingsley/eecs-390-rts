@@ -136,8 +136,8 @@ public class Chunk : MonoBehaviour {
 	}
 	
 	private static int[] makeIndices(int chunkSize){
-		int[] indices = new int[6 * chunkSize * chunkSize];
-		for (int i = 0; i < chunkSize * chunkSize; i++) {
+		int[] indices = new int[12 * chunkSize * chunkSize];
+		for (int i = 0; i < 2 * chunkSize * chunkSize; i++) {
 			indices [i*6] = i*4;
 			indices [i*6+1] = i*4 + 1;
 			indices [i*6+2] = i*4 + 3;

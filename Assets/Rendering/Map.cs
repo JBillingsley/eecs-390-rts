@@ -43,56 +43,44 @@ public class Map : MonoBehaviour {
 	/********************/
 	/*                  */
 	/********************/
+	public const int FOREGROUND_ID = 0;
+	public const int BACKGROUND_ID = 1;
+	public const int FOREGROUND_CONTEXT = 2;
+	public const int BACKGROUND_CONTEXT = 3;
+	public const int NAVIGATION_MAP = 4;
 
-	public bool isSolid(IVector2 v){
+	public bool isForegroundSolid(IVector2 v){
 		return getForeground(v).solid;
+	}
+	public bool isBackgroundSolid(IVector2 v){
+		return getBackground(v).solid;
 	}
 
 	public TileSpec getForeground(IVector2 v){
-		TileSpec t = TileSpecList.getTileSpec(getForegroundID(v));
+		TileSpec t = TileSpecList.getTileSpec(getByte(v, FOREGROUND_ID));
 		if (t == null)
 			return TileSpecList.getTileSpec(0);
 		return t;
 	}
 	public TileSpec getBackground(IVector2 v){
-		TileSpec t = TileSpecList.getTileSpec(getBackgroundID(v));
+		TileSpec t = TileSpecList.getTileSpec(getByte(v, BACKGROUND_ID));
 		if (t == null)
 			return TileSpecList.getTileSpec(0);
 		return t;
-	}
-	public byte getForegroundID(IVector2 v){
-		if (!inBounds(v))
-			return 0;
-		return getByte(v, 0);
-	}
-	public byte getBackgroundID(IVector2 v){
-		if (!inBounds(v))
-			return 0;
-		return getByte(v, 1);
-	}
-	public byte getTileSolid(IVector2 v){
-		if (!inBounds(v))
-			return 0;
-		return getByte(v, 2);
-	}
-	public byte getTileNav(IVector2 v){
-		if (!inBounds(v))
-			return 0;
-		return getByte(v, 3);
 	}
 
 	public byte getRenderContext(IVector2 v){
 		switch(renderMode){
 			case NAVMESH:
-				return getTileNav(v);
+				return getByte(v, NAVIGATION_MAP);
 			default:
-				return getTileSolid(v);
+				return getByte(v, FOREGROUND_CONTEXT);
 		}
 	}
 	public TileSpec getRenderForeground(IVector2 v){
 		switch(renderMode){
 			case NAVMESH:
-				return (!isSolid(v) && isSolid(v + Direction.getDirection(Direction.BOTTOM)))? TileSpecList.getTileSpec(0) : TileSpecList.getTileSpec(1);
+			return (!isForegroundSolid(v) && isForegroundSolid(v + Direction.getDirection(Direction.BOTTOM)))? TileSpecList.getTileSpec(0) : TileSpecList.getTileSpec(1);
 			default:
 				return getForeground(v);
 		}
@@ -101,7 +89,7 @@ public class Map : MonoBehaviour {
 	public TileSpec getRenderBackground(IVector2 v){
 		switch(renderMode){
 			case NAVMESH:
-				return (!isSolid(v) && isSolid(v + Direction.getDirection(Direction.BOTTOM)))? TileSpecList.getTileSpec(2) : TileSpecList.getTileSpec(0);
+			return (!isForegroundSolid(v) && isForegroundSolid(v + Direction.getDirection(Direction.BOTTOM)))? TileSpecList.getTileSpec(2) : TileSpecList.getTileSpec(0);
 			default:
 				return getBackground(v);
 		}
@@ -138,6 +126,14 @@ public class Map : MonoBehaviour {
 	/************************************/
 
 	public byte getByte(IVector2 v, byte i){
+		if (!inBounds(v))
+			return 0;
+		return (byte)(map [v.y, v.x] >> i * 8);
+	}
+
+	public byte getByte(IVector2 v, byte i, byte def){
+		if (!inBounds(v))
+			return def;
 		return (byte)(map [v.y, v.x] >> i * 8);
 	}
 
@@ -155,11 +151,11 @@ public class Map : MonoBehaviour {
 		bool[] b = new bool[directions.Length];
 	
 		for (int i = 0; i < directions.Length; i++)
-			b[i] = isSolid(v + Direction.getDirection(directions[i]));
+			b[i] = isForegroundSolid(v + Direction.getDirection(directions[i]));
 		map [v.y,v.x] |= (uint)Direction.packByte(directions, b) << 16;
 
 		for (int i = 0; i < directions.Length; i++)
-			b[i] = isSolid(v + Direction.getDirection(directions[i])) || !isSolid(v + Direction.getDirection(directions[i]) + Direction.getDirection(Direction.BOTTOM));
+			b[i] = isForegroundSolid(v + Direction.getDirection(directions[i])) || !isForegroundSolid(v + Direction.getDirection(directions[i]) + Direction.getDirection(Direction.BOTTOM));
 		map [v.y,v.x] |= (uint)Direction.packByte(directions, b) << 24;
 	}
 
