@@ -9,7 +9,10 @@ public class EditorUtil{
 	public const float height = 16;
 	public const float buttonSize = 20;
 	public const float texSize = 100;
-	private static Texture2D line = new Texture2D(1, 1, TextureFormat.ARGB32, true);
+	private static Texture2D line{
+		get{if (linex == null) linex = new Texture2D(1, 1, TextureFormat.ARGB32, true); return linex; }
+	}
+	private static Texture2D linex;
 	private static GUIStyle lineStyle = new GUIStyle();
 
 	static EditorUtil(){
