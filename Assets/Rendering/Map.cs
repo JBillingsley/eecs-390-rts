@@ -7,7 +7,7 @@ public class Map : MonoBehaviour {
 
 	public bool[,] dirtyChunks;
 
-	public Tilesetx tileset;
+	public Tileset tileset;
 
 	public int w = 1;
 	public int h = 1;
@@ -137,13 +137,10 @@ public class Map : MonoBehaviour {
 		return (byte)(map [v.y, v.x] >> i * 8);
 	}
 
-	public void setAndUpdateTileSpec(IVector2 v, short id){
-		setTileSpec (v, id);
-		updateTileSpec(v);
-	}
-
-	public void setTileSpec(IVector2 v, short id){
-		map [v.y,v.x] = (uint)id;
+	public void setByte(IVector2 v, byte i, byte data){
+		if (!inBounds(v))
+			return;
+		map [v.y, v.x] = (map [v.y, v.x] & ~((ulong)0xFF << (i * 8))) | ((ulong)data << (i * 8));
 	}
 
 	public void updateTileSpec(IVector2 v){
@@ -152,11 +149,15 @@ public class Map : MonoBehaviour {
 	
 		for (int i = 0; i < directions.Length; i++)
 			b[i] = isForegroundSolid(v + Direction.getDirection(directions[i]));
-		map [v.y,v.x] |= (uint)Direction.packByte(directions, b) << 16;
+		setByte(v, FOREGROUND_CONTEXT, Direction.packByte(directions, b));
+
+		for (int i = 0; i < directions.Length; i++)
+			b[i] = isBackgroundSolid(v + Direction.getDirection(directions[i]));
+		setByte(v, BACKGROUND_CONTEXT, Direction.packByte(directions, b));
 
 		for (int i = 0; i < directions.Length; i++)
 			b[i] = isForegroundSolid(v + Direction.getDirection(directions[i])) || !isForegroundSolid(v + Direction.getDirection(directions[i]) + Direction.getDirection(Direction.BOTTOM));
-		map [v.y,v.x] |= (uint)Direction.packByte(directions, b) << 24;
+		setByte(v, NAVIGATION_MAP, Direction.packByte(directions, b));
 	}
 
 
@@ -192,7 +193,7 @@ public class Map : MonoBehaviour {
 	/*                  */
 	/********************/
 
-	public Tilesetx getTileset(){
+	public Tileset getTileset(){
 		return tileset;
 	}
 
@@ -200,9 +201,22 @@ public class Map : MonoBehaviour {
 	/*                  */
 	/********************/
 	[System.Serializable]
-	public class Tilesetx{
+	public class Tileset{
 		public Material material;
-		public int xTiles = 1;
-		public int yTiles = 1;
+		public int width = 1;
+		public int height = 1;
+
+		public Vector2[] getTex(int i){
+			Vector2[] tex = new Vector2[4];
+			float x = i % width;
+			float y = i / width;
+			float x1 = x + 1;
+			float y1 = y + 1;
+			tex [0] = new Vector3 (x/width, 1 - y1/height);
+			tex [1] = new Vector3 (x/width, 1 - y/height);
+			tex [2] = new Vector3 (x1/width, 1 - y/height);
+			tex [3] = new Vector3 (x1/width, 1 - y1/height);
+			return tex;
+		}
 	}
 }

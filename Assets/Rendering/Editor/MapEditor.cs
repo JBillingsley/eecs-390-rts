@@ -18,7 +18,7 @@ public class MapEditor : Editor {
 		EditorGUILayout.EndHorizontal();
 
 		EditorGUIUtility.labelWidth = 80;
-		map.tileSize = EditorGUILayout.IntField("Tile Size", Mathf.NextPowerOfTwo(Mathf.Clamp(map.tileSize, 1, 32)));
+		map.tileSize = EditorGUILayout.IntField("Tile Size", Mathf.NextPowerOfTwo(Mathf.Clamp(map.tileSize, 1, 64)));
 		map.chunkSize = EditorGUILayout.IntField("Chunk Size", Mathf.NextPowerOfTwo(Mathf.Clamp(map.chunkSize, 1, 32)));
 
 		GUI.enabled = true;

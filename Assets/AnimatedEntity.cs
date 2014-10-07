@@ -17,7 +17,7 @@ public class AnimatedEntity : MonoBehaviour {
 		Animation a = animation.animation;
 		if (a != null){
 			i %= a.tileSequence.Length * a.frameSkip;
-			renderer.material.SetFloat("_Index", i / a.frameSkip);
+			renderer.material.SetFloat("_Index", a.tileSequence[i / a.frameSkip]);
 		}
 		else
 			Debug.Log("No Valid Animation Set");

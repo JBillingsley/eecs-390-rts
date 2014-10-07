@@ -150,22 +150,32 @@ public class Chunk : MonoBehaviour {
 
 	private Vector2[] makeTextures(int cx, int cy){
 		Vector2[] textures = new Vector2[8 * map.chunkSize * map.chunkSize];
-		float ix = 1f / map.tileset.xTiles;
-		float iy = 1f / map.tileset.yTiles;
+		float ix = 1f / map.tileset.width;
+		float iy = 1f / map.tileset.height;
 		int i = 0;
 		for (int y = 0; y < map.chunkSize; y++) {
 			for (int x = 0; x < map.chunkSize; x++) {
 				IVector2 v = new IVector2(cx*map.chunkSize + x, cy*map.chunkSize + y);
 				TileSpec tile = map.getRenderForeground(v);
 				int texID = tile.getTexID(map.getRenderContext(v));
-				float tx = (texID % map.tileset.xTiles) * ix;
-				float ty = (texID / map.tileset.xTiles) * iy;
-				float tx1 = ((texID % map.tileset.xTiles) + 1) * ix;
-				float ty1 = ((texID / map.tileset.xTiles) + 1) * iy;
-				textures [i*4] = new Vector3 (tx, 1 - ty1);
-				textures [i*4+1] = new Vector3 (tx, 1 - ty );
-				textures [i*4+2] = new Vector3 (tx1, 1 - ty);
-				textures [i*4+3] = new Vector3 (tx1, 1 - ty1);
+				Vector2[] tex = map.tileset.getTex(texID);
+				textures [i*4] = tex[0];
+				textures [i*4+1] = tex[1];
+				textures [i*4+2] = tex[2];
+				textures [i*4+3] = tex[3];
+				i++;
+			}
+		}
+		for (int y = 0; y < map.chunkSize; y++) {
+			for (int x = 0; x < map.chunkSize; x++) {
+				IVector2 v = new IVector2(cx*map.chunkSize + x, cy*map.chunkSize + y);
+				TileSpec tile = map.getRenderBackground(v);
+				int texID = tile.getTexID(map.getRenderContext(v));
+				Vector2[] tex = map.tileset.getTex(texID);
+				textures [i*4] = tex[0];
+				textures [i*4+1] = tex[1];
+				textures [i*4+2] = tex[2];
+				textures [i*4+3] = tex[3];
 				i++;
 			}
 		}
