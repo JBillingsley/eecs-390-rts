@@ -4,37 +4,31 @@ using System.Collections;
 public class AnimatedEntity : MonoBehaviour {
 
 	private Material defaultMaterial;
-
-	public string animationSet = "Default";
-	private string oldAnimationSet;
-	private AnimationSet anim;
-	public int animationIndex;
+	public AnimationSpec animation;
 	private int i;
 
 	void Start () {
 		defaultMaterial = renderer.sharedMaterial;
 	}
 	
-	void FixedUpdate () {
+	public void FixedUpdate () {
 		updateAnimationSet ();
 		i++;
-		if (anim != null){
-			animationIndex %= anim.animations.Length;
-			Animation a = anim.animations[animationIndex];
+		Animation a = animation.animation;
+		if (a != null){
 			i %= a.tileSequence.Length * a.frameSkip;
 			renderer.material.SetFloat("_Index", i / a.frameSkip);
 		}
+		else
+			Debug.Log("No Valid Animation Set");
 	}
 
 	void updateAnimationSet(){
-		if (!animationSet.Equals (oldAnimationSet)) {
-			oldAnimationSet = animationSet;
-			anim = GlobalData.getAnimationSet(animationSet);
-			if (anim != null)
-				renderer.material = anim.getTileset().getMaterial();
-			else
-				renderer.material = defaultMaterial;
-		}
+		AnimationSet anim = animation.animationSet;
+		if (anim != null)
+			renderer.material = anim.getTileset() == null? null : anim.getTileset().getMaterial();
+		else
+			renderer.material = defaultMaterial;
 	}
 
 }

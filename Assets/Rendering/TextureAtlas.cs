@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 
 [System.Serializable]
-public class Tileset {
-	public string name = "Tileset Name";
+public class TextureAtlas {
+	public string name = "Texture Atlas Name";
 	public Texture2D texture;
 	[Range(1, 32)]
 	public int width = 1;
@@ -43,6 +43,22 @@ public class Tileset {
 			material.SetFloat("_Height", height);
 	}
 
+	public Color[] tileData(int index){
+		float w = pixelWidth();
+		float h = pixelHeight();
+		int x = index % width;
+		int y = index / width;
+		return texture.GetPixels ((int)(x * w), texture.height - (int)h - (int)(y * h), (int)w, (int)h);
+	}
+
+	public float pixelWidth(){
+		return texture.width / width;
+	}
+
+	public float pixelHeight(){
+		return texture.height / height;
+	}
+
 	public Texture2D getSubtexture(Texture2D tex, int i){
 		if (texture == null) {
 			Debug.Log ("Cannot get subTexture from null texture.");
@@ -76,7 +92,7 @@ public class Tileset {
 	}
 
 	public static void construct(SerializedProperty prop){
-		prop.FindPropertyRelative("name").stringValue = "Tileset Name";
+		prop.FindPropertyRelative("name").stringValue = "TextureAtlas Name";
 		prop.FindPropertyRelative("width").intValue = 1;
 		prop.FindPropertyRelative("height").intValue = 1;
 		prop.serializedObject.ApplyModifiedProperties();

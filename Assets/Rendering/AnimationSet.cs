@@ -8,7 +8,7 @@ public class AnimationSet {
 	public string name = "Animation Set Name";
 	public Animation[] animations = new Animation[1];
 	[SerializeField]
-	private int tileset = 0;
+	private int textureAtlasID = 0;
 	[SerializeField]
 	private float lastFrame = Time.realtimeSinceStartup;
 
@@ -19,8 +19,8 @@ public class AnimationSet {
 	[SerializeField]
 	private int previewIndex;
 
-	public Tileset getTileset(){
-		return GlobalData.getTileset (tileset);
+	public TextureAtlas getTileset(){
+		return TextureAtlasList.getTextureAtlas(textureAtlasID);
 	}
 
 	public static void construct(SerializedProperty prop){

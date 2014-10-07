@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ControlInput : MonoBehaviour {
 
-	public Camera2D camera;
+	public Camera2D camerax;
 
 	void FixedUpdate () {
 		Vector3 delta = new Vector2();
@@ -15,14 +15,14 @@ public class ControlInput : MonoBehaviour {
 			delta.x -= 1;
 		if (Input.GetKey(KeyCode.RightArrow))
 			delta.x += 1;
-		camera.transform.position += delta;
+		camerax.move (delta);
 		
 		float f = Input.GetAxis("Mouse ScrollWheel");
 		if (f != 0){
 			if (f > 0)
-				camera.zoomIn();
+				camerax.zoomIn();
 			else
-				camera.zoomOut();
+				camerax.zoomOut();
 		}
 	}
 }

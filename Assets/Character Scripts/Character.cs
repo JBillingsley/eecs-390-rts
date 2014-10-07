@@ -25,7 +25,8 @@ public class Character : AnimatedEntity {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public void FixedUpdate () {
+		base.FixedUpdate ();
 		move ();
 	}
 

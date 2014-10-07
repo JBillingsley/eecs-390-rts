@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a09228e166c8f4ca273c90b1e47747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 27578466}
+  camerax: {fileID: 27578466}
 --- !u!1 &92167670
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 92167670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 934c1d6b941cda3488d077af5aaec5dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e0aa7b209a1d1740998ce99c1130652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tileset:
@@ -236,7 +236,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
 --- !u!1 &175070719
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +262,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 175070719}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: -5, z: 11}
+  m_LocalPosition: {x: -10, y: -5, z: 21}
   m_LocalScale: {x: 20, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 27578465}
@@ -307,84 +307,136 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 175070719}
   m_Mesh: {fileID: 4300000, guid: 3dd9f6dce01501041a46a227edb1bf01, type: 3}
---- !u!1 &601693636
+--- !u!1 &597646133
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 601693638}
-  - 114: {fileID: 601693637}
+  - 4: {fileID: 597646135}
+  - 114: {fileID: 597646134}
   m_Layer: 0
-  m_Name: Global Vars
+  m_Name: AnimationSets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &601693637
+--- !u!114 &597646134
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 601693636}
+  m_GameObject: {fileID: 597646133}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8844571fa58c1d64f8579a6b286ea2ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 091e2d90a324cdb4193e3f6cdce4fac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globalData:
-    tilesets:
-    - name: Tiles
-      texture: {fileID: 2800000, guid: 2bdd6686f272e064db290861245ec6e0, type: 3}
-      width: 16
-      height: 16
-      folded: 0
-    - name: Player
-      texture: {fileID: 2800000, guid: f8ffeb9a25450424eb342588708e4c92, type: 3}
-      width: 3
-      height: 1
-      folded: 0
-    - name: 2
-      texture: {fileID: 2800000, guid: 2bdd6686f272e064db290861245ec6e0, type: 3}
-      width: 6
-      height: 8
-      folded: 1
+  list:
     animationsets:
     - name: Player
       animations:
-      - name: Run
+      - name: Idle
         tileSequence: 00000000010000000200000001000000
-        frameSkip: 8
+        frameSkip: 10
         folded: 0
-      - name: Walk
-        tileSequence: 00000000
-        frameSkip: 3
-        folded: 0
-      - name: Dance
+      textureAtlasID: 0
+      lastFrame: 142.221603
+      folded: 0
+      preview: 0
+      previewIndex: 1
+    - name: Animation Set Name
+      animations:
+      - name: Animation Name
         tileSequence: 00000000
         frameSkip: 1
         folded: 0
-      tileset: 1
-      lastFrame: 14.889535
+      textureAtlasID: 0
+      lastFrame: 142.276489
       folded: 0
       preview: 0
       previewIndex: 0
-    tilesetFolded: 0
     animationsetFolded: 0
---- !u!4 &601693638
+--- !u!4 &597646135
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 601693636}
+  m_GameObject: {fileID: 597646133}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!1 &855346068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 855346070}
+  - 114: {fileID: 855346069}
+  m_Layer: 0
+  m_Name: Tiles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &855346069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 855346068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680b2aa697056a84e998e7772355fa94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileset:
+    name: Tileset
+    texture: {fileID: 2800000, guid: 2bdd6686f272e064db290861245ec6e0, type: 3}
+    width: 16
+    height: 16
+    folded: 0
+  list:
+    tilespecs:
+    - name: Air
+      context: 0
+      index: 0
+      solid: 0
+      folded: 0
+      view: {fileID: 0}
+    - name: Dirt
+      context: 2
+      index: 1
+      solid: 1
+      folded: 0
+      view: {fileID: 0}
+    - name: Stone
+      context: 2
+      index: 49
+      solid: 1
+      folded: 0
+      view: {fileID: 0}
+    tileSpecFolded: 0
+--- !u!4 &855346070
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 855346068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 62.005703, y: 63.0460358, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
 --- !u!1 &1254249727
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +494,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
 --- !u!114 &1254249732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,15 +506,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a2a2c98cdc6d654184b09eae60061b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationSet: Default
-  animationIndex: 0
+  animation:
+    animationsetID: 0
+    animationID: 0
   position: {x: 0, y: 0}
   destination: {x: 0, y: 0}
-  moveSpeed: 10
+  moveSpeed: 5
   maxHealth: 0
   currentHealth: 0
-  jumpSpeed: 2
-  gravity: 9.81000042
+  jumpSpeed: 1.29999995
+  gravity: 2
   terrainLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -520,8 +573,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20de1a6d4cbde434db9774f8187a610f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationSet: Player
-  animationIndex: 0
+  animation:
+    animationsetID: 0
+    animationID: 0
   position: {x: 0, y: 0}
   destination: {x: 0, y: 0}
   moveSpeed: 1
@@ -569,7 +623,54 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
+--- !u!1 &1922239639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1922239641}
+  - 114: {fileID: 1922239640}
+  m_Layer: 0
+  m_Name: Tilesets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1922239640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1922239639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31e445688867a8f438ba98bcfbb9ef15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+    textureAtlases:
+    - name: Player
+      texture: {fileID: 2800000, guid: f8ffeb9a25450424eb342588708e4c92, type: 3}
+      width: 3
+      height: 1
+      folded: 1
+    textureAtlasFolded: 0
+--- !u!4 &1922239641
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1922239639}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
 --- !u!1 &2089555414
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,8 +701,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a16d477780d3b2949a87d91f83490d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationSet: Default
-  animationIndex: 0
+  animation:
+    animationsetID: 0
+    animationID: 0
   position: {x: 0, y: 0}
   destination: {x: 0, y: 0}
   moveSpeed: 1
@@ -656,12 +758,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2089555414}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106829}
   m_LocalPosition: {x: 62.732132, y: 64, z: 0}
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
 --- !u!1 &2097381056
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,7 +829,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2097381056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: -5, z: 10}
+  m_LocalPosition: {x: -10, y: -5, z: 20}
   m_LocalScale: {x: 20, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 27578465}

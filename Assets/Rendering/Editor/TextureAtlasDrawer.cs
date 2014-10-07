@@ -2,8 +2,8 @@
 using UnityEditor;
 
 
-[CustomPropertyDrawer (typeof (Tileset))]
-public class TilesetDrawer : PropertyDrawer {
+[CustomPropertyDrawer (typeof (TextureAtlas))]
+public class TextureAtlasDrawer : PropertyDrawer {
 
 	public const int padding = 10;
 

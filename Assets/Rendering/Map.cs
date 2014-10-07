@@ -37,7 +37,7 @@ public class Map : MonoBehaviour {
 			}
 		for (int y = 0; y < h*chunkSize; y++)
 			for (int x = 0; x < w*chunkSize; x++)
-				updateTileData(new IVector2(x, y));
+				updateTileSpec(new IVector2(x, y));
 	}
 
 	/********************/
@@ -45,19 +45,30 @@ public class Map : MonoBehaviour {
 	/********************/
 
 	public bool isSolid(IVector2 v){
-		return getTileData (v).solid;
+		return getForeground(v).solid;
 	}
 
-	public TileData getTileData(IVector2 v){
-		TileData t = TileData.tiles[getTileID(v)];
+	public TileSpec getForeground(IVector2 v){
+		TileSpec t = TileSpecList.getTileSpec(getForegroundID(v));
 		if (t == null)
-			return TileData.tiles[TileData.defaultTile];
+			return TileSpecList.getTileSpec(0);
 		return t;
 	}
-	public byte getTileID(IVector2 v){
+	public TileSpec getBackground(IVector2 v){
+		TileSpec t = TileSpecList.getTileSpec(getBackgroundID(v));
+		if (t == null)
+			return TileSpecList.getTileSpec(0);
+		return t;
+	}
+	public byte getForegroundID(IVector2 v){
 		if (!inBounds(v))
-			return TileData.defaultTile;
+			return 0;
 		return getByte(v, 0);
+	}
+	public byte getBackgroundID(IVector2 v){
+		if (!inBounds(v))
+			return 0;
+		return getByte(v, 1);
 	}
 	public byte getTileSolid(IVector2 v){
 		if (!inBounds(v))
@@ -70,7 +81,7 @@ public class Map : MonoBehaviour {
 		return getByte(v, 3);
 	}
 
-	public byte getTileRender(IVector2 v){
+	public byte getRenderContext(IVector2 v){
 		switch(renderMode){
 			case NAVMESH:
 				return getTileNav(v);
@@ -78,12 +89,21 @@ public class Map : MonoBehaviour {
 				return getTileSolid(v);
 		}
 	}
-	public TileData getTileRenderData(IVector2 v){
+	public TileSpec getRenderForeground(IVector2 v){
 		switch(renderMode){
 			case NAVMESH:
-				return (!isSolid(v) && isSolid(v + Direction.getDirection(Direction.BOTTOM)))? TileData.air : TileData.tiles[TileData.defaultTile];
+				return (!isSolid(v) && isSolid(v + Direction.getDirection(Direction.BOTTOM)))? TileSpecList.getTileSpec(0) : TileSpecList.getTileSpec(1);
 			default:
-				return getTileData(v);
+				return getForeground(v);
+		}
+	}
+	
+	public TileSpec getRenderBackground(IVector2 v){
+		switch(renderMode){
+			case NAVMESH:
+				return (!isSolid(v) && isSolid(v + Direction.getDirection(Direction.BOTTOM)))? TileSpecList.getTileSpec(2) : TileSpecList.getTileSpec(0);
+			default:
+				return getBackground(v);
 		}
 	}
 	public const byte TERRAIN = 0;
@@ -121,16 +141,16 @@ public class Map : MonoBehaviour {
 		return (byte)(map [v.y, v.x] >> i * 8);
 	}
 
-	public void setAndUpdateTileData(IVector2 v, short id){
-		setTileData (v, id);
-		updateTileData(v);
+	public void setAndUpdateTileSpec(IVector2 v, short id){
+		setTileSpec (v, id);
+		updateTileSpec(v);
 	}
 
-	public void setTileData(IVector2 v, short id){
+	public void setTileSpec(IVector2 v, short id){
 		map [v.y,v.x] = (uint)id;
 	}
 
-	public void updateTileData(IVector2 v){
+	public void updateTileSpec(IVector2 v){
 		map [v.y,v.x] &= 0x00FF;
 		bool[] b = new bool[directions.Length];
 	

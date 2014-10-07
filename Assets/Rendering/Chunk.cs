@@ -156,7 +156,8 @@ public class Chunk : MonoBehaviour {
 		for (int y = 0; y < map.chunkSize; y++) {
 			for (int x = 0; x < map.chunkSize; x++) {
 				IVector2 v = new IVector2(cx*map.chunkSize + x, cy*map.chunkSize + y);
-				int texID = map.getTileRenderData(v).getTexID(map.getTileRender(v));
+				TileSpec tile = map.getRenderForeground(v);
+				int texID = tile.getTexID(map.getRenderContext(v));
 				float tx = (texID % map.tileset.xTiles) * ix;
 				float ty = (texID / map.tileset.xTiles) * iy;
 				float tx1 = ((texID % map.tileset.xTiles) + 1) * ix;
@@ -179,9 +180,9 @@ public class Chunk : MonoBehaviour {
 		for (int y = 0; y < map.chunkSize; y++) {
 			for (int x = 0; x < map.chunkSize; x++, i++) {
 				v = new IVector2(cx*map.chunkSize + x, cy*map.chunkSize + y);
-				TileData tile = map.getTileData(v);
+				TileSpec tile = map.getForeground(v);
 				if (tile.solid)
-					tile.getCollisionIndices(4*i, off, (byte)~map.getTileRender(v), indices);
+					tile.getCollisionIndices(4*i, off, (byte)~map.getRenderContext(v), indices);
 			}
 		}
 		return indices.ToArray();

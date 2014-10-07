@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TileData {
+public class TilexData {
 
 	const byte NOCONTEXT = 0;
 	const byte PARTIALCONTEXT = 1;
@@ -15,11 +15,11 @@ public class TileData {
 	 * Tiles with full context can occupy partial texture tiles. Requires 48 texture tiles.
 	 **/
 
-	public static readonly TileData[] tiles = new TileData[32];
+	public static readonly TilexData[] tiles = new TilexData[32];
 
-	public static readonly TileData air = new TileData (0, false);
-	public static readonly TileData dirt = new TileData (1, true, FULLCONTEXT);
-	public static readonly TileData thing = new TileData (49, true, FULLCONTEXT);
+	public static readonly TilexData air = new TilexData (0, false);
+	public static readonly TilexData dirt = new TilexData (1, true, FULLCONTEXT);
+	public static readonly TilexData thing = new TilexData (49, true, FULLCONTEXT);
 	
 	public static readonly byte defaultTile = 1;
 
@@ -31,9 +31,9 @@ public class TileData {
 
 	private static byte i = 0;
 
-	private TileData(byte texID, bool solid) : this(texID, solid, NOCONTEXT){}
+	private TilexData(byte texID, bool solid) : this(texID, solid, NOCONTEXT){}
 
-	private TileData(byte texID, bool solid, byte context){
+	private TilexData(byte texID, bool solid, byte context){
 		this.texID = texID;
 		this.solid = solid;
 		this.context = context;
