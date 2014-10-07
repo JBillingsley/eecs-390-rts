@@ -10,7 +10,7 @@ public class AnimationSet {
 	[SerializeField]
 	private int textureAtlasID = 0;
 	[SerializeField]
-	private float lastFrame = Time.realtimeSinceStartup;
+	private float lastFrame;
 
 	[SerializeField]
 	private bool folded;

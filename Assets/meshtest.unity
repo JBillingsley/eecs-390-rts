@@ -414,10 +414,10 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       textureAtlasID: 0
-      lastFrame: 241.311447
+      lastFrame: 212.46553
       folded: 1
       preview: 0
-      previewIndex: 0
+      previewIndex: 2
     - name: Earth
       animations:
       - name: Attack
@@ -625,7 +625,7 @@ GameObject:
   - 114: {fileID: 1254249732}
   - 143: {fileID: 1254249733}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -686,11 +686,11 @@ MonoBehaviour:
     animationID: 0
   position: {x: 0, y: 0}
   destination: {x: 0, y: 0}
-  moveSpeed: 5
+  moveSpeed: 8
   maxHealth: 0
   currentHealth: 0
-  jumpSpeed: 1.29999995
-  gravity: 2
+  jumpSpeed: 1.5
+  gravity: 4
   terrainLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -712,8 +712,8 @@ CharacterController:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1254249727}
   serializedVersion: 2
-  m_Height: .25
-  m_Radius: .25
+  m_Height: .600000024
+  m_Radius: .200000003
   m_SlopeLimit: 0
   m_StepOffset: .300000012
   m_SkinWidth: .0799999982
@@ -872,6 +872,7 @@ GameObject:
   - 33: {fileID: 1858070152}
   - 23: {fileID: 1858070151}
   - 114: {fileID: 1858070150}
+  - 143: {fileID: 1858070154}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -898,6 +899,8 @@ MonoBehaviour:
   moveSpeed: 1
   maxHealth: 0
   currentHealth: 0
+  jumpSpeed: 10
+  gravity: 9.81000042
   myState: 3
   myTeam: 0
   characterTarget: {fileID: 0}
@@ -941,6 +944,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
+--- !u!143 &1858070154
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1858070149}
+  serializedVersion: 2
+  m_Height: .649999976
+  m_Radius: .200000003
+  m_SlopeLimit: 45
+  m_StepOffset: .300000012
+  m_SkinWidth: .0799999982
+  m_MinMoveDistance: 0
+  m_Center: {x: .5, y: .5, z: 0}
 --- !u!1 &1922239639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1051,6 +1068,7 @@ GameObject:
   - 65: {fileID: 2089555417}
   - 23: {fileID: 2089555416}
   - 114: {fileID: 2089555415}
+  - 143: {fileID: 2089555420}
   m_Layer: 0
   m_Name: Follow
   m_TagString: Untagged
@@ -1077,6 +1095,8 @@ MonoBehaviour:
   moveSpeed: 1
   maxHealth: 0
   currentHealth: 0
+  jumpSpeed: 10
+  gravity: 9.81000042
   myState: 1
   myTeam: 0
   characterTarget: {fileID: 0}
@@ -1132,6 +1152,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+--- !u!143 &2089555420
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2089555414}
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: .500000238
+  m_SlopeLimit: 45
+  m_StepOffset: .300000012
+  m_SkinWidth: .0799999982
+  m_MinMoveDistance: 0
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2097381056
 GameObject:
   m_ObjectHideFlags: 0
