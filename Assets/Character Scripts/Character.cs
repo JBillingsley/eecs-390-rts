@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(CharacterController))]
 public class Character : AnimatedEntity {
 
 	//For pathing:
@@ -17,19 +18,30 @@ public class Character : AnimatedEntity {
 	public float maxHealth;
 	public float currentHealth;
 
+	public float jumpSpeed = 10;
+	public float gravity = 9.81f;
+
+	protected CharacterController cc;
+	Vector2 currentMovement;
+	Vector2 lastPosition;
+
 	// Use this for initialization
 	void Start () {
+		currentMovement = new Vector2();
+
 		//Start the pathing coroutine
 		StartCoroutine(getPath());
-		position = new Vector2((int)this.transform.position.x,(int)this.transform.position.y);
+		cc = GetComponent<CharacterController>();
+		position = new Vector2(Mathf.CeilToInt(this.transform.position.x),Mathf.CeilToInt(this.transform.position.y));
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		move ();
 	}
 
 	protected void findPath(Vector2 v){
+		position = new Vector2(Mathf.CeilToInt(this.transform.position.x),Mathf.CeilToInt(this.transform.position.y));
 		destination = new IVector2(v.x,v.y);
 	}
 
@@ -47,12 +59,12 @@ public class Character : AnimatedEntity {
 	reset:
 		while(true){
 			//This routine happens every second.
-			yield return new WaitForSeconds(1);
+			yield return null;
 
 			//If the destination hasn't changed...
 			if(lastDest == destination){
 				//...Go back to start of the loop.
-				continue;
+				goto reset;
 			}
 			Vector2 start = position;
 			Vector2 end = destination;
@@ -101,7 +113,7 @@ public class Character : AnimatedEntity {
 				}
 
 				//Only do 20 cycles per frame
-				if(count % 20 == 0){
+				if(count % 40 == 0){
 					yield return null;
 				}
 			}
@@ -142,13 +154,44 @@ public class Character : AnimatedEntity {
 			if(currentPathIndex >= path.length){
 				return;
 			}
+			Vector2 currentpos = new Vector2(this.transform.position.x,this.transform.position.y);
 
-			Vector3 v = path.locations[currentPathIndex] - this.transform.position;
+			Vector3 dest = path.locations[currentPathIndex];
+
+			Vector3 v = dest - this.transform.position;
+
+			currentMovement.x = v.normalized.x * moveSpeed;
+
+			if(dest.y > this.position.y || (lastPosition - currentpos).magnitude < .01){
+				if(cc.isGrounded){
+					Debug.Log ("Jumping");
+					currentMovement.y = jumpSpeed;
+				}
+				//jump ();
+			}
+
 			if(v.magnitude < .1){
 				position = path.locations[currentPathIndex];
 				currentPathIndex++;
 			}
-			transform.Translate(v.normalized * moveSpeed * Time.deltaTime);
+			Debug.Log(currentMovement);
+			lastPosition = currentpos;
+			//transform.Translate(v.normalized * moveSpeed * Time.deltaTime);
+		}
+		else{
+			currentMovement.x = 0;
+		}
+		if(!cc.isGrounded){
+			currentMovement.y -= gravity * Time.fixedDeltaTime;
+		}
+		cc.Move(currentMovement * Time.fixedDeltaTime);
+
+	}
+
+	public virtual void jump(){
+		if(cc.isGrounded){
+			Debug.Log ("Jumping");
+			currentMovement.y = jumpSpeed;
 		}
 	}
 }

@@ -4,13 +4,11 @@ using System.Collections.Generic;
 
 //Author: Henry Eastman
 //Controls the player, including inputs and movement.
-[RequireComponent(typeof(CharacterController))]
+
 public class Player : Character {
 	
 	public static Player singleton;
 
-	public float jumpSpeed = 100;
-	public float gravity = 9.81f;
 
 	public LayerMask terrainLayer;
 	public LayerMask itemLayer;
@@ -19,8 +17,6 @@ public class Player : Character {
 	public Rect selectionBox;
 	
 	public Texture selectBox;
-
-	CharacterController cc;
 
 	Vector2 movement = new Vector2();
 
