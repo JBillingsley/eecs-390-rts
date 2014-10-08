@@ -75,7 +75,7 @@ MonoBehaviour:
     animationID: 0
   position: {x: 0, y: 0}
   destination: {x: 0, y: 0}
-  moveSpeed: 1
+  moveSpeed: .25
   maxHealth: 0
   currentHealth: 0
   jumpSpeed: 4

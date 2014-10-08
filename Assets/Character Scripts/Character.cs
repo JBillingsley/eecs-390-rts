@@ -157,10 +157,7 @@ public class Character : AnimatedEntity {
 
 	//Moves this character along its route.
 	public virtual void move(){
-		if(currentState == movementState.LANDING){
-			return;
-		}
-		if(path != null){
+		if(path != null && currentPathIndex < path.locations.Count){
 
 			Vector2 currentpos = new Vector2(this.transform.position.x,this.transform.position.y);
 
@@ -170,7 +167,7 @@ public class Character : AnimatedEntity {
 
 			currentMovement.x = v.normalized.x * moveSpeed;
 
-			if(dest.y > this.transform.position.y + .25f &&  (dest.x - this.transform.position.y < .75f) ){// || (lastPosition - currentpos).magnitude == 0){
+			if(v.y > .25f && Mathf.Abs(v.x) < 1){// || (lastPosition - currentpos).magnitude == 0){
 				jump ();
 			}
 
@@ -179,7 +176,7 @@ public class Character : AnimatedEntity {
 				currentPathIndex++;
 			}
 			lastPosition = currentpos;
-			//transform.Translate(v.normalized * moveSpeed * Time.deltaTime);
+			//transform.Translate(v.normalized * moveSpeed* Time.deltaTime);
 		}
 		else{
 			currentMovement.x = 0;
