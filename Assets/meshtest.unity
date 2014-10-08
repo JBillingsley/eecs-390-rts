@@ -447,10 +447,10 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       textureAtlasID: 3
-      lastFrame: 739.409424
+      lastFrame: 208.297516
       folded: 1
       preview: 0
-      previewIndex: 2
+      previewIndex: 6
     - name: Golem
       animations:
       - name: Attack
@@ -999,14 +999,14 @@ MonoBehaviour:
       folded: 1
     - name: Water
       texture: {fileID: 2800000, guid: 6d6b6867b3a015c49b1fb8e02e8f2a74, type: 3}
-      width: 2
+      width: 4
       height: 4
-      folded: 1
+      folded: 0
     - name: Fire
       texture: {fileID: 2800000, guid: 643e06153c9359448b11da31cbc99faf, type: 3}
-      width: 1
-      height: 6
-      folded: 1
+      width: 4
+      height: 4
+      folded: 0
     - name: Golem
       texture: {fileID: 2800000, guid: 9533a0cf21bf0ae45aa021829742b2a8, type: 3}
       width: 4
