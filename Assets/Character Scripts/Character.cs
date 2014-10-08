@@ -20,17 +20,24 @@ public class Character : AnimatedEntity {
 
 	public float jumpSpeed = 10;
 	public float gravity = 9.81f;
+	public float landingDelay = 5;
 
 	protected CharacterController cc;
 	Vector2 currentMovement;
 	Vector2 lastPosition;
 
+	public enum movementState {WALKING,JUMPING,LANDING,IDLE};
+	public movementState currentState;
+
 	// Use this for initialization
 	void Start () {
 		currentMovement = new Vector2();
 
+		currentState = movementState.IDLE;
+
 		//Start the pathing coroutine
 		StartCoroutine(getPath());
+		StartCoroutine(computeState());
 		cc = GetComponent<CharacterController>();
 		position = new Vector2(Mathf.CeilToInt(this.transform.position.x),Mathf.CeilToInt(this.transform.position.y));
 	}
@@ -150,10 +157,11 @@ public class Character : AnimatedEntity {
 
 	//Moves this character along its route.
 	public virtual void move(){
+		if(currentState == movementState.LANDING){
+			return;
+		}
 		if(path != null){
-			if(currentPathIndex >= path.length){
-				return;
-			}
+
 			Vector2 currentpos = new Vector2(this.transform.position.x,this.transform.position.y);
 
 			Vector3 dest = path.locations[currentPathIndex];
@@ -162,19 +170,14 @@ public class Character : AnimatedEntity {
 
 			currentMovement.x = v.normalized.x * moveSpeed;
 
-			if(dest.y > this.position.y || (lastPosition - currentpos).magnitude < .01){
-				if(cc.isGrounded){
-					Debug.Log ("Jumping");
-					currentMovement.y = jumpSpeed;
-				}
-				//jump ();
+			if(dest.y > this.transform.position.y + .25f &&  (dest.x - this.transform.position.y < .75f) ){// || (lastPosition - currentpos).magnitude == 0){
+				jump ();
 			}
 
 			if(v.magnitude < .1){
 				position = path.locations[currentPathIndex];
 				currentPathIndex++;
 			}
-			Debug.Log(currentMovement);
 			lastPosition = currentpos;
 			//transform.Translate(v.normalized * moveSpeed * Time.deltaTime);
 		}
@@ -188,9 +191,44 @@ public class Character : AnimatedEntity {
 
 	}
 
+	public IEnumerator computeState(){
+		int counter = 0;
+		while(true){
+			switch(currentState){
+			case movementState.IDLE:
+				if(currentMovement.y != 0){
+					currentState = movementState.WALKING;
+				}
+				break;
+			case movementState.JUMPING:
+				if(cc.isGrounded){
+					currentState = movementState.LANDING;
+					counter = (int)landingDelay;
+				}
+				break;
+			case movementState.LANDING:
+				counter --;
+				if(counter == 0){
+					currentState = movementState.WALKING;
+				}
+				break;
+			case movementState.WALKING:
+				if(!cc.isGrounded){
+					currentState = movementState.JUMPING;
+				}
+				else{
+					if(path == null){
+						currentState = movementState.IDLE;
+					}
+				}
+				break;
+			}
+			yield return null;
+		}
+	}
+
 	public virtual void jump(){
 		if(cc.isGrounded){
-			Debug.Log ("Jumping");
 			currentMovement.y = jumpSpeed;
 		}
 	}
