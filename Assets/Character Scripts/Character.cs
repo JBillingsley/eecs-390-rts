@@ -23,14 +23,14 @@ public class Character : AnimatedEntity {
 	public float landingDelay = 5;
 
 	protected CharacterController cc;
-	Vector2 currentMovement;
+	protected Vector2 currentMovement;
 	Vector2 lastPosition;
 
 	public enum movementState {WALKING,JUMPING,LANDING,IDLE};
 	public movementState currentState;
 
 	// Use this for initialization
-	void Start () {
+	protected void Start () {
 		currentMovement = new Vector2();
 
 		currentState = movementState.IDLE;
@@ -44,6 +44,7 @@ public class Character : AnimatedEntity {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		base.FixedUpdate();
 		move ();
 	}
 
@@ -184,6 +185,9 @@ public class Character : AnimatedEntity {
 		if(!cc.isGrounded){
 			currentMovement.y -= gravity * Time.fixedDeltaTime;
 		}
+		else{
+			currentMovement.y = 0;
+		}
 		cc.Move(currentMovement * Time.fixedDeltaTime);
 
 	}
@@ -193,13 +197,15 @@ public class Character : AnimatedEntity {
 		while(true){
 			switch(currentState){
 			case movementState.IDLE:
-				if(currentMovement.y != 0){
+				if(currentMovement.x != 0){
 					currentState = movementState.WALKING;
+					animation.animationID = 1;
 				}
 				break;
 			case movementState.JUMPING:
 				if(cc.isGrounded){
-					currentState = movementState.LANDING;
+					currentState = movementState.WALKING;
+					animation.animationID = 1;
 					counter = (int)landingDelay;
 				}
 				break;
@@ -207,15 +213,17 @@ public class Character : AnimatedEntity {
 				counter --;
 				if(counter == 0){
 					currentState = movementState.WALKING;
+					animation.animationID = 1;
 				}
 				break;
 			case movementState.WALKING:
-				if(!cc.isGrounded){
+				if(!cc.isGrounded && currentMovement.y != 0){
 					currentState = movementState.JUMPING;
 				}
 				else{
-					if(path == null){
+					if(currentMovement.x == 0){
 						currentState = movementState.IDLE;
+						animation.animationID = 2;
 					}
 				}
 				break;

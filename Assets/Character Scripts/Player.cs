@@ -18,8 +18,6 @@ public class Player : Character {
 	
 	public Texture selectBox;
 
-	Vector2 movement = new Vector2();
-
 	//The current units
 	public List<Character> selected; /* Will be multiple units */
 	private List<Character> units;
@@ -36,7 +34,8 @@ public class Player : Character {
 	//private NavigationNode lastPosition;
 
 	// Use this for initialization
-	void Start () {
+	protected void Start () {
+		base.Start();
 		cc = this.GetComponent<CharacterController>();
 		singleton = this;
 		position = new Vector2((int)this.transform.position.x,(int)this.transform.position.y);
@@ -202,18 +201,18 @@ public class Player : Character {
 	}
 
 	public override void move(){
-		movement.x /= 2f;
-		movement.x = Mathf.Clamp(movement.x + Input.GetAxis("Horizontal") * moveSpeed * Time.fixedDeltaTime,-1,1);
+		currentMovement.x = 0;
+		currentMovement.x = Mathf.Clamp(Input.GetAxis("Horizontal") * moveSpeed * Time.fixedDeltaTime,-1,1);
 		if(cc.isGrounded){
-			movement.y = 0;
+			currentMovement.y = 0;
 			if(Input.GetAxis("Jump") > .5f){
-				movement.y = jumpSpeed;
+				currentMovement.y = jumpSpeed;
 			}
 		}
 		if(!cc.isGrounded){
-			movement.y -= gravity * Time.fixedDeltaTime;
+			currentMovement.y -= gravity * Time.fixedDeltaTime;
 		}
-		Vector2 mov = transform.TransformDirection(movement);
+		Vector2 mov = transform.TransformDirection(currentMovement);
 		mov *= moveSpeed;
 		cc.Move(mov * Time.deltaTime);
 

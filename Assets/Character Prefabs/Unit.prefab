@@ -78,8 +78,8 @@ MonoBehaviour:
   moveSpeed: .25
   maxHealth: 0
   currentHealth: 0
-  jumpSpeed: 4
-  gravity: 9.81000042
+  jumpSpeed: 5
+  gravity: 5
   landingDelay: 5
   currentState: 0
   myState: 3
