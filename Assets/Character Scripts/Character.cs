@@ -168,7 +168,7 @@ public class Character : AnimatedEntity {
 
 			currentMovement.x = v.normalized.x * moveSpeed;
 
-			if(v.y > .25f && Mathf.Abs(v.x) < 1){// || (lastPosition - currentpos).magnitude == 0){
+			if(v.y > .25f && Mathf.Abs(v.x) < 2){// || (lastPosition - currentpos).magnitude == 0){
 				jump ();
 			}
 
@@ -228,11 +228,18 @@ public class Character : AnimatedEntity {
 				}
 				break;
 			}
+			if(currentMovement.x < 0){
+				//Look left
+			}
+			else{
+				//Look right
+			}
 			yield return null;
 		}
 	}
 
 	public virtual void jump(){
+		Debug.Log ("Jumping");
 		if(cc.isGrounded){
 			currentMovement.y = jumpSpeed;
 		}

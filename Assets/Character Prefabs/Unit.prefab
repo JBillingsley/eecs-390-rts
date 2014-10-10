@@ -12,7 +12,6 @@ GameObject:
   - 23: {fileID: 2300000}
   - 114: {fileID: 11400000}
   - 143: {fileID: 14300000}
-  - 114: {fileID: 11400002}
   m_Layer: 9
   m_Name: Unit
   m_TagString: Untagged
@@ -27,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 63.0258865, y: 64, z: 0}
+  m_LocalPosition: {x: 64.9073257, y: 63.9351921, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -71,8 +70,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animation:
-    animationsetID: 0
-    animationID: 0
+    animationsetID: 4
+    animationID: 2
   position: {x: 0, y: 0}
   destination: {x: 0, y: 0}
   moveSpeed: .25
@@ -86,20 +85,6 @@ MonoBehaviour:
   myTeam: 0
   characterTarget: {fileID: 0}
   lastTargetPosition: {x: 0, y: 0}
---- !u!114 &11400002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb9365935718db94b82b935801c862a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animation:
-    animationsetID: 4
-    animationID: 0
 --- !u!143 &14300000
 CharacterController:
   m_ObjectHideFlags: 1
