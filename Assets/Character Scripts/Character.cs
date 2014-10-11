@@ -244,4 +244,8 @@ public class Character : AnimatedEntity {
 			Debug.Log ("Jumping");
 		}
 	}
+
+	public void hit(float f){
+		this.currentHealth -= f;
+	}
 }
