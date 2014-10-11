@@ -10,10 +10,10 @@ GameObject:
   - 4: {fileID: 400000}
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
-  - 114: {fileID: 11400000}
   - 143: {fileID: 14300000}
+  - 114: {fileID: 11400000}
   m_Layer: 9
-  m_Name: Unit
+  m_Name: Follow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 63.0258865, y: 64, z: 0}
+  m_LocalPosition: {x: 62.130619, y: 64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -43,7 +43,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 46fb72e2ca1438a489ad0d58324a1e48, type: 2}
+  - {fileID: 2100000, guid: 5c374e3a0b1efa54eb195419262c78ea, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -66,23 +66,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20de1a6d4cbde434db9774f8187a610f, type: 3}
+  m_Script: {fileID: 11500000, guid: a16d477780d3b2949a87d91f83490d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animation:
-    animationsetID: 4
-    animationID: 2
+    animationsetID: 1
+    animationID: 0
   position: {x: 0, y: 0}
   destination: {x: 0, y: 0}
-  moveSpeed: .25
+  moveSpeed: 2
   maxHealth: 0
   currentHealth: 0
   jumpSpeed: 5
-  gravity: 5
-  landingDelay: 0
+  gravity: 9.81000042
+  landingDelay: 5
   cc: {fileID: 0}
   currentState: 0
-  myState: 3
+  myState: 1
   myTeam: 0
   characterTarget: {fileID: 0}
   lastTargetPosition: {x: 0, y: 0, z: 0}

@@ -50,7 +50,7 @@ public class Character : AnimatedEntity {
 		move ();
 	}
 
-	protected void findPath(Vector2 v){
+	public void findPath(Vector2 v){
 		position = new Vector2(Mathf.CeilToInt(this.transform.position.x),Mathf.CeilToInt(this.transform.position.y));
 		destination = new IVector2(v.x,v.y);
 	}

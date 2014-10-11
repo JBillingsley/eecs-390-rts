@@ -32,7 +32,7 @@ public class Map : MonoBehaviour {
 		map = new ulong[h*chunkSize, w*chunkSize];
 		dirtyChunks = new bool[h, w];
 		for (int x = 0; x < w*chunkSize; x++)
-			for (int y = 60 + (int)(Random.value * 2); y >= 0; y--){
+			for (int y = 60 + (int)(Random.value * 3); y >= 0; y--){
 				map [y, x] = (ulong)(Random.value * 2) + 1;
 			}
 		for (int y = 0; y < h*chunkSize; y++)
