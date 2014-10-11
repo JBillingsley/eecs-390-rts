@@ -26,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 64.9073257, y: 63.9351921, z: 0}
+  m_LocalPosition: {x: 63.0258865, y: 64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,7 +79,7 @@ MonoBehaviour:
   currentHealth: 0
   jumpSpeed: 5
   gravity: 5
-  landingDelay: 5
+  landingDelay: 0
   currentState: 0
   myState: 3
   myTeam: 0

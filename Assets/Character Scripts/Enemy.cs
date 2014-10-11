@@ -15,7 +15,6 @@ public class Enemy : NPC {
 		}
 		Vector2 targetPos = characterTarget.position;
 		if((lastTargetPosition-targetPos).magnitude > 1f){
-			lastTargetPosition = targetPos;
 			findPath(targetPos);
 		}
 		if((targetPos - position).magnitude < 1f){
@@ -30,7 +29,6 @@ public class Enemy : NPC {
 		}
 		Vector2 targetPos = characterTarget.position;
 		if((lastTargetPosition-targetPos).magnitude > 2f){
-			lastTargetPosition = targetPos;
 			findPath(targetPos);
 		}
 	}
