@@ -122,7 +122,11 @@ public class Player : Character {
 		foreach(Character u in units){
 			if(u){
 				Vector2 v = Camera.main.WorldToScreenPoint(u.transform.position);
-				if(selectionBox.Contains(new Vector2(v.x,Screen.height - v.y))){
+				Vector2 w = Camera.main.WorldToScreenPoint(u.transform.position + u.transform.localScale);
+
+				Vector2 pos = (v+w)/2;
+
+				if(selectionBox.Contains(new Vector2(pos.x,Screen.height - pos.y))){
 					addToSelection(u);
 				}
 			}
@@ -157,8 +161,7 @@ public class Player : Character {
 
 		//Select units by pressing them.
 
-		/*
-		if(Physics.Raycast(r,out hit,100f,myUnits.value)){
+		/*if(Physics.Raycast(r,out hit,100f,this.gameObject.layer)){
 
 			addToSelection(hit.collider.GetComponent<Unit>());
 			return;

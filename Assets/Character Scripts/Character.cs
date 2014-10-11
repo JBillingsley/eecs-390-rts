@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(CharacterController))]
 public class Character : AnimatedEntity {
 
@@ -22,7 +23,8 @@ public class Character : AnimatedEntity {
 	public float gravity = 9.81f;
 	public float landingDelay = 5;
 
-	protected CharacterController cc;
+	[HideInInspector]
+	public CharacterController cc;
 	protected Vector2 currentMovement;
 	Vector2 lastPosition;
 
@@ -76,7 +78,6 @@ public class Character : AnimatedEntity {
 			}
 			Vector2 start = position;
 			Vector2 end = destination;
-			Debug.Log ("Trying to path from " + start + " to " + end + ".");
 
 			//Create a list of leaves
 			List<ParentedNode> leaves = new List<ParentedNode>();
