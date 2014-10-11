@@ -756,14 +756,14 @@ MonoBehaviour:
       folded: 0
       view: {fileID: 0}
     - name: Dirt
-      context: 2
+      context: 1
       index: 1
       solid: 1
       folded: 0
       view: {fileID: 0}
     - name: Stone
-      context: 2
-      index: 49
+      context: 1
+      index: 17
       solid: 1
       folded: 0
       view: {fileID: 0}
