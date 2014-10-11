@@ -15,7 +15,8 @@ public class Camera2D : MonoBehaviour {
 	private static Dictionary<int, Chunk> chunks = new Dictionary<int, Chunk>();
 	
 	void Update () {
-		camera.orthographicSize = tileHeight()/2;
+		camera.orthographicSize = tileHeight()/2/targetZoom;
+
 		chunkManagement();
 	}
 
