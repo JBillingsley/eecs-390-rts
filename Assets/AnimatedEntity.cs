@@ -5,6 +5,8 @@ public class AnimatedEntity : MonoBehaviour {
 
 	private Material defaultMaterial;
 	public AnimationSpec animation;
+	private bool oldright;
+	public bool right;
 	private int i;
 
 	void Start () {
@@ -12,6 +14,13 @@ public class AnimatedEntity : MonoBehaviour {
 	}
 	
 	public void FixedUpdate () {
+		if (right != oldright) {
+			oldright = right;
+			if (right)
+				GetComponent<MeshFilter>().mesh = UnitMesh.inst.rightMesh;
+			else
+				GetComponent<MeshFilter>().mesh = UnitMesh.inst.leftMesh;
+		}
 		updateAnimationSet ();
 		i++;
 		Animation a = animation.animation;
