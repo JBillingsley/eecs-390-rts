@@ -53,7 +53,7 @@ public class Player : Character {
 		if(selectInput){
 			continueBox();
 		}
-		else{
+		if(selectInputUp){
 			endBox();
 		}
 		if(moveInput){
@@ -86,6 +86,7 @@ public class Player : Character {
 		addSelect = Input.GetKey(KeyCode.LeftShift); 
 	}
 
+	//Starts the selection box
 	void startBox() {
 		selectionBox = new Rect();
 		drawSelection = true;
@@ -102,7 +103,8 @@ public class Player : Character {
 	}
 	
 	void endBox(){
-		
+
+
 		selectionBox = standardizeRect(selectionBox);
 		
 		drawSelection = false;
@@ -122,7 +124,11 @@ public class Player : Character {
 		foreach(Character u in units){
 			if(u){
 				Vector2 v = Camera.main.WorldToScreenPoint(u.transform.position);
-				if(selectionBox.Contains(new Vector2(v.x,Screen.height - v.y))){
+				Vector2 w = Camera.main.WorldToScreenPoint(u.transform.position + u.transform.localScale);
+
+				Vector2 pos = (v+w)/2;
+
+				if(selectionBox.Contains(new Vector2(pos.x,Screen.height - pos.y))){
 					addToSelection(u);
 				}
 			}
@@ -143,11 +149,11 @@ public class Player : Character {
 	
 	//Select units if you currently have mouse input.
 	void selectUnits() {
-		RaycastHit hit;
-		Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
+		Vector2 mousePos = Input.mousePosition;
 		if(!addSelect){
 			foreach(Character u in selected){
 				if(u){
+
 					//Select the units
 					//u.changeSelection(false);
 				}
@@ -157,12 +163,15 @@ public class Player : Character {
 
 		//Select units by pressing them.
 
-		/*
-		if(Physics.Raycast(r,out hit,100f,myUnits.value)){
-
-			addToSelection(hit.collider.GetComponent<Unit>());
-			return;
-		}*/
+		foreach(Character u in units){
+			
+			Vector2 v = Camera.main.WorldToScreenPoint(u.transform.position);
+			Vector2 w = Camera.main.WorldToScreenPoint(u.transform.position + u.transform.localScale);
+			if(new Rect(v.x,v.y,(w-v).x,(w-v).y).Contains(mousePos)){
+				selected.Add (u);
+				return;
+			}
+		}
 	}
 	
 	//Move the units to the specified place. (Mouse position)
@@ -171,7 +180,7 @@ public class Player : Character {
 		Vector2 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		//StartCoroutine("findPath",v);
 		foreach(Character c in selected){
-			c.StartCoroutine("findPath",v);
+			c.findPath(v);
 		}
 	}
 

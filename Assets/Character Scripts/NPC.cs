@@ -10,7 +10,7 @@ public abstract class NPC : Character {
 	public Team myTeam;
 
 	public Character characterTarget;
-	public Vector2 lastTargetPosition;
+	public Vector3 lastTargetPosition;
 
 	//Perform an action based on the current state
 	public void act(){

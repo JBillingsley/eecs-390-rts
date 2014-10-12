@@ -13,11 +13,11 @@ public class Enemy : NPC {
 			myState = State.IDLE;
 			return;
 		}
-		Vector2 targetPos = characterTarget.position;
+		Vector3 targetPos = characterTarget.position;
 		if((lastTargetPosition-targetPos).magnitude > 1f){
 			findPath(targetPos);
 		}
-		if((targetPos - position).magnitude < 1f){
+		if((targetPos - this.transform.position).magnitude < 1f){
 			hit(characterTarget);
 		}
 	}
@@ -27,7 +27,7 @@ public class Enemy : NPC {
 			myState = State.IDLE;
 			return;
 		}
-		Vector2 targetPos = characterTarget.position;
+		Vector3 targetPos = characterTarget.position;
 		if((lastTargetPosition-targetPos).magnitude > 2f){
 			findPath(targetPos);
 		}
@@ -38,10 +38,12 @@ public class Enemy : NPC {
 	}
 
 	protected override void idle(){
-
+		if(characterTarget){
+			myState = State.FOLLOWING;
+		}
 	}
 
 	void hit(Character c){
-		c.currentHealth--;
+		c.hit(1f);
 	}
 }
