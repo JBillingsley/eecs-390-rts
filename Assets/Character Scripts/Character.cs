@@ -230,10 +230,10 @@ public class Character : AnimatedEntity {
 				break;
 			}
 			if(currentMovement.x < 0){
-				//Look left
+				right = false;
 			}
 			else{
-				//Look right
+				right = true;
 			}
 			yield return null;
 		}
