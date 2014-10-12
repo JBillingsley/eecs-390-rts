@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camerax: {fileID: 27578466}
+  map: {fileID: 92167671}
 --- !u!82 &27578468
 AudioSource:
   m_ObjectHideFlags: 0
