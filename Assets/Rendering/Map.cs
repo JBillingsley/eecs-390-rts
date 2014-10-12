@@ -31,10 +31,12 @@ public class Map : MonoBehaviour {
 		name = name + Util.pair(getWidth(), getHeight());
 		map = new ulong[h*chunkSize, w*chunkSize];
 		dirtyChunks = new bool[h, w];
-		for (int x = 0; x < w*chunkSize; x++)
-			for (int y = 60 + (int)(Random.value * 3); y >= 0; y--){
-				map [y, x] = (ulong)(Random.value * 2) + 1;
-			}
+		for (int x = 0; x < w*chunkSize; x++){
+			for (int y = 60 + (int)(Random.value * 3); y >= 0; y--)
+				setByte(new IVector2(x, y), FOREGROUND_ID, (byte)(Random.value * 2 + 1));
+			for (int y = 63 + (int)(Random.value * 3); y >= 0; y--)
+				setByte(new IVector2(x, y), BACKGROUND_ID, (byte)3);
+		}
 		for (int y = 0; y < h*chunkSize; y++)
 			for (int x = 0; x < w*chunkSize; x++)
 				updateTileSpec(new IVector2(x, y));
@@ -73,14 +75,29 @@ public class Map : MonoBehaviour {
 		switch(renderMode){
 			case NAVMESH:
 				return getByte(v, NAVIGATION_MAP);
+			case BACKGROUND:
+				return getByte(v, BACKGROUND_CONTEXT);
 			default:
 				return getByte(v, FOREGROUND_CONTEXT);
+		}
+	}
+
+	public byte getBackgroundRenderContext(IVector2 v){
+		switch(renderMode){
+			case NAVMESH:
+				return 0;
+			case BACKGROUND:
+				return 0;
+			default:
+				return getByte(v, BACKGROUND_CONTEXT);
 		}
 	}
 	public TileSpec getRenderForeground(IVector2 v){
 		switch(renderMode){
 			case NAVMESH:
-			return (!isForegroundSolid(v) && isForegroundSolid(v + Direction.getDirection(Direction.BOTTOM)))? TileSpecList.getTileSpec(0) : TileSpecList.getTileSpec(1);
+				return (!isForegroundSolid(v) && isForegroundSolid(v + Direction.getDirection(Direction.BOTTOM)))? TileSpecList.getTileSpec(0) : TileSpecList.getTileSpec(1);
+			case BACKGROUND:
+				return getBackground(v);
 			default:
 				return getForeground(v);
 		}
@@ -89,13 +106,17 @@ public class Map : MonoBehaviour {
 	public TileSpec getRenderBackground(IVector2 v){
 		switch(renderMode){
 			case NAVMESH:
-			return (!isForegroundSolid(v) && isForegroundSolid(v + Direction.getDirection(Direction.BOTTOM)))? TileSpecList.getTileSpec(2) : TileSpecList.getTileSpec(0);
+				return TileSpecList.getTileSpec(0);
+			case BACKGROUND:
+				return TileSpecList.getTileSpec(0);
 			default:
 				return getBackground(v);
 		}
 	}
+
 	public const byte TERRAIN = 0;
 	public const byte NAVMESH = 1;
+	public const byte BACKGROUND = 2;
 	public byte renderMode = NAVMESH;
 	public void setRenderMode(byte mode){
 		if (renderMode == mode)

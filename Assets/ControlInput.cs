@@ -16,7 +16,12 @@ public class ControlInput : MonoBehaviour {
 		if (Input.GetKey(KeyCode.RightArrow))
 			delta.x += 1;
 		camerax.move (delta);
-		
+
+		if (Input.GetKey(KeyCode.KeypadMinus))
+			camerax.zoomIn();
+		if (Input.GetKey(KeyCode.KeypadPlus))
+			camerax.zoomOut();
+
 		float f = Input.GetAxis("Mouse ScrollWheel");
 		if (f != 0){
 			if (f > 0)

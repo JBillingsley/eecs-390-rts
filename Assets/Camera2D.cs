@@ -15,7 +15,8 @@ public class Camera2D : MonoBehaviour {
 	private static Dictionary<int, Chunk> chunks = new Dictionary<int, Chunk>();
 	
 	void Update () {
-		camera.orthographicSize = tileHeight()/2/targetZoom;
+		zoom = zoom + (targetZoom - zoom) * 0.1f;
+		camera.orthographicSize = tileHeight()/2f;
 
 		chunkManagement();
 	}
@@ -26,12 +27,12 @@ public class Camera2D : MonoBehaviour {
 
 	public void zoomIn(){
 		float newZoom = targetZoom;
-		newZoom /= 2f;
+		newZoom *= 2f;
 		targetZoom = Mathf.Min(maxZoom, Mathf.Max(minZoom, newZoom));
 	}
 	public void zoomOut(){
 		float newZoom = targetZoom;
-		newZoom *= 2f;
+		newZoom /= 2f;
 		targetZoom = Mathf.Min(maxZoom, Mathf.Max(minZoom, newZoom));	
 	}
 
@@ -69,7 +70,7 @@ public class Camera2D : MonoBehaviour {
 
 	private int chunkWidth(){
 		return (int)(Screen.width * zoom / (map.tileSize * map.chunkSize));
-	}
+	}	
 
 	private int chunkHeight(){
 		return (int)(Screen.height * zoom / (map.tileSize * map.chunkSize));

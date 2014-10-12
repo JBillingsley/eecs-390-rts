@@ -23,7 +23,7 @@ public class MapEditor : Editor {
 
 		GUI.enabled = true;
 
-		map.setRenderMode((byte)EditorGUILayout.Popup("RenderMode", map.renderMode, new string[]{"Terrain", "Navmesh"}));
+		map.setRenderMode((byte)EditorGUILayout.Popup("RenderMode", map.renderMode, new string[]{"Terrain", "Navmesh", "Background"}));
 
 		EditorGUI.indentLevel++;
 		EditorGUILayout.PropertyField(serializedObject.FindProperty("tileset"), true);
