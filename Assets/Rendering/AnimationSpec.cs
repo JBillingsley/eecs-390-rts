@@ -22,4 +22,16 @@ public class AnimationSpec {
 		}
 	}
 
+	public void selectAnimation(string name){
+		int i = 0;
+		foreach (Animation a in animationSet.animations) {
+			if (a.name.Equals(name)){
+				animationID = i;
+				return;
+			}
+			i++;
+		}
+		animationID = -1;
+	}
+
 }
