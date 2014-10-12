@@ -31,6 +31,8 @@ public class Character : AnimatedEntity {
 	public enum movementState {WALKING,JUMPING,LANDING,IDLE};
 	public movementState currentState;
 
+	protected Map map;
+
 	// Use this for initialization
 	protected void Start () {
 		currentMovement = new Vector2();
@@ -41,7 +43,7 @@ public class Character : AnimatedEntity {
 		StartCoroutine(getPath());
 		StartCoroutine(computeState());
 		cc = GetComponent<CharacterController>();
-		position = new Vector2(Mathf.CeilToInt(this.transform.position.x),Mathf.CeilToInt(this.transform.position.y));
+		position = new Vector2(Mathf.RoundToInt(this.transform.position.x),Mathf.RoundToInt(this.transform.position.y));
 	}
 	
 	// Update is called once per frame
@@ -51,8 +53,8 @@ public class Character : AnimatedEntity {
 	}
 
 	public void findPath(Vector2 v){
-		position = new Vector2(Mathf.CeilToInt(this.transform.position.x),Mathf.CeilToInt(this.transform.position.y));
-		destination = new IVector2(v.x,v.y);
+		position = new Vector2(Mathf.RoundToInt(this.transform.position.x),Mathf.RoundToInt(this.transform.position.y));
+		destination = new Vector2(v.x,v.y);
 	}
 
 	//Sets the route for this character to follow
@@ -65,19 +67,24 @@ public class Character : AnimatedEntity {
 	//Coroutine which calculates the path to the destination.
 	public IEnumerator getPath(){
 		Vector2 lastDest = position;
+		float waitTime = .1f;
 
 	reset:
 		while(true){
 			//This routine happens every second.
-			yield return null;
+			yield return new WaitForSeconds(waitTime);
 
 			//If the destination hasn't changed...
 			if(lastDest == destination){
+				waitTime = Mathf.Clamp(waitTime + .01f,.1f,1f);
+				Debug.Log (waitTime);
 				//...Go back to start of the loop.
 				goto reset;
 			}
+			waitTime = .1f;
 			Vector2 start = position;
-			Vector2 end = destination;
+			Vector2 end = new Vector2(destination.x ,Mathf.FloorToInt(destination.y));;
+			Vector2 endTile = new IVector2(destination.x,destination.y);
 
 			//Create a list of leaves
 			List<ParentedNode> leaves = new List<ParentedNode>();
@@ -91,7 +98,7 @@ public class Character : AnimatedEntity {
 			ParentedNode current = new ParentedNode(null,start,float.MaxValue);
 
 			//While there are still leaves, and the destination hasn't changed.
-			while(leaves.Count > 0 && end.Equals(destination)){
+			while(leaves.Count > 0){
 				//Create a parented node
 				current.weight = float.MaxValue;
 				//Check to find the lowest weighted leaf
@@ -105,10 +112,12 @@ public class Character : AnimatedEntity {
 				branches.Add(current);
 
 				//If it found the path...
-				if(current.location == end){
+				if(current.location == endTile){
 					//...Create a new route based on that last node.
-					setPath(new Route(current));
-					lastDest = end;
+					//ParentedNode p = new ParentedNode(current.parent,end,0);
+					Route r = new Route(current);
+					setPath(r);
+					lastDest = endTile;
 					//Break out of this while loop.
 					goto reset;
 				}
@@ -129,6 +138,7 @@ public class Character : AnimatedEntity {
 
 			//If it goes through and cant find anything, 
 			Debug.Log ("Path not found");
+			waitTime += .01f;
 
 		}
 	}
@@ -167,7 +177,7 @@ public class Character : AnimatedEntity {
 
 			Vector3 v = dest - this.transform.position;
 
-			currentMovement.x = v.normalized.x * moveSpeed;
+			currentMovement.x = Mathf.Sign(v.normalized.x) * moveSpeed;
 
 			if(v.y > .25f && (Mathf.Abs(v.x) > 0 && cc.velocity.x == 0)){// || (lastPosition - currentpos).magnitude == 0){
 				jump ();
@@ -232,7 +242,7 @@ public class Character : AnimatedEntity {
 			if(currentMovement.x < 0){
 				right = false;
 			}
-			else{
+			else if(currentMovement.x > 0){
 				right = true;
 			}
 			yield return null;
@@ -242,7 +252,6 @@ public class Character : AnimatedEntity {
 	public virtual void jump(){
 		if(cc.isGrounded){
 			currentMovement.y = jumpSpeed;
-			Debug.Log ("Jumping");
 		}
 	}
 

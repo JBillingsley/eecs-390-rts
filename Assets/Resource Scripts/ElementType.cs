@@ -5,7 +5,8 @@ public enum Element {
 	NONE,
 	DIRT,
 	WOOD,
-	ROCK
+	ROCK,
+	CLAY
 }
 public class ElementType : MonoBehaviour {
 
