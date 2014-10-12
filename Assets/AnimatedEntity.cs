@@ -5,8 +5,8 @@ public class AnimatedEntity : MonoBehaviour {
 
 	private Material defaultMaterial;
 	public AnimationSpec animation;
-	private bool oldright;
-	public bool right;
+	private bool oldright = true;
+	public bool right = true;
 	private int i;
 
 	void Start () {

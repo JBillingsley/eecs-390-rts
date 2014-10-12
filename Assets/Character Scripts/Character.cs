@@ -29,13 +29,15 @@ public class Character : AnimatedEntity {
 	Vector2 lastPosition;
 
 	public enum movementState {WALKING,JUMPING,LANDING,IDLE};
-	public movementState currentState;
+	protected movementState currentState;
 
 	protected Map map;
 
 	// Use this for initialization
 	protected void Start () {
-		currentMovement = new Vector2();
+		currentMovement = new Vector2(0,0);
+
+		map = GameObject.FindObjectOfType<Map>();
 
 		currentState = movementState.IDLE;
 
@@ -77,7 +79,6 @@ public class Character : AnimatedEntity {
 			//If the destination hasn't changed...
 			if(lastDest == destination){
 				waitTime = Mathf.Clamp(waitTime + .01f,.1f,1f);
-				Debug.Log (waitTime);
 				//...Go back to start of the loop.
 				goto reset;
 			}
@@ -242,7 +243,7 @@ public class Character : AnimatedEntity {
 			if(currentMovement.x < 0){
 				right = false;
 			}
-			else if(currentMovement.x > 0){
+			if(currentMovement.x > 0){
 				right = true;
 			}
 			yield return null;
@@ -251,7 +252,7 @@ public class Character : AnimatedEntity {
 
 	public virtual void jump(){
 		if(cc.isGrounded){
-			currentMovement.y = jumpSpeed;
+			currentMovement.y = jumpSpeed * Util.randomSpread();
 		}
 	}
 
