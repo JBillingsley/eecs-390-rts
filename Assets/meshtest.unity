@@ -290,7 +290,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!1 &92167670
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +338,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 10
 --- !u!1 &154801104
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,7 +606,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8dd904aa180c9fe45a0028f2b0a6c328, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8dd904aa180c9fe45a0028f2b0a6c328, type: 2}
       propertyPath: m_Name
@@ -658,11 +658,11 @@ MonoBehaviour:
     - name: Player
       animations:
       - name: Idle
-        tileSequence: 00000000010000000200000001000000
+        tileSequence: 00000000010000000200000003000000
         frameSkip: 10
         folded: 0
       - name: Walk
-        tileSequence: 00000000010000000200000001000000
+        tileSequence: 04000000050000000600000007000000
         frameSkip: 10
         folded: 0
       - name: Idle
@@ -670,10 +670,10 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       textureAtlasID: 0
-      lastFrame: 82.6913834
-      folded: 1
+      lastFrame: 787.266296
+      folded: 0
       preview: 0
-      previewIndex: 3
+      previewIndex: 1
     - name: Earth
       animations:
       - name: Attack
@@ -746,7 +746,7 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       textureAtlasID: 4
-      lastFrame: 598.351746
+      lastFrame: 787.282837
       folded: 0
       preview: 2
       previewIndex: 0
@@ -762,7 +762,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
 --- !u!1 &821421901
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,7 +912,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
 --- !u!1 &966447491
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,7 +1170,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 12
 --- !u!1 &1210461522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1332,7 +1332,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
 --- !u!114 &1254249732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1384,7 +1384,7 @@ CharacterController:
   m_StepOffset: .300000012
   m_SkinWidth: .0799999982
   m_MinMoveDistance: 0
-  m_Center: {x: .5, y: .5, z: 0}
+  m_Center: {x: .5, y: .400000006, z: 0}
 --- !u!1 &1271574656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1646,7 +1646,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
       propertyPath: m_Name
@@ -1875,7 +1875,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 11
 --- !u!1001 &1765510628
 Prefab:
   m_ObjectHideFlags: 0
@@ -1913,7 +1913,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8dd904aa180c9fe45a0028f2b0a6c328, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 8dd904aa180c9fe45a0028f2b0a6c328, type: 2}
       propertyPath: animation.animationsetID
@@ -2128,7 +2128,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
 --- !u!143 &1858070154
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2175,8 +2175,8 @@ MonoBehaviour:
     textureAtlases:
     - name: Player
       texture: {fileID: 2800000, guid: f8ffeb9a25450424eb342588708e4c92, type: 3}
-      width: 3
-      height: 1
+      width: 4
+      height: 4
       folded: 1
     - name: Earth
       texture: {fileID: 2800000, guid: b85a6390b0c4f3545bd907e4f763a48b, type: 3}
@@ -2187,12 +2187,12 @@ MonoBehaviour:
       texture: {fileID: 2800000, guid: 6d6b6867b3a015c49b1fb8e02e8f2a74, type: 3}
       width: 4
       height: 4
-      folded: 0
+      folded: 1
     - name: Fire
       texture: {fileID: 2800000, guid: 643e06153c9359448b11da31cbc99faf, type: 3}
       width: 4
       height: 4
-      folded: 0
+      folded: 1
     - name: Golem
       texture: {fileID: 2800000, guid: 9533a0cf21bf0ae45aa021829742b2a8, type: 3}
       width: 4
@@ -2241,7 +2241,7 @@ Transform:
   - {fileID: 154801107}
   - {fileID: 1413450091}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
 --- !u!1 &2097381056
 GameObject:
   m_ObjectHideFlags: 0
