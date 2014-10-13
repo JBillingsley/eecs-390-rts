@@ -233,10 +233,12 @@ public class Map : MonoBehaviour {
 			float y = i / width;
 			float x1 = x + 1;
 			float y1 = y + 1;
-			tex [0] = new Vector3 (x/width, 1 - y1/height);
-			tex [1] = new Vector3 (x/width, 1 - y/height);
-			tex [2] = new Vector3 (x1/width, 1 - y/height);
-			tex [3] = new Vector3 (x1/width, 1 - y1/height);
+			float dx = 1f/material.mainTexture.width;
+			float dy = 1f/material.mainTexture.height;
+			tex [0] = new Vector3 (x/width + dx, 1 - y1/height + dy);
+			tex [1] = new Vector3 (x/width + dx, 1 - y/height - dy);
+			tex [2] = new Vector3 (x1/width - dx, 1 - y/height - dy);
+			tex [3] = new Vector3 (x1/width - dx, 1 - y1/height + dy);
 			return tex;
 		}
 	}
