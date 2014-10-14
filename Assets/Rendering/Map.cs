@@ -34,7 +34,7 @@ public class Map : MonoBehaviour {
 		for (int x = 0; x < w*chunkSize; x++){
 			for (int y = 60 + (int)(Random.value * 2); y >= 0; y--)
 				setByte(new IVector2(x, y), FOREGROUND_ID, (byte)(Random.value * 2 + 1));
-			for (int y = 63 + (int)(Random.value * 2); y >= 0; y--)
+			for (int y = 61 + (int)(Random.value * 2); y >= 0; y--)
  				setByte(new IVector2(x, y), BACKGROUND_ID, (byte)3);
 		}
 		for (int y = 0; y < h*chunkSize; y++)
@@ -190,7 +190,8 @@ public class Map : MonoBehaviour {
 			for (int y = -1; y <= 1; y++){
 				IVector2 vi = v + new IVector2(x, y); 
 				if (inBounds(vi))
-					makeDirty(v.y / chunkSize, v.x / chunkSize);
+					makeDirty(vi.y / chunkSize, vi.x / chunkSize);		
+				updateTileSpec(vi);
 			}
 	}
 
