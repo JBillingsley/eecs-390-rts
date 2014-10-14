@@ -87,6 +87,12 @@ public class Character : AnimatedEntity {
 			Vector2 end = new Vector2(destination.x ,Mathf.FloorToInt(destination.y));;
 			Vector2 endTile = new IVector2(destination.x,destination.y);
 
+			if(map.getForeground(endTile).solid){
+				map.getForeground(endTile).solid = false;
+				map.updateTileSpec(endTile);
+				Debug.Log ("not solid");
+			}
+
 			//Create a list of leaves
 			List<ParentedNode> leaves = new List<ParentedNode>();
 
@@ -116,6 +122,7 @@ public class Character : AnimatedEntity {
 				if(current.location == endTile){
 					//...Create a new route based on that last node.
 					//ParentedNode p = new ParentedNode(current.parent,end,0);
+					current.location.x += (1 - Util.randomSpread());
 					Route r = new Route(current);
 					setPath(r);
 					lastDest = endTile;

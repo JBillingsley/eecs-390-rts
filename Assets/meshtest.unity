@@ -199,7 +199,7 @@ AudioSource:
   m_GameObject: {fileID: 27578460}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: ce2a4c94b1d51ec45a5e41b7035b6aa9, type: 3}
+  m_audioClip: {fileID: 8300000, guid: fcaa3c35644b1674685f2248cbc3be3b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: .181999996
   m_Pitch: 1
@@ -670,7 +670,7 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       textureAtlasID: 0
-      lastFrame: 787.266296
+      lastFrame: .222351983
       folded: 0
       preview: 0
       previewIndex: 1
@@ -685,14 +685,14 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       - name: Idle
-        tileSequence: 0000000001000000
+        tileSequence: 0000000001000000020000000300000004000000030000000200000001000000
         frameSkip: 10
         folded: 0
       textureAtlasID: 1
-      lastFrame: 98.4659653
+      lastFrame: 64.2660217
       folded: 1
       preview: 2
-      previewIndex: 1
+      previewIndex: 3
     - name: Water
       animations:
       - name: Attack
@@ -704,14 +704,14 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       - name: Idle
-        tileSequence: 0000000001000000
+        tileSequence: 0000000001000000020000000300000004000000030000000200000001000000
         frameSkip: 10
         folded: 0
       textureAtlasID: 2
-      lastFrame: 97.2189026
+      lastFrame: 81.5285187
       folded: 1
       preview: 0
-      previewIndex: 7
+      previewIndex: 3
     - name: Fire
       animations:
       - name: Attack
@@ -723,14 +723,14 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       - name: Idle
-        tileSequence: 0000000001000000
+        tileSequence: 0000000001000000020000000300000004000000030000000200000001000000
         frameSkip: 10
         folded: 0
       textureAtlasID: 3
-      lastFrame: 99.0788956
-      folded: 1
+      lastFrame: .236549854
+      folded: 0
       preview: 0
-      previewIndex: 0
+      previewIndex: 6
     - name: Golem
       animations:
       - name: Attack
@@ -746,7 +746,7 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       textureAtlasID: 4
-      lastFrame: 787.282837
+      lastFrame: .242221132
       folded: 0
       preview: 2
       previewIndex: 0
@@ -2074,7 +2074,7 @@ MonoBehaviour:
   animation:
     animationsetID: 2
     animationID: 0
-  right: 0
+  right: 1
   position: {x: 0, y: 0}
   destination: {x: 0, y: 0}
   moveSpeed: .25
@@ -2225,7 +2225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1988578640
 Transform:
   m_ObjectHideFlags: 0
