@@ -36,6 +36,7 @@ public class Chunk : MonoBehaviour {
 
 	public void refresh(){
 		if (map.isDirty (x, y)){
+			Debug.Log ("Updating " + x + " " + y);
 			map.unDirty(x, y);
 			renderData.GetComponent<MeshFilter>().mesh.uv = makeTextures(x, y);
 			colliderData.GetComponent<MeshFilter>().mesh.triangles = makeCollisionIndices(x, y);

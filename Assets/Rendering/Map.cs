@@ -190,7 +190,7 @@ public class Map : MonoBehaviour {
 			for (int y = -1; y <= 1; y++){
 				IVector2 vi = v + new IVector2(x, y); 
 				if (inBounds(vi))
-					makeDirty(vi.y / chunkSize, vi.x / chunkSize);		
+					makeDirty(vi.x / chunkSize, vi.y / chunkSize);		
 				updateTileSpec(vi);
 			}
 	}
