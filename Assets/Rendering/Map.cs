@@ -181,6 +181,19 @@ public class Map : MonoBehaviour {
 		setByte(v, NAVIGATION_MAP, Direction.packByte(directions, b));
 	}
 
+	public void setTile(IVector2 v, byte foreground, byte background){
+		if (!inBounds(v))
+			return;
+		setByte (v, FOREGROUND_ID, foreground);
+		setByte (v, BACKGROUND_ID, background);
+		for (int x = -1; x <= 1; x++)
+			for (int y = -1; y <= 1; y++){
+				IVector2 vi = v + new IVector2(x, y); 
+				if (inBounds(vi))
+					dirtyChunks[v.x / chunkSize, v.y / chunkSize] = true;
+			}
+	}
+
 
 	/********************/
 	/*                  */
