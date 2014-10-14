@@ -50,7 +50,5 @@ public class InGameMenuButtons : MonoBehaviour {
 		scale.y = overlayHeight * scale.y/currentObjectHeight;
 		
 		this.scale = scale;
-		
-		//transform.localScale = scale;
 	}
 }

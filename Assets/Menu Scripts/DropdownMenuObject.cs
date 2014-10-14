@@ -5,9 +5,16 @@ public class DropdownMenuObject : MonoBehaviour {
 
 	public bool menuIsDown = false;
 	public GameObject[] dropdownMenu;
+	public DropdownMenuObject[] otherMenus;
 	
 	void OnMouseDown(){
 		menuIsDown = !menuIsDown;
+		foreach(DropdownMenuObject menu in otherMenus){
+			if(menu.menuIsDown == true && menuIsDown == true){
+					menu.menuIsDown = !menuIsDown;
+					menu.toggleMenuDropdown();
+			}
+		}
 		toggleMenuDropdown();
 	}
 	
@@ -21,7 +28,7 @@ public class DropdownMenuObject : MonoBehaviour {
 	
 	}
 	
-	private void toggleMenuDropdown(){
+	public void toggleMenuDropdown(){
 		foreach(GameObject menuItem in dropdownMenu){
 			menuItem.SetActive(menuIsDown);
 		}
