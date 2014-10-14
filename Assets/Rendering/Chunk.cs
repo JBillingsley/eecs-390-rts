@@ -39,6 +39,8 @@ public class Chunk : MonoBehaviour {
 			map.unDirty(x, y);
 			renderData.GetComponent<MeshFilter>().sharedMesh.uv = makeTextures(x, y);
 			colliderData.GetComponent<MeshFilter>().sharedMesh.triangles = makeCollisionIndices(x, y);
+			renderData.GetComponent<MeshFilter>().sharedMesh.RecalculateBounds();
+			colliderData.GetComponent<MeshFilter>().sharedMesh.RecalculateBounds();
 		}
 	}
 
