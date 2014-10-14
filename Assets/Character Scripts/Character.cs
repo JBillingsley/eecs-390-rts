@@ -89,7 +89,7 @@ public class Character : AnimatedEntity {
 
 			if(map.getForeground(endTile).solid){
 				Debug.Log ("Setting air");
-				map.setTile(endTile,0,0);
+				map.setTile(endTile,0,33);
 			}
 
 			//Create a list of leaves
