@@ -36,12 +36,16 @@ public class Chunk : MonoBehaviour {
 
 	public void refresh(){
 		if (map.isDirty (x, y)){
-			Debug.Log ("Updating " + x + " " + y);
 			map.unDirty(x, y);
-			renderData.GetComponent<MeshFilter>().mesh.uv = makeTextures(x, y);
-			colliderData.GetComponent<MeshFilter>().mesh.triangles = makeCollisionIndices(x, y);
-			renderData.GetComponent<MeshFilter>().mesh.RecalculateBounds();
-			colliderData.GetComponent<MeshFilter>().mesh.RecalculateBounds();
+			MeshFilter rFilter = renderData.GetComponent<MeshFilter>();
+			rFilter.sharedMesh.uv = makeTextures(x, y);
+			rFilter.sharedMesh.RecalculateBounds();
+			MeshFilter cFilter = colliderData.GetComponent<MeshFilter>();
+			MeshCollider cCollider = colliderData.GetComponent<MeshCollider>();
+			cFilter.sharedMesh.triangles = makeCollisionIndices(x, y);
+			cFilter.sharedMesh.RecalculateBounds();
+			cCollider.sharedMesh = null;
+			cCollider.sharedMesh = cFilter.sharedMesh;
 		}
 	}
 

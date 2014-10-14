@@ -188,10 +188,10 @@ public class Map : MonoBehaviour {
 		setByte (v, BACKGROUND_ID, background);
 		for (int x = -1; x <= 1; x++)
 			for (int y = -1; y <= 1; y++){
-				IVector2 vi = v + new IVector2(x, y); 
+				IVector2 vi = v + new IVector2(x, y);
+				updateTileSpec(vi);
 				if (inBounds(vi))
 					makeDirty(vi.x / chunkSize, vi.y / chunkSize);		
-				updateTileSpec(vi);
 			}
 	}
 
