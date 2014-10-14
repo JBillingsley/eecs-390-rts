@@ -88,9 +88,8 @@ public class Character : AnimatedEntity {
 			Vector2 endTile = new IVector2(destination.x,destination.y);
 
 			if(map.getForeground(endTile).solid){
-				map.getForeground(endTile).solid = false;
-				map.updateTileSpec(endTile);
-				Debug.Log ("not solid");
+				Debug.Log ("Setting air");
+				map.setTile(endTile,0,0);
 			}
 
 			//Create a list of leaves
