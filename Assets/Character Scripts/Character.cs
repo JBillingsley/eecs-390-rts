@@ -23,6 +23,11 @@ public class Character : AnimatedEntity {
 	public float gravity = 9.81f;
 	public float landingDelay = 5;
 
+	protected UnitManager um;
+	protected EnemyManager em;
+
+	public bool selected;
+
 	[HideInInspector]
 	public CharacterController cc;
 	protected Vector2 currentMovement;
@@ -35,6 +40,9 @@ public class Character : AnimatedEntity {
 
 	// Use this for initialization
 	protected void Start () {
+		um = GameObject.FindObjectOfType<UnitManager>();
+		em = GameObject.FindObjectOfType<EnemyManager>();
+
 		currentMovement = new Vector2(0,0);
 
 		map = GameObject.FindObjectOfType<Map>();
@@ -46,6 +54,8 @@ public class Character : AnimatedEntity {
 		StartCoroutine(computeState());
 		cc = GetComponent<CharacterController>();
 		position = new Vector2(Mathf.RoundToInt(this.transform.position.x),Mathf.RoundToInt(this.transform.position.y));
+
+		selected = false;
 	}
 	
 	// Update is called once per frame
@@ -87,10 +97,6 @@ public class Character : AnimatedEntity {
 			Vector2 end = new Vector2(destination.x ,Mathf.FloorToInt(destination.y));;
 			Vector2 endTile = new IVector2(destination.x,destination.y);
 
-			if(map.getForeground(endTile).solid){
-				Debug.Log ("Setting air");
-				map.setTile(endTile,0,3);
-			}
 
 			//Create a list of leaves
 			List<ParentedNode> leaves = new List<ParentedNode>();
@@ -265,4 +271,10 @@ public class Character : AnimatedEntity {
 	public void hit(float f){
 		this.currentHealth -= f;
 	}
+
+	public void changeSelection (bool b)
+	{
+		this.selected = b;
+	}
+
 }

@@ -20,7 +20,6 @@ public class Player : Character {
 
 	//The current units
 	public List<Character> selected; /* Will be multiple units */
-	private List<Character> units;
 
 	//Inputs
 	private bool selectInputDown = false;
@@ -41,8 +40,6 @@ public class Player : Character {
 		position = new Vector2((int)this.transform.position.x,(int)this.transform.position.y);
 		selectionBox = new Rect(0,0,0,0);
 		drawSelection = false;
-		units = new List<Character>( GameObject.FindObjectsOfType<Unit>());
-		//position = null;
 	}
 
 	void Update(){
@@ -95,16 +92,16 @@ public class Player : Character {
 		selectionBox.x = pos.x;
 		selectionBox.y = Screen.height - pos.y;
 	}
-	//End the selection box;
+
+	//continue the selection box;
 	void continueBox(){
 		Vector2 pos = Input.mousePosition;
 		selectionBox.width = pos.x - selectionBox.x;
 		selectionBox.height = (Screen.height - pos.y) - selectionBox.y;
 	}
-	
+
+	//End the selection box.
 	void endBox(){
-
-
 		selectionBox = standardizeRect(selectionBox);
 		
 		drawSelection = false;
@@ -121,7 +118,7 @@ public class Player : Character {
 			}
 			selected = new List<Character>();
 		}
-		foreach(Character u in units){
+		foreach(Character u in um.units){
 			if(u){
 				Vector2 v = Camera.main.WorldToScreenPoint(u.transform.position);
 				Vector2 w = Camera.main.WorldToScreenPoint(u.transform.position + u.transform.localScale);
@@ -154,8 +151,8 @@ public class Player : Character {
 			foreach(Character u in selected){
 				if(u){
 
-					//Select the units
-					//u.changeSelection(false);
+					//unSelect the units
+					u.changeSelection(false);
 				}
 			}
 			selected = new List<Character>();
@@ -163,7 +160,7 @@ public class Player : Character {
 
 		//Select units by pressing them.
 
-		foreach(Character u in units){
+		foreach(Character u in um.units){
 			
 			Vector2 v = Camera.main.WorldToScreenPoint(u.transform.position);
 			Vector2 w = Camera.main.WorldToScreenPoint(u.transform.position + u.transform.localScale);
@@ -187,15 +184,16 @@ public class Player : Character {
 	//Add the unit to the selection list
 	void addToSelection(Character u){
 		selected.Add(u);
+		Debug.Log ("adding unit");
 		//Select the unit
-		//u.changeSelection(true);
+		u.changeSelection(true);
 	}
 	
 	//Remove the unit from the selection list
 	void removeFromSelection(Character u){
 		selected.Remove(u);
 		//unselect the unit
-		//u.changeSelection(false);
+		u.changeSelection(false);
 	}
 
 	void makeRoute(){

@@ -9,6 +9,12 @@ public class GenericFactory : MonoBehaviour{
 	private List<GameObject> activeObjects;
 	private Queue<GameObject> inactiveObjects;
 
+	public GenericFactory(GameObject g){
+		spawnedObject = g;
+		activeObjects = new List<GameObject>();
+		inactiveObjects = new Queue<GameObject>();
+	}
+
 	// Use this for initialization
 	void Start () {
 		activeObjects = new List<GameObject>();
@@ -49,5 +55,9 @@ public class GenericFactory : MonoBehaviour{
 		activeObjects.Add (returnObject);
 		returnObject.SetActive(true);
 		return returnObject;
+	}
+
+	public List<GameObject> getActiveObjects(){
+		return activeObjects;
 	}
 }

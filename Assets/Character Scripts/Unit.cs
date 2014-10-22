@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Unit : NPC {
 
-
-
 	// Update is called once per frame
 	void Update(){
 		act ();
@@ -22,5 +20,18 @@ public class Unit : NPC {
 	}
 	protected override void idle(){
 
+	}
+
+	public void interactWithPosition(Vector2 v){
+
+	}
+
+	public void gatherPosition(Vector2 v){
+		myState = State.GATHERING;
+	}
+
+	public void attackPosition(Vector2 v){
+		myState = State.ATTACKING;
+		characterTarget = em.getNearestEnemy(v);
 	}
 }
