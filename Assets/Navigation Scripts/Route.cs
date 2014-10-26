@@ -47,4 +47,16 @@ public class Route {
 		}
 		return sw.ToString();
 	}
+
+	public void reverseRoute(){
+		locations.Reverse();
+	}
+
+	public void append(Route r){
+		if(r != null){
+			this.locations.AddRange (r.locations);
+			this.length += r.length;
+		}
+
+	}
 }

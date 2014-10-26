@@ -1615,8 +1615,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   factories: []
-  enemies: []
-  enemy: {fileID: 0}
+  enemies:
+  - {fileID: 1210461522}
+  - {fileID: 100000, guid: 3d435f16376e5834583eebe7ee30dcf2, type: 2}
+  - {fileID: 1271574656}
+  - {fileID: 1817409785}
+  - {fileID: 1076057206}
+  enemy: {fileID: 11400000, guid: 3d435f16376e5834583eebe7ee30dcf2, type: 2}
 --- !u!114 &327196822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1630,7 +1635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   factories: []
   units: []
-  unit: {fileID: 0}
+  unit: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
 --- !u!4 &327196823
 Transform:
   m_ObjectHideFlags: 0

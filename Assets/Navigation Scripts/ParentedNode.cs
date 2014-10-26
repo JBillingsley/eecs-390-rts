@@ -55,4 +55,17 @@ public class ParentedNode {
 		}
 		return neighbors.ToArray();
 	}
+
+	public Vector2[] GetDigNeighbors(){
+		
+		List<Vector2> neighbors = new List<Vector2>();
+		IVector2 pos = new IVector2(location.x,location.y);
+
+		neighbors.Add (new IVector2(location.x - 1, location.y));
+		neighbors.Add (new IVector2(location.x + 1, location.y));
+		neighbors.Add (new IVector2(location.x, location.y -1));
+		neighbors.Add (new IVector2(location.x, location.y + 1));
+
+		return neighbors.ToArray();
+	}
 }

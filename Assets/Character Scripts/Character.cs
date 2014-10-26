@@ -10,9 +10,9 @@ public class Character : AnimatedEntity {
 	[HideInInspector]
 	public Vector2 position;
 	[HideInInspector]
-	public Vector2 destination;
+	public IVector2 destination;
 	protected int currentPathIndex;
-	protected Route path;
+	public Route path;
 
 	//Standard Character variables.
 	public float moveSpeed;
@@ -35,6 +35,7 @@ public class Character : AnimatedEntity {
 
 	public enum movementState {WALKING,JUMPING,LANDING,IDLE};
 	protected movementState currentState;
+	public bool digging=false;
 
 	protected Map map;
 
@@ -66,7 +67,7 @@ public class Character : AnimatedEntity {
 
 	public void findPath(Vector2 v){
 		position = new Vector2(Mathf.RoundToInt(this.transform.position.x),Mathf.RoundToInt(this.transform.position.y));
-		destination = new Vector2(v.x,v.y);
+		destination = new IVector2(v.x,v.y);
 	}
 
 	//Sets the route for this character to follow
@@ -94,15 +95,28 @@ public class Character : AnimatedEntity {
 			}
 			waitTime = .1f;
 			Vector2 start = position;
-			Vector2 end = new Vector2(destination.x ,Mathf.FloorToInt(destination.y));;
+			Vector2 end = new IVector2(destination.x ,destination.y);
 			Vector2 endTile = new IVector2(destination.x,destination.y);
-
 
 			//Create a list of leaves
 			List<ParentedNode> leaves = new List<ParentedNode>();
 
 			//Create a list of branches (used leaves)
 			List<ParentedNode> branches = new List<ParentedNode>();
+
+			//If the character has to dig
+			Route digRoute = new Route();
+			/*if(map.getForeground(endTile).solid){
+				digging = true;
+				digRoute = pathToNearestAir(endTile);
+				digRoute.reverseRoute();
+				if(digRoute.length > 0){
+					endTile = digRoute.locations[0];
+				}
+			}
+			else{
+				digging = false;
+			}*/
 
 			//Add current position to the leaves
 			leaves.Add (new ParentedNode(null,position,0));
@@ -127,11 +141,12 @@ public class Character : AnimatedEntity {
 				if(current.location == endTile){
 					//...Create a new route based on that last node.
 					//ParentedNode p = new ParentedNode(current.parent,end,0);
-					current.location.x += (1 - Util.randomSpread());
 					Route r = new Route(current);
 					setPath(r);
-					lastDest = endTile;
-					//Break out of this while loop.
+					if(r.locations.Count > 0){
+						lastDest = new IVector2(r.locations[r.locations.Count-1].x,r.locations[r.locations.Count-1].y);
+					}
+					//Break out
 					goto reset;
 				}
 
@@ -139,7 +154,12 @@ public class Character : AnimatedEntity {
 				foreach(Vector2 v in current.GetNeighbors()){
 					///Dont add it if it was already dealt with.
 					if(!ContainsNode(leaves,branches,v)){
-						leaves.Add(new ParentedNode(current,v,hueristic(v,start) + hueristic(v,end)));
+						leaves.Add(new ParentedNode(current,v,hueristic(v,start) + hueristic(v,endTile)));
+					}
+				}
+				foreach(Vector2 v in current.GetDigNeighbors()){
+					if(!ContainsNode(leaves,branches,v)){
+						leaves.Add(new ParentedNode(current,v,hueristic(v,start) + hueristic(v,endTile) + 10));
 					}
 				}
 
@@ -155,7 +175,7 @@ public class Character : AnimatedEntity {
 
 		}
 	}
-
+	
 	//Checks if the vector is in either list.
 	static bool ContainsNode(List<ParentedNode> l,List<ParentedNode>b, Vector2 n){
 		//Check l
@@ -192,11 +212,21 @@ public class Character : AnimatedEntity {
 
 			currentMovement.x = Mathf.Sign(v.normalized.x) * moveSpeed;
 
+			IVector2 iDest = new IVector2(dest.x,dest.y);
+			if(digging){
+				map.setTile(iDest,0,0);
+			}
+			if(map.getForeground(iDest).solid){
+				map.setTile(iDest,0,0);
+				Debug.Log ("Destroyed" + (Vector2)iDest);
+				Debug.Log (path);
+			}
+
 			if(v.y > .25f && (Mathf.Abs(v.x) > 0 && cc.velocity.x == 0)){// || (lastPosition - currentpos).magnitude == 0){
 				jump ();
 			}
 
-			if(v.magnitude < .1){
+			if(v.magnitude < .25){
 				position = path.locations[currentPathIndex];
 				currentPathIndex++;
 			}
