@@ -41,6 +41,8 @@ public class Character : AnimatedEntity {
 
 	protected Map map;
 
+	public ParticleSystem particles;
+
 	// Use this for initialization
 	protected void Start () {
 		um = GameObject.FindObjectOfType<UnitManager>();
@@ -212,11 +214,16 @@ public class Character : AnimatedEntity {
 
 			Vector3 v = dest - this.transform.position;
 
-			currentMovement.x = Mathf.Sign(v.normalized.x) * moveSpeed;
+			currentMovement.x = ((Mathf.Abs(v.x) < .05)?0:Mathf.Sign(v.normalized.x) * moveSpeed);
+
 
 			IVector2 iDest = new IVector2(dest.x,dest.y);
 
 			if(digging){
+				if(v.y < -.25){
+					jump(.8f);
+					emitParticles();
+				}
 				if((digTimer -= Time.fixedDeltaTime) <= 0){
 					digging = false;
 					map.setTile(iDest,0,map.getByte(iDest,Map.BACKGROUND_ID));
@@ -279,6 +286,7 @@ public class Character : AnimatedEntity {
 			case movementState.LANDING:
 				counter --;
 				if(counter == 0){
+					particles.Emit(25);
 					currentState = movementState.WALKING;
 					animation.animationID = 1;
 				}
@@ -296,6 +304,7 @@ public class Character : AnimatedEntity {
 				break;
 			case movementState.DIGGING:
 				animation.animationID = 0;
+				emitParticles();
 				if(!digging){
 					currentState = movementState.IDLE;
 					animation.animationID = 1;
@@ -313,6 +322,12 @@ public class Character : AnimatedEntity {
 		}
 	}
 
+	public virtual void jump(float mod){
+		if(cc.isGrounded){
+			currentMovement.y = jumpSpeed * mod;
+		}
+	}
+
 	public virtual void jump(){
 		if(cc.isGrounded){
 			currentMovement.y = jumpSpeed * Util.randomSpread();
@@ -327,5 +342,9 @@ public class Character : AnimatedEntity {
 	{
 		this.selected = b;
 	}
-
+	public void emitParticles(){
+		if(particles){
+			particles.Emit(1);
+		}
+	}
 }
