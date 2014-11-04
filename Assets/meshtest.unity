@@ -1661,7 +1661,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 64.2910309
+      value: 64.5752716
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1685,6 +1685,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
       propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: m_LocalScale.y
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1967,7 +1975,7 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       textureAtlasID: 0
-      lastFrame: .222351983
+      lastFrame: 89.5230713
       folded: 0
       preview: 0
       previewIndex: 1
@@ -2024,14 +2032,14 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       textureAtlasID: 3
-      lastFrame: .236549854
+      lastFrame: 89.5357666
       folded: 0
       preview: 0
-      previewIndex: 6
+      previewIndex: 2
     - name: Golem
       animations:
       - name: Attack
-        tileSequence: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e000000
+        tileSequence: 0d0000000e0000000d000000
         frameSkip: 10
         folded: 0
       - name: Walk
@@ -2043,9 +2051,9 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       textureAtlasID: 4
-      lastFrame: .242221132
+      lastFrame: 89.5485611
       folded: 0
-      preview: 2
+      preview: 0
       previewIndex: 0
     animationsetFolded: 0
 --- !u!4 &597646135
@@ -2524,12 +2532,6 @@ MonoBehaviour:
       solid: 1
       folded: 0
       view: {fileID: 0}
-    - name: What
-      context: 1
-      index: 33
-      solid: 1
-      folded: 0
-      view: {fileID: 0}
     tileSpecFolded: 0
 --- !u!4 &855346070
 Transform:
@@ -2736,15 +2738,16 @@ MonoBehaviour:
     animationID: 2
   right: 0
   position: {x: 0, y: 0}
-  destination: {x: 0, y: 0}
   moveSpeed: .25
   maxHealth: 0
   currentHealth: 0
   jumpSpeed: 2
   gravity: 2
   landingDelay: 0
+  digTime: 4
   selected: 0
   cc: {fileID: 0}
+  digging: 0
   myState: 3
   myTeam: 0
   characterTarget: {fileID: 0}
@@ -3088,15 +3091,16 @@ MonoBehaviour:
     animationID: 2
   right: 0
   position: {x: 0, y: 0}
-  destination: {x: 0, y: 0}
   moveSpeed: .25
   maxHealth: 0
   currentHealth: 0
   jumpSpeed: 2
   gravity: 2
   landingDelay: 0
+  digTime: 4
   selected: 0
   cc: {fileID: 0}
+  digging: 0
   myState: 3
   myTeam: 0
   characterTarget: {fileID: 0}
@@ -3324,15 +3328,16 @@ MonoBehaviour:
     animationID: 2
   right: 0
   position: {x: 0, y: 0}
-  destination: {x: 0, y: 0}
   moveSpeed: .25
   maxHealth: 0
   currentHealth: 0
   jumpSpeed: 2
   gravity: 2
   landingDelay: 0
+  digTime: 4
   selected: 0
   cc: {fileID: 0}
+  digging: 0
   myState: 3
   myTeam: 0
   characterTarget: {fileID: 0}
@@ -3450,17 +3455,18 @@ MonoBehaviour:
   animation:
     animationsetID: 0
     animationID: 0
-  right: 1
+  right: 0
   position: {x: 0, y: 0}
-  destination: {x: 0, y: 0}
   moveSpeed: 8
   maxHealth: 0
   currentHealth: 0
   jumpSpeed: .75
   gravity: 2
   landingDelay: 5
+  digTime: 4
   selected: 0
   cc: {fileID: 0}
+  digging: 0
   terrainLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -3540,15 +3546,16 @@ MonoBehaviour:
     animationID: 2
   right: 0
   position: {x: 0, y: 0}
-  destination: {x: 0, y: 0}
   moveSpeed: .25
   maxHealth: 0
   currentHealth: 0
   jumpSpeed: 2
   gravity: 2
   landingDelay: 0
+  digTime: 4
   selected: 0
   cc: {fileID: 0}
+  digging: 0
   myState: 3
   myTeam: 0
   characterTarget: {fileID: 0}
@@ -3589,8 +3596,8 @@ Transform:
   m_PrefabInternal: {fileID: 401769405}
   m_GameObject: {fileID: 1271574656}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 63.0110741, y: 64.2910309, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 63.0110741, y: 64.5752716, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -4433,15 +4440,16 @@ MonoBehaviour:
     animationID: 1
   right: 0
   position: {x: 0, y: 0}
-  destination: {x: 0, y: 0}
   moveSpeed: 2
   maxHealth: 0
   currentHealth: 0
   jumpSpeed: 5
   gravity: 9.81000042
   landingDelay: 5
+  digTime: 4
   selected: 0
   cc: {fileID: 0}
+  digging: 0
   myState: 1
   myTeam: 0
   characterTarget: {fileID: 1076057209}
@@ -4967,6 +4975,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5c374e3a0b1efa54eb195419262c78ea, type: 2}
+    - target: {fileID: 11400000, guid: 8dd904aa180c9fe45a0028f2b0a6c328, type: 2}
+      propertyPath: right
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8dd904aa180c9fe45a0028f2b0a6c328, type: 2}
   m_RootGameObject: {fileID: 1858070149}
@@ -5228,15 +5240,16 @@ MonoBehaviour:
     animationID: 2
   right: 0
   position: {x: 0, y: 0}
-  destination: {x: 0, y: 0}
   moveSpeed: .25
   maxHealth: 0
   currentHealth: 0
   jumpSpeed: 2
   gravity: 2
   landingDelay: 0
+  digTime: 4
   selected: 0
   cc: {fileID: 0}
+  digging: 0
   myState: 3
   myTeam: 0
   characterTarget: {fileID: 0}
@@ -5367,17 +5380,18 @@ MonoBehaviour:
   animation:
     animationsetID: 2
     animationID: 0
-  right: 1
+  right: 0
   position: {x: 0, y: 0}
-  destination: {x: 0, y: 0}
   moveSpeed: .25
   maxHealth: 0
   currentHealth: 0
   jumpSpeed: 5
   gravity: 5
   landingDelay: 0
+  digTime: 4
   selected: 0
   cc: {fileID: 0}
+  digging: 0
   myState: 3
   myTeam: 0
   characterTarget: {fileID: 0}

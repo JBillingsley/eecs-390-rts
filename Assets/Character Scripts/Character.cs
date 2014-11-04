@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -22,6 +22,8 @@ public class Character : AnimatedEntity {
 	public float jumpSpeed = 10;
 	public float gravity = 9.81f;
 	public float landingDelay = 5;
+	public float digTime = 4f;
+	private float digTimer = 0;
 
 	protected UnitManager um;
 	protected EnemyManager em;
@@ -33,9 +35,9 @@ public class Character : AnimatedEntity {
 	protected Vector2 currentMovement;
 	Vector2 lastPosition;
 
-	public enum movementState {WALKING,JUMPING,LANDING,IDLE};
+	public enum movementState {WALKING,JUMPING,LANDING,IDLE,DIGGING};
 	protected movementState currentState;
-	public bool digging=false;
+	public bool digging = false;
 
 	protected Map map;
 
@@ -213,13 +215,18 @@ public class Character : AnimatedEntity {
 			currentMovement.x = Mathf.Sign(v.normalized.x) * moveSpeed;
 
 			IVector2 iDest = new IVector2(dest.x,dest.y);
+
 			if(digging){
-				map.setTile(iDest,0,0);
+				if((digTimer -= Time.fixedDeltaTime) <= 0){
+					digging = false;
+					map.setTile(iDest,0,map.getByte(iDest,Map.BACKGROUND_ID));
+					Debug.Log ("Destroyed" + (Vector2)iDest);
+					Debug.Log (path);
+				}
 			}
-			if(map.getForeground(iDest).solid){
-				map.setTile(iDest,0,0);
-				Debug.Log ("Destroyed" + (Vector2)iDest);
-				Debug.Log (path);
+			else if(map.getForeground(iDest).solid){
+				digTimer = digTime;
+				digging = true;
 			}
 
 			if(v.y > .25f && (Mathf.Abs(v.x) > 0 && cc.velocity.x == 0)){// || (lastPosition - currentpos).magnitude == 0){
@@ -247,6 +254,12 @@ public class Character : AnimatedEntity {
 	}
 
 	public IEnumerator computeState(){
+
+		if(digging){
+			currentState = movementState.DIGGING;
+			animation.animationID = 0;
+		}
+
 		int counter = 0;
 		while(true){
 			switch(currentState){
@@ -281,7 +294,15 @@ public class Character : AnimatedEntity {
 					}
 				}
 				break;
+			case movementState.DIGGING:
+				animation.animationID = 0;
+				if(!digging){
+					currentState = movementState.IDLE;
+					animation.animationID = 1;
+				}
+				break;
 			}
+
 			if(currentMovement.x < 0){
 				right = false;
 			}
