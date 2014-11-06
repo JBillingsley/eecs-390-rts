@@ -19,11 +19,15 @@ public class Character : AnimatedEntity {
 	public float maxHealth;
 	public float currentHealth;
 
+	public float hitForce;
+
 	public float jumpSpeed = 10;
 	public float gravity = 9.81f;
 	public float landingDelay = 5;
 	public float digTime = 4f;
 	private float digTimer = 0;
+
+	public float weight;
 
 	protected UnitManager um;
 	protected EnemyManager em;
@@ -33,6 +37,7 @@ public class Character : AnimatedEntity {
 	[HideInInspector]
 	public CharacterController cc;
 	protected Vector2 currentMovement;
+	protected Vector2 knockback;
 	Vector2 lastPosition;
 
 	public enum movementState {WALKING,JUMPING,LANDING,IDLE,DIGGING};
@@ -216,6 +221,9 @@ public class Character : AnimatedEntity {
 
 			currentMovement.x = ((Mathf.Abs(v.x) < .05)?0:Mathf.Sign(v.normalized.x) * moveSpeed);
 
+			if(knockback.magnitude > .2f){
+				knockback = Vector2.Lerp(knockback,Vector2.zero,5*Time.fixedDeltaTime);
+			}
 
 			IVector2 iDest = new IVector2(dest.x,dest.y);
 
@@ -334,7 +342,11 @@ public class Character : AnimatedEntity {
 		}
 	}
 
-	public void hit(float f){
+	//Damagae and apply a force to the character
+	public void hit(float f,float force,Transform source){
+		Vector2 dir = source.position - this.transform.position;
+		knockback = dir.normalized * force;
+		this.path = null;
 		this.currentHealth -= f;
 	}
 

@@ -44,6 +44,6 @@ public class Enemy : NPC {
 	}
 
 	void hit(Character c){
-		c.hit(1f);
+		c.hit(1f,hitForce,this.transform);
 	}
 }

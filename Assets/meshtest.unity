@@ -1822,10 +1822,10 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       textureAtlasID: 0
-      lastFrame: 89.5230713
+      lastFrame: 168.433273
       folded: 0
       preview: 0
-      previewIndex: 1
+      previewIndex: 3
     - name: Earth
       animations:
       - name: Attack
@@ -1879,10 +1879,10 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       textureAtlasID: 3
-      lastFrame: 89.5357666
+      lastFrame: 168.454895
       folded: 0
       preview: 0
-      previewIndex: 2
+      previewIndex: 4
     - name: Golem
       animations:
       - name: Attack
@@ -1898,10 +1898,10 @@ MonoBehaviour:
         frameSkip: 10
         folded: 0
       textureAtlasID: 4
-      lastFrame: 89.5485611
+      lastFrame: 168.470673
       folded: 0
       preview: 0
-      previewIndex: 0
+      previewIndex: 2
     animationsetFolded: 0
 --- !u!4 &597646135
 Transform:
