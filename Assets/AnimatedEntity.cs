@@ -7,6 +7,7 @@ public class AnimatedEntity : MonoBehaviour {
 	public AnimationSpec animation;
 	private bool oldright = true;
 	public bool right = true;
+	private float f;
 	private int i;
 
 	void Start () {
@@ -22,7 +23,8 @@ public class AnimatedEntity : MonoBehaviour {
 				GetComponent<MeshFilter>().mesh = UnitMesh.inst.leftMesh;
 		}
 		updateAnimationSet ();
-		i++;
+		f += Time.fixedDeltaTime * 60;
+		i = Mathf.FloorToInt(f);
 		Animation a = animation.animation;
 		if (a != null){
 			i %= a.tileSequence.Length * a.frameSkip;

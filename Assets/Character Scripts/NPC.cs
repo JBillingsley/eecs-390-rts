@@ -35,4 +35,8 @@ public abstract class NPC : Character {
 	protected abstract void gather();
 	protected abstract void idle();
 
+	
+	public void damage(Character c){
+		c.hit(1f,hitForce,this.transform);
+	}
 }

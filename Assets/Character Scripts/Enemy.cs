@@ -7,6 +7,14 @@ public class Enemy : NPC {
 		act ();
 		move ();
 	}
+
+	void OnControllerColliderHit(ControllerColliderHit col){
+		if(col.gameObject.tag == "Unit"){
+			Debug.Log ("collision");
+			characterTarget = col.gameObject.GetComponent<Unit>();
+			myState = State.ATTACKING;
+		}
+	}
 	
 	protected override void attack(){
 		if(!characterTarget){
@@ -18,7 +26,7 @@ public class Enemy : NPC {
 			findPath(targetPos);
 		}
 		if((targetPos - this.transform.position).magnitude < 1f){
-			hit(characterTarget);
+			damage(characterTarget);
 		}
 	}
 
@@ -43,7 +51,4 @@ public class Enemy : NPC {
 		}
 	}
 
-	void hit(Character c){
-		c.hit(1f,hitForce,this.transform);
-	}
 }

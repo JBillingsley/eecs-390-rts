@@ -10,7 +10,17 @@ public class Unit : NPC {
 	}
 
 	protected override void attack(){
-
+		if(!characterTarget){
+			myState = State.IDLE;
+			return;
+		}
+		Vector3 targetPos = characterTarget.position;
+		if((lastTargetPosition-targetPos).magnitude > 1f){
+			findPath(targetPos);
+		}
+		if((targetPos - this.transform.position).magnitude < 1f){
+			damage(characterTarget);
+		}
 	}
 	protected override void follow(){
 

@@ -41,7 +41,7 @@ public class Character : AnimatedEntity {
 	Vector2 lastPosition;
 
 	public enum movementState {WALKING,JUMPING,LANDING,IDLE,DIGGING};
-	protected movementState currentState;
+	public movementState currentState;
 	public bool digging = false;
 
 	protected Map map;
@@ -50,6 +50,7 @@ public class Character : AnimatedEntity {
 
 	// Use this for initialization
 	protected void Start () {
+		//Here be dragons
 		um = GameObject.FindObjectOfType<UnitManager>();
 		em = GameObject.FindObjectOfType<EnemyManager>();
 
@@ -105,7 +106,6 @@ public class Character : AnimatedEntity {
 			waitTime = .1f;
 			Vector2 start = position;
 			Vector2 end = new IVector2(destination.x ,destination.y);
-			Vector2 endTile = new IVector2(destination.x,destination.y);
 
 			//Create a list of leaves
 			List<ParentedNode> leaves = new List<ParentedNode>();
@@ -130,24 +130,17 @@ public class Character : AnimatedEntity {
 			//Add current position to the leaves
 			leaves.Add (new ParentedNode(null,position,0));
 			int count = 0;
-			ParentedNode current = new ParentedNode(null,start,float.MaxValue);
 
 			//While there are still leaves, and the destination hasn't changed.
 			while(leaves.Count > 0){
-				//Create a parented node
-				current.weight = float.MaxValue;
-				//Check to find the lowest weighted leaf
-				foreach(ParentedNode p in leaves){	
-					if(p.weight < current.weight){
-						current = p;
-					}				                             
-				}
+
+				ParentedNode current = getSmallestLeaf(leaves);
 
 				leaves.Remove(current);
 				branches.Add(current);
 
 				//If it found the path...
-				if(current.location == endTile){
+				if(current.location == end){
 					//...Create a new route based on that last node.
 					//ParentedNode p = new ParentedNode(current.parent,end,0);
 					Route r = new Route(current);
@@ -159,18 +152,9 @@ public class Character : AnimatedEntity {
 					goto reset;
 				}
 
-				//Get the neighbors and add them to leaves, parented to the current node.
-				foreach(Vector2 v in current.GetNeighbors()){
-					///Dont add it if it was already dealt with.
-					if(!ContainsNode(leaves,branches,v)){
-						leaves.Add(new ParentedNode(current,v,hueristic(v,start) + hueristic(v,endTile)));
-					}
-				}
-				foreach(Vector2 v in current.GetDigNeighbors()){
-					if(!ContainsNode(leaves,branches,v)){
-						leaves.Add(new ParentedNode(current,v,hueristic(v,start) + hueristic(v,endTile) + 10));
-					}
-				}
+				//Add new leaves, both open neighbors and ones where you dig.
+				addToLeaves(current,current.GetNeighbors(),branches,leaves,start,end,0);
+				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,10);
 
 				//Only do 20 cycles per frame
 				if(count % 40 == 0){
@@ -184,18 +168,41 @@ public class Character : AnimatedEntity {
 
 		}
 	}
+
+	//Gets the smallest node in leaves
+	private ParentedNode getSmallestLeaf(List<ParentedNode> leaves){
+		//Create a parented node
+		ParentedNode current = new ParentedNode(null,Vector2.zero,float.MaxValue);
+		current.weight = float.MaxValue;
+		//Check to find the lowest weighted leaf
+		foreach(ParentedNode p in leaves){	
+			if(p.weight < current.weight){
+				current = p;
+			}				                             
+		}
+		return current;
+	}
+
+	//Add the specified nodes as leaves, ensuring that they are parented to current and not in branches or leaves.
+	private void addToLeaves(ParentedNode current, Vector2[] positions, List<ParentedNode> branches,
+	                        List<ParentedNode> leaves, Vector2 start, Vector2 end, int addedWeight){
+		//Get the neighbors and add them to leaves, parented to the current node.
+		foreach(Vector2 v in positions){
+			//Don't add it if its already in the leaves or branches.
+			if(!ContainsNode(leaves,branches,v)){
+				leaves.Add(new ParentedNode(current,v,hueristic(v,start) + hueristic(v,end) + addedWeight));
+			}
+		}
+	}
 	
 	//Checks if the vector is in either list.
 	static bool ContainsNode(List<ParentedNode> l,List<ParentedNode>b, Vector2 n){
+		List<ParentedNode> combined = new List<ParentedNode>();
+		combined.AddRange(l);
+		combined.AddRange(b);
 		//Check l
-		foreach(ParentedNode p in l){
+		foreach(ParentedNode p in combined){
 			if((p.location - n).magnitude < 1){
-				return true;
-			}
-		}
-		//check b
-		foreach(ParentedNode a in b){
-			if((a.location - n).magnitude < 1){
 				return true;
 			}
 		}
@@ -221,28 +228,9 @@ public class Character : AnimatedEntity {
 
 			currentMovement.x = ((Mathf.Abs(v.x) < .05)?0:Mathf.Sign(v.normalized.x) * moveSpeed);
 
-			if(knockback.magnitude > .2f){
-				knockback = Vector2.Lerp(knockback,Vector2.zero,5*Time.fixedDeltaTime);
-			}
+			handleKnockback();
 
-			IVector2 iDest = new IVector2(dest.x,dest.y);
-
-			if(digging){
-				if(v.y < -.25){
-					jump(.8f);
-					emitParticles();
-				}
-				if((digTimer -= Time.fixedDeltaTime) <= 0){
-					digging = false;
-					map.setTile(iDest,0,map.getByte(iDest,Map.BACKGROUND_ID));
-					Debug.Log ("Destroyed" + (Vector2)iDest);
-					Debug.Log (path);
-				}
-			}
-			else if(map.getForeground(iDest).solid){
-				digTimer = digTime;
-				digging = true;
-			}
+			handleDigging(dest,v);
 
 			if(v.y > .25f && (Mathf.Abs(v.x) > 0 && cc.velocity.x == 0)){// || (lastPosition - currentpos).magnitude == 0){
 				jump ();
@@ -268,7 +256,44 @@ public class Character : AnimatedEntity {
 
 	}
 
-	public IEnumerator computeState(){
+	//If we have knockback velocity, manage it.
+	public void handleKnockback(){
+		if(knockback.magnitude > .2f){
+			knockback = Vector2.Lerp(knockback,Vector2.zero,5*Time.fixedDeltaTime);
+		}
+	}
+
+	//Handles the character digging.
+	public void handleDigging(Vector2 dest,Vector2 v){
+		IVector2 iDest = new IVector2(dest.x,dest.y);
+		//Check the digging boolean
+		if(digging){
+			this.currentState = movementState.DIGGING;
+			if(v.y < -.25){
+				jump(.8f);
+				emitParticles();
+			}
+			//If it is done digging
+			if((digTimer -= Time.fixedDeltaTime) <= 0){
+				mine (iDest);
+			}
+		}
+		//Detect if it needs to start digging
+		else if(map.getForeground(iDest).solid){
+			digTimer = digTime;
+			digging = true;
+		}
+	}
+
+	protected void mine(IVector2 iDest){
+		digging = false;
+		map.setTile(iDest,0,map.getByte(iDest,Map.BACKGROUND_ID));
+		Debug.Log ("Destroyed" + (Vector2)iDest);
+		Debug.Log (path);
+	}
+
+	//Determines the current movement state and what it should transition to
+	protected IEnumerator computeState(){
 
 		if(digging){
 			currentState = movementState.DIGGING;
@@ -330,12 +355,14 @@ public class Character : AnimatedEntity {
 		}
 	}
 
+	//Jump a modified height
 	public virtual void jump(float mod){
 		if(cc.isGrounded){
 			currentMovement.y = jumpSpeed * mod;
 		}
 	}
 
+	//Jump normally
 	public virtual void jump(){
 		if(cc.isGrounded){
 			currentMovement.y = jumpSpeed * Util.randomSpread();
@@ -354,6 +381,7 @@ public class Character : AnimatedEntity {
 	{
 		this.selected = b;
 	}
+
 	public void emitParticles(){
 		if(particles){
 			particles.Emit(1);
