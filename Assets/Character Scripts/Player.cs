@@ -5,6 +5,7 @@ using System.Collections.Generic;
 //Author: Henry Eastman
 //Controls the player, including inputs and movement.
 
+[RequireComponent(typeof(CapsuleCollider))]
 public class Player : Character {
 	
 	public static Player singleton;
