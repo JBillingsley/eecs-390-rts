@@ -297,7 +297,7 @@ public class Character : AnimatedEntity {
 
 		if(digging){
 			currentState = movementState.DIGGING;
-			animation.animationID = 0;
+			animater.animationID = 0;
 		}
 
 		int counter = 0;
@@ -306,13 +306,13 @@ public class Character : AnimatedEntity {
 			case movementState.IDLE:
 				if(currentMovement.x != 0){
 					currentState = movementState.WALKING;
-					animation.animationID = 1;
+					animater.animationID = 1;
 				}
 				break;
 			case movementState.JUMPING:
 				if(cc.isGrounded){
 					currentState = movementState.WALKING;
-					animation.animationID = 1;
+					animater.animationID = 1;
 					counter = (int)landingDelay;
 				}
 				break;
@@ -321,7 +321,7 @@ public class Character : AnimatedEntity {
 				if(counter == 0){
 					particles.Emit(25);
 					currentState = movementState.WALKING;
-					animation.animationID = 1;
+					animater.animationID = 1;
 				}
 				break;
 			case movementState.WALKING:
@@ -331,16 +331,16 @@ public class Character : AnimatedEntity {
 				else{
 					if(currentMovement.x == 0){
 						currentState = movementState.IDLE;
-						animation.animationID = 2;
+						animater.animationID = 2;
 					}
 				}
 				break;
 			case movementState.DIGGING:
-				animation.animationID = 0;
+				animater.animationID = 0;
 				emitParticles();
 				if(!digging){
 					currentState = movementState.IDLE;
-					animation.animationID = 1;
+					animater.animationID = 1;
 				}
 				break;
 			}

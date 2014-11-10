@@ -6,11 +6,11 @@ using System.Collections.Generic;
 //Controls the player, including inputs and movement.
 
 [RequireComponent(typeof(CapsuleCollider))]
-public class Player : Character {
+[RequireComponent(typeof(Rigidbody))]
+public class Player : AnimatedEntity {
 	
 	public static Player singleton;
-
-
+	
 	public LayerMask terrainLayer;
 	public LayerMask itemLayer;
 
@@ -29,18 +29,30 @@ public class Player : Character {
 	private bool moveInput = false;
 	private bool addSelect = false;
 
-	//public Item equipped;
+	private UnitManager um;
 
-	//private NavigationNode lastPosition;
+	public float moveSpeed = 2;
+	public float jumpSpeed = 2;
+	public float gravity = 1;
+	private bool onGround = false;
+	private Transform platform;
+	private bool stuck = false;
+
+	
+	Vector2 currentMovement = new Vector2();
+
+	
+	public enum movementState {WALKING,JUMPING,LANDING,IDLE,DIGGING};
+	public movementState currentState;
+	public bool digging = false;
 
 	// Use this for initialization
 	protected void Start () {
-		base.Start();
-		cc = this.GetComponent<CharacterController>();
 		singleton = this;
-		position = new Vector2((int)this.transform.position.x,(int)this.transform.position.y);
 		selectionBox = new Rect(0,0,0,0);
 		drawSelection = false;
+		um = GameObject.FindObjectOfType<UnitManager>();
+		StartCoroutine(computeState());
 	}
 
 	void Update(){
@@ -60,13 +72,14 @@ public class Player : Character {
 	}
 
 	// Update is called once per frame
-	public void FixedUpdate () {
+	public new void FixedUpdate () {
 		base.FixedUpdate();
 		move();
 	}
 
-	void OnGUI(){
+	private void OnGUI(){
 		if(drawSelection){
+			Debug.Log("drawing");
 			Rect r = selectionBox;
 			if (r != null){
 				r.x = Screen.height - r.x;
@@ -208,21 +221,100 @@ public class Player : Character {
 		return (hit = Physics2D.GetRayIntersection(r,100f,l.value));
 	}
 
-	public override void move(){
-		currentMovement.x = 0;
-		currentMovement.x = Mathf.Clamp(Input.GetAxis("Horizontal") * moveSpeed * Time.fixedDeltaTime,-1,1);
-		if(cc.isGrounded){
+	public void move(){
+		currentMovement.x = Mathf.Clamp(Input.GetAxis("Horizontal") * moveSpeed,-moveSpeed,moveSpeed);
+		if(onGround || stuck){
 			currentMovement.y = 0;
 			if(Input.GetAxis("Jump") > .5f){
 				currentMovement.y = jumpSpeed;
 			}
 		}
-		if(!cc.isGrounded){
+		else{
 			currentMovement.y -= gravity * Time.fixedDeltaTime;
 		}
-		Vector2 mov = transform.TransformDirection(currentMovement);
-		mov *= moveSpeed;
-		cc.Move(mov * Time.deltaTime);
+		Debug.Log (currentMovement);
+		this.rigidbody.velocity = currentMovement;
+	}
 
+	//Determines the current movement state and what it should transition to
+	protected IEnumerator computeState(){
+		
+		if(digging){
+			currentState = movementState.DIGGING;
+			animater.animationID = 0;
+		}
+		
+		int counter = 0;
+		while(true){
+			switch(currentState){
+			case movementState.IDLE:
+				if(currentMovement.x != 0){
+					currentState = movementState.WALKING;
+					animater.animationID = 1;
+				}
+				break;
+			case movementState.JUMPING:
+				if(onGround){
+					currentState = movementState.WALKING;
+					animater.animationID = 1;
+				}
+				break;
+			case movementState.LANDING:
+				counter --;
+				if(counter == 0){
+					currentState = movementState.WALKING;
+					animater.animationID = 1;
+				}
+				break;
+			case movementState.WALKING:
+				if(!onGround && currentMovement.y != 0){
+					currentState = movementState.JUMPING;
+				}
+				else{
+					if(currentMovement.x == 0){
+						currentState = movementState.IDLE;
+						animater.animationID = 2;
+					}
+				}
+				break;
+			case movementState.DIGGING:
+				animater.animationID = 0;
+				if(!digging){
+					currentState = movementState.IDLE;
+					animater.animationID = 1;
+				}
+				break;
+			}
+			
+			if(currentMovement.x < 0){
+				right = false;
+			}
+			if(currentMovement.x > 0){
+				right = true;
+			}
+			yield return null;
+		}
+	}
+
+	public void OnCollisionEnter(Collision col){
+		if(col.gameObject.tag == "Unit" && stuck == false){
+			this.transform.parent = col.gameObject.transform;
+			platform = col.gameObject.transform;
+			stuck = true;
+		}
+		else{
+			onGround = true;
+		}
+	}
+
+	public void OnCollisionExit(Collision col){
+		if(col.gameObject.tag == "Unit" && col.gameObject.transform == platform){
+			this.transform.parent = null;
+			platform = null;
+			stuck = false;
+		}
+		else{
+			onGround = false;
+		}
 	}
 }

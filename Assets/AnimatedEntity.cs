@@ -4,7 +4,7 @@ using System.Collections;
 public class AnimatedEntity : MonoBehaviour {
 
 	private Material defaultMaterial;
-	public AnimationSpec animation;
+	public AnimationSpec animater;
 	private bool oldright = true;
 	public bool right = true;
 	private float f;
@@ -25,7 +25,7 @@ public class AnimatedEntity : MonoBehaviour {
 		updateAnimationSet ();
 		f += Time.fixedDeltaTime * 60;
 		i = Mathf.FloorToInt(f);
-		Animation a = animation.animation;
+		Animation a = animater.animation;
 		if (a != null){
 			i %= a.tileSequence.Length * a.frameSkip;
 			renderer.material.SetFloat("_Index", a.tileSequence[i / a.frameSkip]);
@@ -35,7 +35,7 @@ public class AnimatedEntity : MonoBehaviour {
 	}
 
 	void updateAnimationSet(){
-		AnimationSet anim = animation.animationSet;
+		AnimationSet anim = animater.animationSet;
 		if (anim != null)
 			renderer.material = anim.getTileset() == null? null : anim.getTileset().getMaterial();
 		else
