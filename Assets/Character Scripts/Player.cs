@@ -77,7 +77,7 @@ public class Player : AnimatedEntity {
 		move();
 	}
 
-	private void OnGUI(){
+	void OnGUI(){
 		if(drawSelection){
 			Debug.Log("drawing");
 			Rect r = selectionBox;

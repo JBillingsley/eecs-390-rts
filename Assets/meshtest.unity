@@ -922,8 +922,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb9365935718db94b82b935801c862a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation:
-    animationsetID: 2
+  animater:
+    animationsetID: 0
     animationID: 0
   right: 0
 --- !u!1 &171818146
@@ -1389,6 +1389,14 @@ Prefab:
     - target: {fileID: 400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
       propertyPath: m_LocalScale.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: animater.animationsetID
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: animater.animationID
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
@@ -2197,8 +2205,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb9365935718db94b82b935801c862a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation:
-    animationsetID: 1
+  animater:
+    animationsetID: 0
     animationID: 0
   right: 0
 --- !u!1 &829342568
@@ -2495,7 +2503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20de1a6d4cbde434db9774f8187a610f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation:
+  animater:
     animationsetID: 4
     animationID: 2
   right: 0
@@ -2504,10 +2512,11 @@ MonoBehaviour:
   maxHealth: 0
   currentHealth: 0
   hitForce: 0
-  jumpSpeed: 2
-  gravity: 2
+  size: .5
+  jumpSpeed: 1.5
+  gravity: 1
   landingDelay: 0
-  digTime: 4
+  digTime: 6
   weight: 0
   selected: 0
   cc: {fileID: 0}
@@ -2824,7 +2833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20de1a6d4cbde434db9774f8187a610f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation:
+  animater:
     animationsetID: 4
     animationID: 2
   right: 0
@@ -2833,10 +2842,11 @@ MonoBehaviour:
   maxHealth: 0
   currentHealth: 0
   hitForce: 0
-  jumpSpeed: 2
-  gravity: 2
+  size: 2
+  jumpSpeed: 1.5
+  gravity: 1
   landingDelay: 0
-  digTime: 4
+  digTime: 6
   weight: 0
   selected: 0
   cc: {fileID: 0}
@@ -3109,7 +3119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20de1a6d4cbde434db9774f8187a610f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation:
+  animater:
     animationsetID: 4
     animationID: 2
   right: 0
@@ -3118,10 +3128,11 @@ MonoBehaviour:
   maxHealth: 0
   currentHealth: 0
   hitForce: 0
-  jumpSpeed: 2
-  gravity: 2
+  size: 1
+  jumpSpeed: 1.5
+  gravity: 1
   landingDelay: 0
-  digTime: 4
+  digTime: 6
   weight: 0
   selected: 0
   cc: {fileID: 0}
@@ -3256,7 +3267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a2a2c98cdc6d654184b09eae60061b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation:
+  animater:
     animationsetID: 0
     animationID: 0
   right: 1
@@ -3272,10 +3283,10 @@ MonoBehaviour:
     y: 0
     width: 0
     height: 0
-  selectBox: {fileID: 0}
+  selectBox: {fileID: 2800000, guid: f03f237df4c62f04fa20bae100b751d2, type: 3}
   selected: []
   moveSpeed: 3
-  jumpSpeed: 5
+  jumpSpeed: 3
   gravity: 5
   currentState: 0
   digging: 0
@@ -3291,9 +3302,9 @@ Rigidbody:
   m_AngularDrag: .0500000007
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 120
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &1271574656
 GameObject:
   m_ObjectHideFlags: 0
@@ -3340,7 +3351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20de1a6d4cbde434db9774f8187a610f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation:
+  animater:
     animationsetID: 4
     animationID: 2
   right: 0
@@ -3349,10 +3360,11 @@ MonoBehaviour:
   maxHealth: 0
   currentHealth: 0
   hitForce: 0
-  jumpSpeed: 2
-  gravity: 2
+  size: 1
+  jumpSpeed: 1.5
+  gravity: 1
   landingDelay: 0
-  digTime: 4
+  digTime: 6
   weight: 0
   selected: 0
   cc: {fileID: 0}
@@ -3453,6 +3465,18 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
       propertyPath: m_LocalScale.y
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: animater.animationsetID
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: animater.animationID
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: size
       value: .5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3860,8 +3884,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb9365935718db94b82b935801c862a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation:
-    animationsetID: 4
+  animater:
+    animationsetID: 0
     animationID: 0
   right: 0
 --- !u!1001 &1413666706
@@ -3906,6 +3930,18 @@ Prefab:
     - target: {fileID: 100000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
       propertyPath: m_Name
       value: Unit
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: animater.animationsetID
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: animater.animationID
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: size
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
@@ -4052,8 +4088,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb9365935718db94b82b935801c862a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation:
-    animationsetID: 3
+  animater:
+    animationsetID: 0
     animationID: 0
   right: 0
 --- !u!1 &1446440743
@@ -4854,7 +4890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20de1a6d4cbde434db9774f8187a610f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation:
+  animater:
     animationsetID: 4
     animationID: 2
   right: 0
@@ -4863,10 +4899,11 @@ MonoBehaviour:
   maxHealth: 0
   currentHealth: 0
   hitForce: 0
-  jumpSpeed: 2
-  gravity: 2
+  size: 1
+  jumpSpeed: 1.5
+  gravity: 1
   landingDelay: 0
-  digTime: 4
+  digTime: 6
   weight: 0
   selected: 0
   cc: {fileID: 0}
@@ -5091,6 +5128,14 @@ Prefab:
     - target: {fileID: 400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: animater.animationsetID
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: animater.animationID
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
@@ -5435,6 +5480,14 @@ Prefab:
     - target: {fileID: 400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
       propertyPath: m_LocalScale.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: animater.animationsetID
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
+      propertyPath: animater.animationID
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a93f9f5ed4f612f499795ba65ab1f38f, type: 2}
