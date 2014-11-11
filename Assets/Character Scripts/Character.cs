@@ -238,7 +238,7 @@ public class Character : AnimatedEntity {
 				jump ();
 			}
 
-			if(v.magnitude < .1f){
+			if(v.magnitude < .25f){
 				position = path.locations[currentPathIndex];
 				currentPathIndex++;
 			}

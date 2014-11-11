@@ -233,7 +233,7 @@ public class Player : AnimatedEntity {
 			currentMovement.y -= gravity * Time.fixedDeltaTime;
 		}
 		Debug.Log (currentMovement);
-		this.rigidbody.velocity = currentMovement;
+		this.rigidbody.AddForce(currentMovement);
 	}
 
 	//Determines the current movement state and what it should transition to
@@ -296,14 +296,22 @@ public class Player : AnimatedEntity {
 		}
 	}
 
-	public void OnCollisionEnter(Collision col){
+	public void OnCollisionStay(Collision col){
+		Vector2 diff = col.contacts[0].point - this.transform.position;
+		Vector2 normal = col.contacts[0].normal;
 		if(col.gameObject.tag == "Unit" && stuck == false){
 			this.transform.parent = col.gameObject.transform;
 			platform = col.gameObject.transform;
 			stuck = true;
+			this.currentMovement = Vector3.zero;
 		}
 		else{
-			onGround = true;
+			onGround = false;
+			foreach(ContactPoint p in col.contacts){
+				if(Mathf.Abs(p.normal.x) < .01f){
+					onGround = true;
+				}
+			}
 		}
 	}
 
