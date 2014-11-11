@@ -21,6 +21,7 @@ public class Character : AnimatedEntity {
 
 	public float hitForce;
 
+	public float size = 1f;
 	public float jumpSpeed = 10;
 	public float gravity = 9.81f;
 	public float landingDelay = 5;
@@ -67,6 +68,7 @@ public class Character : AnimatedEntity {
 		position = new Vector2(Mathf.RoundToInt(this.transform.position.x),Mathf.RoundToInt(this.transform.position.y));
 
 		selected = false;
+		this.transform.localScale = new Vector3(size,size,size);
 	}
 	
 	// Update is called once per frame
@@ -84,7 +86,7 @@ public class Character : AnimatedEntity {
 	public void setPath(Route r){
 		path = r;
 		currentPathIndex = 0;
-
+		r.centerLocations();
 	}
 
 	//Coroutine which calculates the path to the destination.
@@ -220,7 +222,7 @@ public class Character : AnimatedEntity {
 	public virtual void move(){
 		if(path != null && currentPathIndex < path.locations.Count){
 
-			Vector2 currentpos = new Vector2(this.transform.position.x,this.transform.position.y);
+			Vector2 currentpos = new Vector2(this.transform.position.x + size/2,this.transform.position.y);
 
 			Vector3 dest = path.locations[currentPathIndex];
 
@@ -236,7 +238,7 @@ public class Character : AnimatedEntity {
 				jump ();
 			}
 
-			if(v.magnitude < .25){
+			if(v.magnitude < .1f){
 				position = path.locations[currentPathIndex];
 				currentPathIndex++;
 			}

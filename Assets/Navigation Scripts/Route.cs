@@ -59,4 +59,9 @@ public class Route {
 		}
 
 	}
+	public void centerLocations(){
+		for(int i = 0; i < locations.Count; i++){
+			locations[i].Set(locations[i].x + .5f,locations[i].y,locations[i].z);
+		}
+	}
 }

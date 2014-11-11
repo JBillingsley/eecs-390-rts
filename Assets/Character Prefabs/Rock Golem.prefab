@@ -69,19 +69,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20de1a6d4cbde434db9774f8187a610f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation:
-    animationsetID: 4
-    animationID: 2
+  animater:
+    animationsetID: 0
+    animationID: 0
   right: 0
   position: {x: 0, y: 0}
   moveSpeed: .125
   maxHealth: 0
   currentHealth: 0
   hitForce: 0
-  jumpSpeed: 2
-  gravity: 2
+  size: 1
+  jumpSpeed: 1.5
+  gravity: 1
   landingDelay: 0
-  digTime: 4
+  digTime: 6
   weight: 0
   selected: 0
   cc: {fileID: 0}
