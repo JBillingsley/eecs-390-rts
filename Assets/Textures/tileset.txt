@@ -1,0 +1,12 @@
+256 16 16
+terrain/air.png 16 16
+terrain/back.png 512 512
+terrain/grass.png 512 512
+terrain/rock.png 512 512
+terrain/grassclay.png 512 512
+terrain/rockclay.png 512 512
+terrain/grassiron.png 512 512
+terrain/rockiron.png 512 512
+terrain/grassno.png 512 512
+terrain/rockno.png 512 512
+terrain/grassgem.png 512 512
