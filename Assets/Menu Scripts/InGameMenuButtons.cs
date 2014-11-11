@@ -7,12 +7,7 @@ public class InGameMenuButtons : MonoBehaviour {
 	public string content;
 	public float overlayHeight;
 	public float overlayWidth;
-	//public float toolTipRightPosition;
-	//public float toolTipBottomPosition;
-	//public GameObject toolTipTargetPosition;
 	public Vector3 toolTipActualPosition;
-	//public float screenXPosition;
-	//public float screenYPosition;
 	public bool buttonMousedOver = false;
 	public Vector3 scale;
 	
