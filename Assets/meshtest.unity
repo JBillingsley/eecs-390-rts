@@ -342,6 +342,7 @@ MonoBehaviour:
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 172646953}
 --- !u!23 &79159929
 Renderer:
   m_ObjectHideFlags: 0
@@ -434,6 +435,7 @@ MonoBehaviour:
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 172646953}
 --- !u!23 &81298336
 Renderer:
   m_ObjectHideFlags: 0
@@ -720,6 +722,7 @@ MonoBehaviour:
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 2.06484795}
+  uiCam: {fileID: 172646953}
 --- !u!23 &129206458
 Renderer:
   m_ObjectHideFlags: 0
@@ -812,6 +815,7 @@ MonoBehaviour:
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 172646953}
 --- !u!23 &152290189
 Renderer:
   m_ObjectHideFlags: 0
@@ -1027,6 +1031,7 @@ MonoBehaviour:
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 172646953}
 --- !u!23 &171998468
 Renderer:
   m_ObjectHideFlags: 0
@@ -1266,6 +1271,7 @@ MonoBehaviour:
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 172646953}
 --- !u!23 &230717734
 Renderer:
   m_ObjectHideFlags: 0
@@ -2095,6 +2101,7 @@ MonoBehaviour:
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 172646953}
 --- !u!23 &811256423
 Renderer:
   m_ObjectHideFlags: 0
@@ -2937,6 +2944,54 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
+      propertyPath: uiCam
+      value: 
+      objectReference: {fileID: 172646953}
+    - target: {fileID: 11400010, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
+      propertyPath: uiCam
+      value: 
+      objectReference: {fileID: 172646953}
+    - target: {fileID: 11400012, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
+      propertyPath: uiCam
+      value: 
+      objectReference: {fileID: 172646953}
+    - target: {fileID: 11400016, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
+      propertyPath: uiCam
+      value: 
+      objectReference: {fileID: 172646953}
+    - target: {fileID: 11400008, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
+      propertyPath: uiCam
+      value: 
+      objectReference: {fileID: 172646953}
+    - target: {fileID: 11400014, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
+      propertyPath: uiCam
+      value: 
+      objectReference: {fileID: 172646953}
+    - target: {fileID: 11400024, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
+      propertyPath: uiCam
+      value: 
+      objectReference: {fileID: 172646953}
+    - target: {fileID: 11400022, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
+      propertyPath: uiCam
+      value: 
+      objectReference: {fileID: 172646953}
+    - target: {fileID: 11400006, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
+      propertyPath: uiCam
+      value: 
+      objectReference: {fileID: 172646953}
+    - target: {fileID: 11400002, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
+      propertyPath: uiCam
+      value: 
+      objectReference: {fileID: 172646953}
+    - target: {fileID: 11400028, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
+      propertyPath: uiCam
+      value: 
+      objectReference: {fileID: 172646953}
+    - target: {fileID: 11400026, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
+      propertyPath: uiCam
+      value: 
+      objectReference: {fileID: 172646953}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6525b3b651fdc2548877704359bdd3d5, type: 2}
   m_RootGameObject: {fileID: 1411279171}
@@ -3619,6 +3674,7 @@ MonoBehaviour:
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 172646953}
 --- !u!23 &1306211177
 Renderer:
   m_ObjectHideFlags: 0
@@ -4155,6 +4211,7 @@ MonoBehaviour:
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 172646953}
 --- !u!23 &1446440746
 Renderer:
   m_ObjectHideFlags: 0
@@ -4248,6 +4305,7 @@ MonoBehaviour:
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 172646953}
 --- !u!23 &1544752241
 Renderer:
   m_ObjectHideFlags: 0
@@ -4430,6 +4488,7 @@ MonoBehaviour:
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 2.00530005}
+  uiCam: {fileID: 172646953}
 --- !u!23 &1657357826
 Renderer:
   m_ObjectHideFlags: 0
@@ -5271,6 +5330,7 @@ MonoBehaviour:
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 172646953}
 --- !u!23 &1933252773
 Renderer:
   m_ObjectHideFlags: 0

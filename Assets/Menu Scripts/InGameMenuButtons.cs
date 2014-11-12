@@ -10,6 +10,7 @@ public class InGameMenuButtons : MonoBehaviour {
 	public Vector3 toolTipActualPosition;
 	public bool buttonMousedOver = false;
 	public Vector3 scale;
+	public Camera uiCam;
 	
 	void OnMouseOver(){
 		buttonMousedOver = true;
@@ -34,7 +35,7 @@ public class InGameMenuButtons : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-		toolTipActualPosition = Camera.main.WorldToScreenPoint(transform.position);
+		toolTipActualPosition = uiCam.WorldToScreenPoint(transform.position);
 	}
 	
 	private void worldToScreenPositions(){
