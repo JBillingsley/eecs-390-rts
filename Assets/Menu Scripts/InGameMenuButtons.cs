@@ -4,12 +4,16 @@ using System.Collections;
 public class InGameMenuButtons : MonoBehaviour {
 
 
-	public string content;
+	public string title;
+	public string amount;
+	public string description;
 	public float overlayHeight;
 	public float overlayWidth;
 	public Vector3 toolTipActualPosition;
 	public bool buttonMousedOver = false;
 	public Vector3 scale;
+	public Camera uiCam;
+	public Element type;
 	
 	void OnMouseOver(){
 		buttonMousedOver = true;
@@ -22,7 +26,7 @@ public class InGameMenuButtons : MonoBehaviour {
 	void OnGUI(){
 		if(buttonMousedOver){
 			worldToScreenPositions();
-			GUI.TextArea(new Rect(toolTipActualPosition.x , Screen.height - (toolTipActualPosition.y)+scale.y, ((overlayWidth * scale.x) * Screen.width)/100, ((overlayHeight * scale.y)* Screen.height)/100), content);
+			GUI.TextArea(new Rect(toolTipActualPosition.x , Screen.height - (toolTipActualPosition.y)+scale.y, ((overlayWidth * scale.x) * Screen.width)/100, ((overlayHeight * scale.y)* Screen.height)/100), title + '\n' + amount + '\n' + description);
 		}
 		
 	}
@@ -34,7 +38,8 @@ public class InGameMenuButtons : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-		toolTipActualPosition = Camera.main.WorldToScreenPoint(transform.position);
+		toolTipActualPosition = uiCam.WorldToScreenPoint(transform.position);
+		amount = "Amount: " + InventroyManager.instance.getCount(type);
 	}
 	
 	private void worldToScreenPositions(){
