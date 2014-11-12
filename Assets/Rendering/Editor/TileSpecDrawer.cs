@@ -25,9 +25,7 @@ public class TileSpecDrawer : PropertyDrawer {
 
 		SerializedProperty folded = prop.FindPropertyRelative ("folded");
 		bool fold = folded.boolValue;
-
-
-
+		
 		if (name == null || context == null || index == null)
 			return;
 
@@ -42,7 +40,8 @@ public class TileSpecDrawer : PropertyDrawer {
 			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h / 2 + EditorUtil.row/2, pos.width - preview - EditorUtil.padding, EditorUtil.height), index, new GUIContent("Index"));
 			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h / 2 + 3 * EditorUtil.row/2, pos.width - preview - EditorUtil.padding, EditorUtil.height), solid, new GUIContent("Solid"));
 			Rect r = new Rect (pos.x + pos.width - preview, pos.y + EditorUtil.row, preview, preview);
-			GUI.Box(r, GUIContent.none);
+			Texture2D tex = (Texture2D)prop.FindPropertyRelative("view").objectReferenceValue;
+			GUI.Box(r, tex == null? new GUIContent("Error"):new GUIContent(tex));
 		}
 		EditorGUI.indentLevel--;
 

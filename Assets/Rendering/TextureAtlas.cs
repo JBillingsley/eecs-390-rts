@@ -75,7 +75,7 @@ public class TextureAtlas {
 			tex = new Texture2D((int)w, (int)h);
 		}
 		try {
-			tex.SetPixels(texture.GetPixels((int)(x*w), texture.height - (int)h - (int)(y*h), (int)w, (int)h));
+			tex.SetPixels(tileData (i));
 		}
 		catch (UnityException e){
 			return null;
