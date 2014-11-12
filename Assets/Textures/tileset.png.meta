@@ -280,7 +280,7 @@ TextureImporter:
   textureType: 5
   buildTargetSettings:
   - buildTarget: Standalone
-    maxTextureSize: 1024
+    maxTextureSize: 4096
     textureFormat: 5
     compressionQuality: 50
   spriteSheet:
