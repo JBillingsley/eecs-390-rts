@@ -8,7 +8,7 @@ public class InventroyManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_instance = this;
-		inventory = new int[Element.length];
+		inventory = new int[(int)Element.length];
 	}
 	
 	public static InventroyManager instance {
