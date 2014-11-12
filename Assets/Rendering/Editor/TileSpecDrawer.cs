@@ -36,8 +36,12 @@ public class TileSpecDrawer : PropertyDrawer {
 		if (!fold){
 			float preview = TileSpec.previewSize((TileContext)context.enumValueIndex);
 			float h = Mathf.Max (preview, 3 * EditorUtil.row);
+			EditorGUI.BeginChangeCheck();
 			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h / 2 - EditorUtil.row/2, pos.width - preview - EditorUtil.padding, EditorUtil.height), context, new GUIContent("Context"));
 			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h / 2 + EditorUtil.row/2, pos.width - preview - EditorUtil.padding, EditorUtil.height), index, new GUIContent("Index"));
+			if (EditorGUI.EndChangeCheck ()) {
+				prop.FindPropertyRelative("view").objectReferenceValue = TileSpec.constructPreview(prop);
+			}
 			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h / 2 + 3 * EditorUtil.row/2, pos.width - preview - EditorUtil.padding, EditorUtil.height), solid, new GUIContent("Solid"));
 			Rect r = new Rect (pos.x + pos.width - preview, pos.y + EditorUtil.row, preview, preview);
 			Texture2D tex = (Texture2D)prop.FindPropertyRelative("view").objectReferenceValue;
