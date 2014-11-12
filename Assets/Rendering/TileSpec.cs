@@ -17,33 +17,36 @@ public class TileSpec {
 	private Texture2D view;
 
 
-	public static Texture2D constructPreview(TileSpec spec, TextureAtlas atlas){
-		if (spec.view != null)
-			Texture2D.Destroy(spec.view);
-		int w = (int)atlas.pixelWidth();
-		int h = (int)atlas.pixelHeight();
-		switch (spec.context) {
-		case TileContext.None:
-			spec.view = fillTexture(spec.view, 1, 1, atlas, new int[]{spec.index});
-			return spec.view;
-		case TileContext.PartialContext:
-			spec.view = fillTexture(spec.view, 3, 3, atlas, new int[]{
-				spec.index, spec.index + 1, spec.index + 2, 
-				spec.index + 4, spec.index + 5, spec.index + 6, 
-				spec.index + 8, spec.index + 9, spec.index + 10});
-			return spec.view;
-		case TileContext.FullContext:
-			spec.view = fillTexture(spec.view, 5, 5, atlas, new int[]{
-				spec.index + 4, spec.index + 34, spec.index + 1, spec.index + 33, spec.index + 6, 
-				spec.index + 36, spec.index + 22, spec.index + 11, spec.index + 20, spec.index + 39, 
-				spec.index + 8, spec.index + 25, spec.index + 9, spec.index + 25, spec.index + 10,
-				spec.index + 40, spec.index + 6, spec.index + 11, spec.index + 4, spec.index + 43,
-				spec.index + 20, spec.index + 46, spec.index + 17, spec.index + 45, spec.index + 22});
-			return spec.view;
-		case TileContext.Slope:
-			return spec.view;
+	public static Texture2D constructPreview(SerializedProperty spec){
+		TextureAtlas atlas = TileSpecList.list.tileset;
+
+		Texture2D tex = (Texture2D)spec.FindPropertyRelative ("view").objectReferenceValue;
+		int index = spec.FindPropertyRelative ("index").intValue;
+
+		switch ((TileContext)spec.FindPropertyRelative ("context").enumValueIndex) {
+			case TileContext.None:
+				tex = fillTexture(tex, 1, 1, atlas, new int[]{index});
+				break;
+			case TileContext.PartialContext:
+				tex = fillTexture(tex, 3, 3, atlas, new int[]{
+					index, index + 1, index + 2, 
+					index + 4, index + 5, index + 6, 
+					index + 8, index + 9, index + 10});
+				break;
+			case TileContext.FullContext:
+				tex = fillTexture(tex, 5, 5, atlas, new int[]{
+					index + 4, index + 34, index + 1, index + 33, index + 6, 
+					index + 36, index + 22, index + 11, index + 20, index + 39, 
+					index + 8, index + 25, index + 9, index + 25, index + 10,
+					index + 40, index + 6, index + 11, index + 4, index + 43,
+					index + 20, index + 46, index + 17, index + 45, index + 22});
+				break;
+			case TileContext.Slope:
+				return null;
 		}
-		return null;
+		spec.FindPropertyRelative("view").objectReferenceValue = tex;
+		spec.serializedObject.ApplyModifiedProperties ();
+		return tex;
 	}
 
 	private static Texture2D fillTexture(Texture2D texture, int width, int height, TextureAtlas atlas, int[] indices){
@@ -51,18 +54,18 @@ public class TileSpec {
 		int h = (int)atlas.pixelHeight();
 		texture = ensureSize(texture, width * w, height * h);
 		for (int i = 0; i < width * height; i++)
-			texture.SetPixels(i % width, i / width, w, h, atlas.tileData(indices[i]));
+			texture.SetPixels(i % width * w, (height - (i / width) - 1) * h, w, h, atlas.tileData(indices[i]));
 		texture.Apply ();
 		return texture;
 	}
 
 	private static Texture2D ensureSize(Texture2D texture, int width, int height){
 		if (texture == null) {
-			texture = new Texture2D(width, height, TextureFormat.BGRA32, false);
+			texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
 		}
 		else if (texture.width != width || texture.height != height) {
 			Texture2D.Destroy(texture);
-			texture = new Texture2D(width, height, TextureFormat.BGRA32, false);
+			texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
 		}
 		return texture;
 	}
@@ -217,7 +220,10 @@ public class TileSpec {
 
 
 	public static void construct(SerializedProperty prop){
-		prop.FindPropertyRelative("name").stringValue = "Tile Name";         
+		prop.FindPropertyRelative("name").stringValue = "Tile Name";
+		prop.FindPropertyRelative ("view").objectReferenceValue = null;
+		prop.serializedObject.ApplyModifiedProperties();
+		prop.FindPropertyRelative ("view").objectReferenceValue = TileSpec.constructPreview(prop);         
 		prop.serializedObject.ApplyModifiedProperties();
 	}
 

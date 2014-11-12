@@ -6,10 +6,12 @@ public class TileSpecList{
 	
 	public static TileSpecList list = new TileSpecList();
 	
+	public TextureAtlas tileset;
 	public List<TileSpec> tilespecs = new List<TileSpec>();
+
 	[SerializeField]
 	private bool tileSpecFolded;
-	
+
 	private TileSpecList(){
 		tilespecs.Add (new TileSpec());
 	}

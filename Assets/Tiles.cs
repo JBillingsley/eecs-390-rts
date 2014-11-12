@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class Tiles : MonoBehaviour {
 
-	public TextureAtlas tileset;
 	public TileSpecList list = TileSpecList.list;
 
 	private static List<TileSpec> makeList(){

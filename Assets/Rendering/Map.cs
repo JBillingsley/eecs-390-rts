@@ -33,9 +33,9 @@ public class Map : MonoBehaviour {
 		dirtyChunks = new bool[h, w];
 		for (int x = 0; x < w*chunkSize; x++){
 			for (int y = 60 + (int)(Random.value * 2); y >= 0; y--)
-				setByte(new IVector2(x, y), FOREGROUND_ID, (byte)(Random.value * 2 + 1));
+				setByte(new IVector2(x, y), FOREGROUND_ID, (byte)(Random.value * 2 + 2));
 			for (int y = 61 + (int)(Random.value * 2); y >= 0; y--)
- 				setByte(new IVector2(x, y), BACKGROUND_ID, (byte)3);
+ 				setByte(new IVector2(x, y), BACKGROUND_ID, (byte)1);
 		}
 		for (int y = 0; y < h*chunkSize; y++)
 			for (int x = 0; x < w*chunkSize; x++)
