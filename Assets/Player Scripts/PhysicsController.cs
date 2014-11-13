@@ -1,26 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(BoxCollider))]
 public class PhysicsController : MonoBehaviour {
 
 	public LayerMask collisionMask;
 
-	private CapsuleCollider myCollider;
+	private BoxCollider myCollider;
 	private Vector2 s;
 	private Vector2 c;
 
 	public bool onGround;
 	public bool onWall;
 
-	private float gap = .04f;
+	private float gap = .01f;
 	public float verticalGap = 0f;
 
 	Ray ray;
 	RaycastHit hit;
 
 	void Start(){
-		myCollider = GetComponent<CapsuleCollider>();
+		myCollider = GetComponent<BoxCollider>();
 		s = myCollider.bounds.size;
 		c = myCollider.center;
 	}
@@ -68,8 +68,8 @@ public class PhysicsController : MonoBehaviour {
 		for(int i = 0; i <= 1; i++){
 			float dir = Mathf.Sign(deltax);
 
-			float x = p.x + c.y + (dir * s.x/2-verticalGap); //* transform.localScale.x; //Only works because i flip local scale.
-			float y = p.y + c.y - (s.y/2-verticalGap - i * (s.y-2*verticalGap)) * transform.localScale.y;
+			float x = p.x + c.x + (dir * s.x/2); //* transform.localScale.x; //Only works because i flip local scale.
+			float y = p.y + c.y - s.y/2 + (i * (s.y));// * transform.localScale.y;
 
 			Vector2 o = new Vector2(x,y);
 			
@@ -110,14 +110,16 @@ public class PhysicsController : MonoBehaviour {
 				float dist = Vector2.Distance( ray.origin,hit.point);
 				
 				if(dist > gap){
-					deltax = (dist * playerDirection.normalized.x) - gap * playerDirection.normalized.x;
-					deltay = (dist * playerDirection.normalized.y) - gap * playerDirection.normalized.y;
+					deltax = 0;//(dist * playerDirection.normalized.x) - gap * playerDirection.normalized.x;
+					deltay = 0;//(dist * playerDirection.normalized.y) - gap * playerDirection.normalized.y;
 				}
 				else{
+					Vector3 point = hit.point;
 					deltax = 0;
 					deltay = 0;
 				}
 				onWall = true;
+				deltax = hit.point.x - p.x;
 				//onGround = true;
 			}
 
