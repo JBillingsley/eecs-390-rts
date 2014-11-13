@@ -24,7 +24,7 @@ public class InGameMenuButtons : MonoBehaviour {
 	}
 	
 	void OnGUI(){
-		//amount = "Amount: " + InventroyManager.instance.getCount(type);
+		amount = "Amount: " + InventroyManager.instance.getCount(type);
 		if(buttonMousedOver){
 			worldToScreenPositions();
 			GUI.TextArea(new Rect(toolTipActualPosition.x , Screen.height - (toolTipActualPosition.y)+scale.y, ((overlayWidth * scale.x) * Screen.width)/100, ((overlayHeight * scale.y)* Screen.height)/100), title + '\n' + amount + '\n' + description);

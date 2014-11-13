@@ -4,9 +4,11 @@ using System.Collections;
 public enum Element {
 	NONE,
 	DIRT,
-	WOOD,
-	ROCK,
 	CLAY,
+	ROCK,
+	WOOD,
+	MUSHROOM,
+	METAL,
 	length
 }
 public class ElementType : MonoBehaviour {
