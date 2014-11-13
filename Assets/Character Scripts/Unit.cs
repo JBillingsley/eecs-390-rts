@@ -26,9 +26,7 @@ public class Unit : NPC {
 
 	}
 	protected override void gather(){
-		// This element type should be determined by the element being mined
-		Debug.Log ("gathering");
-		InventroyManager.instance.addToInventory(Element.DIRT);
+
 	}
 	protected override void idle(){
 

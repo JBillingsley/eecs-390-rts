@@ -10,6 +10,11 @@ public class TileSpec {
 	public TileContext context;
 	public int index;
 	public bool solid;
+	public bool diggable;
+	[Range (1, 256)]
+	public int durability;
+	[Range (1, 16)]
+	public int weight;
 
 	[SerializeField]
 	private bool folded;

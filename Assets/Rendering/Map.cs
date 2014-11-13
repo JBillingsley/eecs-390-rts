@@ -33,13 +33,22 @@ public class Map : MonoBehaviour {
 		dirtyChunks = new bool[h, w];
 		for (int x = 0; x < w*chunkSize; x++){
 			for (int y = 60 + (int)(Random.value * 2); y >= 0; y--)
-				setByte(new IVector2(x, y), FOREGROUND_ID, (byte)(Random.value * 2 + 2));
+				setByte(new IVector2(x, y), FOREGROUND_ID, randomTile()); //Change this line!!!!!!
 			for (int y = 61 + (int)(Random.value * 2); y >= 0; y--)
  				setByte(new IVector2(x, y), BACKGROUND_ID, (byte)1);
 		}
 		for (int y = 0; y < h*chunkSize; y++)
 			for (int x = 0; x < w*chunkSize; x++)
 				updateTileSpec(new IVector2(x, y));
+	}
+
+	public byte randomTile(){
+		int i = (int)(Random.value * 16);
+		while(true){
+			byte b = (byte)(Random.value * 9 + 2);
+			if (TileSpecList.getTileSpec(b).weight >= i)
+				return b;
+		}
 	}
 
 	/********************/

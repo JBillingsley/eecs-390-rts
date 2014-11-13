@@ -101,7 +101,7 @@ public class Character : AnimatedEntity {
 
 			//If the destination hasn't changed...
 			if(lastDest == destination){
-				waitTime = Mathf.Clamp(waitTime + .01f,.1f,1f);
+				waitTime = Mathf.Clamp(waitTime + .01f,.01f,.1f);
 				//...Go back to start of the loop.
 				goto reset;
 			}
@@ -159,7 +159,7 @@ public class Character : AnimatedEntity {
 				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,10);
 
 				//Only do 20 cycles per frame
-				if(count % 40 == 0){
+				if(count % 60 == 0){
 					yield return null;
 				}
 			}
@@ -290,8 +290,10 @@ public class Character : AnimatedEntity {
 	protected void mine(IVector2 iDest){
 		digging = false;
 		map.setTile(iDest,0,map.getByte(iDest,Map.BACKGROUND_ID));
-		Debug.Log ("Destroyed" + (Vector2)iDest);
-		Debug.Log (path);
+
+		// This element type should be determined by the element being mined
+		Debug.Log ("gathering");
+		InventroyManager.instance.addToInventory(Element.DIRT);
 	}
 
 	//Determines the current movement state and what it should transition to

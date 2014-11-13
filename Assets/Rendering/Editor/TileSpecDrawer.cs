@@ -12,7 +12,7 @@ public class TileSpecDrawer : PropertyDrawer {
 	public static float calculateHeight(SerializedProperty prop){
 		float h = EditorUtil.row;
 		if (!prop.FindPropertyRelative ("folded").boolValue)
-			h += Mathf.Max(3 * EditorUtil.row, TileSpec.previewSize((TileContext)prop.FindPropertyRelative("context").enumValueIndex) + EditorUtil.padding);
+			h += Mathf.Max(4 * EditorUtil.row, TileSpec.previewSize((TileContext)prop.FindPropertyRelative("context").enumValueIndex) + EditorUtil.padding);
 		return h;
 	}
 	
@@ -22,6 +22,7 @@ public class TileSpecDrawer : PropertyDrawer {
 		SerializedProperty context = prop.FindPropertyRelative ("context");
 		SerializedProperty index = prop.FindPropertyRelative ("index");
 		SerializedProperty solid = prop.FindPropertyRelative ("solid");
+		SerializedProperty weight = prop.FindPropertyRelative ("weight");
 
 		SerializedProperty folded = prop.FindPropertyRelative ("folded");
 		bool fold = folded.boolValue;
@@ -43,6 +44,7 @@ public class TileSpecDrawer : PropertyDrawer {
 				prop.FindPropertyRelative("view").objectReferenceValue = TileSpec.constructPreview(prop);
 			}
 			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h / 2 + 3 * EditorUtil.row/2, pos.width - preview - EditorUtil.padding, EditorUtil.height), solid, new GUIContent("Solid"));
+			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h / 2 + 5 * EditorUtil.row/2, pos.width - preview - EditorUtil.padding, EditorUtil.height), weight, new GUIContent("Weight"));
 			Rect r = new Rect (pos.x + pos.width - preview, pos.y + EditorUtil.row, preview, preview);
 			Texture2D tex = (Texture2D)prop.FindPropertyRelative("view").objectReferenceValue;
 			GUI.Box(r, tex == null? new GUIContent("Error"):new GUIContent(tex));
