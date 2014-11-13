@@ -24,6 +24,7 @@ public class InGameMenuButtons : MonoBehaviour {
 	}
 	
 	void OnGUI(){
+		//amount = "Amount: " + InventroyManager.instance.getCount(type);
 		if(buttonMousedOver){
 			worldToScreenPositions();
 			GUI.TextArea(new Rect(toolTipActualPosition.x , Screen.height - (toolTipActualPosition.y)+scale.y, ((overlayWidth * scale.x) * Screen.width)/100, ((overlayHeight * scale.y)* Screen.height)/100), title + '\n' + amount + '\n' + description);
@@ -38,8 +39,11 @@ public class InGameMenuButtons : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-		toolTipActualPosition = uiCam.WorldToScreenPoint(transform.position);
-		amount = "Amount: " + InventroyManager.instance.getCount(type);
+		if(uiCam != null){
+			toolTipActualPosition = uiCam.WorldToScreenPoint(transform.position);
+		} else {
+			toolTipActualPosition = Camera.main.WorldToScreenPoint(transform.position);
+		}
 	}
 	
 	private void worldToScreenPositions(){

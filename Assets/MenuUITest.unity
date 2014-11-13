@@ -406,13 +406,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cbacc329acfd4bad8cecc35dd9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: "Metal\r\nAmount: X\r\nThis is the strongest element\r\nthis strenght is
-    passed on to \r\nwhatever unit is created from this element"
+  title: 
+  amount: 
+  description: 
   overlayHeight: 4.48000002
   overlayWidth: 3.5999999
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 0}
+  type: 0
 --- !u!23 &267565498
 Renderer:
   m_ObjectHideFlags: 0
@@ -499,12 +502,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cbacc329acfd4bad8cecc35dd9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: "Clay\r\nAmount: X"
+  title: 
+  amount: 
+  description: 
   overlayHeight: 4.48000002
   overlayWidth: 3.5999999
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 0}
+  type: 0
 --- !u!23 &295412144
 Renderer:
   m_ObjectHideFlags: 0
@@ -619,6 +626,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1974305374}
   m_RootOrder: 0
+--- !u!1 &440441521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 440441522}
+  - 114: {fileID: 440441523}
+  m_Layer: 0
+  m_Name: Destroy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &440441522
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 440441521}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .448831558, y: -1.7454555, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1904230715}
+  m_RootOrder: 0
+--- !u!114 &440441523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 440441521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8296b35ead0614f439b54063219ccb0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: Destroy
+  guiCam: {fileID: 1911770052}
+  panel: {fileID: 1409506256}
+  scale: {x: .962346733, y: 1.20222521, z: 1}
+  x: 8.61999989
+  y: 6.17999983
+  texture: {fileID: 0}
 --- !u!1 &464982999
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,12 +843,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cbacc329acfd4bad8cecc35dd9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: "Stone Tower\r\nRequires: 20 Stone, 10 Wood, 5 Dirt\r\nTower Health: Maximum"
+  title: 
+  amount: 
+  description: 
   overlayHeight: 4.48000002
   overlayWidth: 3.5999999
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 0}
+  type: 0
 --- !u!23 &626840741
 Renderer:
   m_ObjectHideFlags: 0
@@ -955,13 +1012,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cbacc329acfd4bad8cecc35dd9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: "Dirt\r\nAmount: X\r\nPlain dirt is used \r\nfor making cheap houses\r\nand
-    cheap units \r\nwhen put in the right hands"
+  title: 
+  amount: 
+  description: 
   overlayHeight: 4.48000002
   overlayWidth: 3.5999999
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 2.06484795}
+  uiCam: {fileID: 0}
+  type: 0
 --- !u!23 &722305096
 Renderer:
   m_ObjectHideFlags: 0
@@ -1313,12 +1373,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cbacc329acfd4bad8cecc35dd9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: "Iron Ore\r\nAmount: X"
+  title: 
+  amount: 
+  description: 
   overlayHeight: 4.48000002
   overlayWidth: 3.5999999
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 0}
+  type: 0
 --- !u!23 &935431182
 Renderer:
   m_ObjectHideFlags: 0
@@ -1554,12 +1618,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cbacc329acfd4bad8cecc35dd9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: "Mushrooms\r\nAmount: X\r\nWoah... mushrooms..."
+  title: 
+  amount: 
+  description: 
   overlayHeight: 4.48000002
   overlayWidth: 3.5999999
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 0}
+  type: 0
 --- !u!23 &1013180139
 Renderer:
   m_ObjectHideFlags: 0
@@ -1805,12 +1873,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cbacc329acfd4bad8cecc35dd9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: "Wood Tower\r\nRequires: 15 Wood, 5 Stone\r\nTower Health: Medium"
+  title: 
+  amount: 
+  description: 
   overlayHeight: 4.48000002
   overlayWidth: 3.5999999
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 0}
+  type: 0
 --- !u!23 &1134066860
 Renderer:
   m_ObjectHideFlags: 0
@@ -2058,13 +2130,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cbacc329acfd4bad8cecc35dd9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: "Wood\r\nAmount: X\r\nWood is a structural material\r\nuse it to build
-    stronger towers"
+  title: 
+  amount: 
+  description: 
   overlayHeight: 4.48000002
   overlayWidth: 3.5999999
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 0}
+  type: 0
 --- !u!23 &1208301253
 Renderer:
   m_ObjectHideFlags: 0
@@ -2313,12 +2388,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cbacc329acfd4bad8cecc35dd9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: "Rock Golem\r\nRequires: 2 Rock\r\nUnit Speed: Fast\r\nUnit Health: Moderate"
+  title: 
+  amount: 
+  description: 
   overlayHeight: 4.48000002
   overlayWidth: 3.5999999
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 0}
+  type: 0
 --- !u!23 &1340897837
 Renderer:
   m_ObjectHideFlags: 0
@@ -2775,12 +2854,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cbacc329acfd4bad8cecc35dd9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: "Dirt Tower\r\nRequires: 10 Dirt, 5 Wood\r\nTower Health: Low"
+  title: 
+  amount: 
+  description: 
   overlayHeight: 4.48000002
   overlayWidth: 3.5999999
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 0}
+  type: 0
 --- !u!23 &1685150046
 Renderer:
   m_ObjectHideFlags: 0
@@ -3075,7 +3158,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.09682655, y: .799999952, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 440441522}
   m_Father: {fileID: 987079956}
   m_RootOrder: 4
 --- !u!114 &1904230716
@@ -3274,12 +3358,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cbacc329acfd4bad8cecc35dd9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: "Basic Golem\r\nRequires: 2 Dirt\r\nUnit Speed: Slow\r\nUnit Health: Low"
+  title: 
+  amount: 
+  description: 
   overlayHeight: 4.48000002
   overlayWidth: 3.5999999
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 2.00530005}
+  uiCam: {fileID: 0}
+  type: 0
 --- !u!23 &1945869180
 Renderer:
   m_ObjectHideFlags: 0
@@ -3764,13 +3852,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cbacc329acfd4bad8cecc35dd9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: "Super Rock Golem\r\nRequires: 3 Rock\r\nUnit Speed: Moderate\r\nUnit Health:
-    Massive"
+  title: 
+  amount: 
+  description: 
   overlayHeight: 4.48000002
   overlayWidth: 3.5999999
   toolTipActualPosition: {x: 0, y: 0, z: 0}
   buttonMousedOver: 0
   scale: {x: 3.5999999, y: 4.48000002, z: 1.77730036}
+  uiCam: {fileID: 0}
+  type: 0
 --- !u!23 &2106578860
 Renderer:
   m_ObjectHideFlags: 0
