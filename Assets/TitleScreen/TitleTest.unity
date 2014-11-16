@@ -137,6 +137,78 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!1 &412999126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 412999128}
+  - 114: {fileID: 412999127}
+  m_Layer: 0
+  m_Name: Tilesets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &412999127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 412999126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31e445688867a8f438ba98bcfbb9ef15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+    textureAtlases:
+    - name: Player
+      texture: {fileID: 2800000, guid: f8ffeb9a25450424eb342588708e4c92, type: 3}
+      width: 4
+      height: 4
+      folded: 0
+    - name: Earth
+      texture: {fileID: 2800000, guid: b85a6390b0c4f3545bd907e4f763a48b, type: 3}
+      width: 2
+      height: 4
+      folded: 1
+    - name: Water
+      texture: {fileID: 2800000, guid: 6d6b6867b3a015c49b1fb8e02e8f2a74, type: 3}
+      width: 4
+      height: 4
+      folded: 1
+    - name: Fire
+      texture: {fileID: 2800000, guid: 643e06153c9359448b11da31cbc99faf, type: 3}
+      width: 4
+      height: 4
+      folded: 1
+    - name: Golem
+      texture: {fileID: 2800000, guid: 9533a0cf21bf0ae45aa021829742b2a8, type: 3}
+      width: 4
+      height: 4
+      folded: 1
+    - name: Falling
+      texture: {fileID: 2800000, guid: d9afa49a84993db45b776d614d609204, type: 3}
+      width: 5
+      height: 1
+      folded: 0
+    textureAtlasFolded: 0
+--- !u!4 &412999128
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 412999126}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
 --- !u!1 &517325940
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +337,154 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!1 &917140927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 917140929}
+  - 114: {fileID: 917140928}
+  m_Layer: 0
+  m_Name: AnimationSets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &917140928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 917140927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 091e2d90a324cdb4193e3f6cdce4fac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+    animationsets:
+    - name: Player
+      animations:
+      - name: Idle
+        tileSequence: 00000000010000000200000003000000
+        frameSkip: 12
+        folded: 0
+      - name: Walk
+        tileSequence: 04000000050000000600000007000000
+        frameSkip: 12
+        folded: 0
+      - name: Idle
+        tileSequence: 00000000010000000200000001000000
+        frameSkip: 12
+        folded: 0
+      textureAtlasID: 0
+      lastFrame: 10.184535
+      folded: 1
+      preview: 0
+      previewIndex: 2
+    - name: Earth
+      animations:
+      - name: Attack
+        tileSequence: 0000000001000000020000000300000004000000030000000200000001000000
+        frameSkip: 12
+        folded: 0
+      - name: Walk
+        tileSequence: 0000000001000000
+        frameSkip: 12
+        folded: 0
+      - name: Idle
+        tileSequence: 0000000001000000020000000300000004000000030000000200000001000000
+        frameSkip: 12
+        folded: 0
+      textureAtlasID: 1
+      lastFrame: 8.94318104
+      folded: 1
+      preview: 2
+      previewIndex: 5
+    - name: Water
+      animations:
+      - name: Attack
+        tileSequence: 0000000001000000020000000300000004000000030000000200000001000000
+        frameSkip: 10
+        folded: 0
+      - name: Walk
+        tileSequence: 0000000001000000
+        frameSkip: 10
+        folded: 0
+      - name: Idle
+        tileSequence: 0000000001000000020000000300000004000000030000000200000001000000
+        frameSkip: 10
+        folded: 0
+      textureAtlasID: 2
+      lastFrame: 81.5285187
+      folded: 1
+      preview: 0
+      previewIndex: 3
+    - name: Fire
+      animations:
+      - name: Attack
+        tileSequence: 0000000001000000020000000300000004000000030000000200000001000000
+        frameSkip: 10
+        folded: 0
+      - name: Walk
+        tileSequence: 0000000001000000
+        frameSkip: 10
+        folded: 0
+      - name: Idle
+        tileSequence: 0000000001000000020000000300000004000000030000000200000001000000
+        frameSkip: 10
+        folded: 0
+      textureAtlasID: 3
+      lastFrame: 7.53520632
+      folded: 1
+      preview: 0
+      previewIndex: 0
+    - name: Golem
+      animations:
+      - name: Attack
+        tileSequence: 0d0000000e0000000d000000
+        frameSkip: 10
+        folded: 0
+      - name: Walk
+        tileSequence: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c000000
+        frameSkip: 4
+        folded: 0
+      - name: Idle
+        tileSequence: 00000000
+        frameSkip: 10
+        folded: 0
+      textureAtlasID: 4
+      lastFrame: 6.09289265
+      folded: 1
+      preview: 0
+      previewIndex: 2
+    - name: Falling
+      animations:
+      - name: Animation Name
+        tileSequence: 00000000010000000200000003000000
+        frameSkip: 1
+        folded: 0
+      textureAtlasID: 5
+      lastFrame: 105.606972
+      folded: 0
+      preview: 0
+      previewIndex: 0
+    animationsetFolded: 0
+--- !u!4 &917140929
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 917140927}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
 --- !u!1 &964788705
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,7 +493,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 964788707}
-  - 212: {fileID: 964788706}
+  - 212: {fileID: 964788708}
   m_Layer: 0
   m_Name: fallingplaceholder
   m_TagString: Untagged
@@ -281,7 +501,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!212 &964788706
+--- !u!4 &964788707
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 964788705}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .170319855, y: -.672938824, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+--- !u!212 &964788708
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -300,21 +532,59 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cc64a310f4818724ca8b7fba98460910, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!4 &964788707
+--- !u!1 &982369765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 982369767}
+  - 212: {fileID: 982369766}
+  m_Layer: 0
+  m_Name: CasteAway_Emblem-06
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &982369766
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 982369765}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 3
+  m_Sprite: {fileID: 21300000, guid: 6151fb8525dd92f4b955b036afdda80b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!4 &982369767
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 964788705}
+  m_GameObject: {fileID: 982369765}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .170319855, y: -.672938824, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: .25, y: .25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 7
 --- !u!1 &1025341603
 GameObject:
   m_ObjectHideFlags: 0
