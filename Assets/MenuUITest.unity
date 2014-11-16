@@ -2331,6 +2331,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1282663449}
+  - 114: {fileID: 1282663450}
   m_Layer: 0
   m_Name: TextBox
   m_TagString: Untagged
@@ -2350,6 +2351,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!114 &1282663450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1282663448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa65138f5bde15458f54e102120be6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textToDisplay: Hi this is my text son
+  textBox: {fileID: 2800000, guid: 3491eab1826a574459add47377e40516, type: 3}
+  characterIcon: {fileID: 2800000, guid: e3babdd46a6c31640b0ee14e8eb71fb3, type: 3}
 --- !u!1 &1323351953
 GameObject:
   m_ObjectHideFlags: 0
