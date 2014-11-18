@@ -28,7 +28,7 @@ public class CraftingBarActions : MonoBehaviour {
 	}
 	
 	protected string calculateAmount(int i){
-		return "" + InventroyManager.instance.getCount(type[i]);
+		return "" + 0;
 	}
 	
 	protected void buttonAction(){

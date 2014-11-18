@@ -1868,6 +1868,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1073977601}
+  - 114: {fileID: 1073977602}
   m_Layer: 0
   m_Name: CraftingBar
   m_TagString: Untagged
@@ -1882,11 +1883,41 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1073977600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.6072464, y: 64.3654251, z: 1}
+  m_LocalPosition: {x: .81761539, y: -.0815832019, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!114 &1073977602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1073977600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 370c88dd5a4410e47924f7dac7c75a7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelTexture: {fileID: 2800000, guid: 3491eab1826a574459add47377e40516, type: 3}
+  buttonTexure: {fileID: 2800000, guid: 1517234f130167b43a506e4a4401b2b2, type: 3}
+  iconTexture:
+  - {fileID: 2800000, guid: e5eff1e28e44e8b4eba9024888cb9799, type: 3}
+  - {fileID: 2800000, guid: e5eff1e28e44e8b4eba9024888cb9799, type: 3}
+  - {fileID: 2800000, guid: e5eff1e28e44e8b4eba9024888cb9799, type: 3}
+  - {fileID: 2800000, guid: 23b966f7ed7874042b26289ddf6b85f6, type: 3}
+  - {fileID: 2800000, guid: d2871c9f7fda59f44bcaf4a141fd5af3, type: 3}
+  - {fileID: 2800000, guid: 80910a80e1100c84283d7fb1b8363bbd, type: 3}
+  buttons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  panelHeight: 0
+  padding: 5
+  type: 
 --- !u!1 &1093718626
 GameObject:
   m_ObjectHideFlags: 0

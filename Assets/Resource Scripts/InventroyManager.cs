@@ -21,7 +21,6 @@ public class InventroyManager : MonoBehaviour {
 	}
 	
 	public void addToInventory(Element item){
-		Debug.Log ("inc element: " + item);
 		inventory[(int)item] += 1;
 	}
 	
