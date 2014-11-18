@@ -11,6 +11,9 @@ public class UnitPanelScript : MonoBehaviour {
 	public float y;
 	private ArrayList selectedUnits;
 	public Texture texture;
+	float calHalfHeight;
+	float camHalfWidth;
+	Vector3 panelSize;
 	
 	void Start(){
 		selectedUnits = new ArrayList();
