@@ -54,6 +54,8 @@ public class GenericFactory : MonoBehaviour{
 		}
 		activeObjects.Add (returnObject);
 		returnObject.SetActive(true);
+		UnitManager um = GameObject.FindGameObjectWithTag("GameController").GetComponent<UnitManager>();
+		um.units.Add (returnObject.GetComponent<Character>());
 		return returnObject;
 	}
 
