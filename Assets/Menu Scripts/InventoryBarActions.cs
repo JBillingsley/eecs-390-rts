@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InventoryPanelScript : MonoBehaviour {
+public class InventoryBarActions : MonoBehaviour {
 
 	public Texture panelTexture;
 	public Texture buttonTexure;
@@ -20,11 +20,18 @@ public class InventoryPanelScript : MonoBehaviour {
 		for(int i = 0; i < iconTexture.Length; i++){
 			float buttonOffset = ((panelHeight + padding)*i) + padding;
 			if(GUI.Button(new Rect(((Screen.width/2 - ((panelHeight + padding) * (iconTexture.Length))/2)) + buttonOffset, Screen.height - panelHeight, panelHeight, panelHeight), iconTexture[i])){
-				
+				buttonAction();
 			}
-			// TODO: change this to the inventory numbers
-			amount = "" + InventroyManager.instance.getCount(type[i]);
+			amount = calculateAmount(i);
 			GUI.Label(new Rect((((Screen.width/2 - ((panelHeight + padding) * (iconTexture.Length))/2)) + buttonOffset) + (3*panelHeight/4) - 5, Screen.height - panelHeight, panelHeight/3, panelHeight/2), amount);
 		}
+	}
+	
+	protected string calculateAmount(int i){
+		return "" + InventroyManager.instance.getCount(type[i]);
+	}
+	
+	protected void buttonAction(){
+
 	}
 }
