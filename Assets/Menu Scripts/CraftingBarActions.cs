@@ -7,6 +7,7 @@ public class CraftingBarActions : MonoBehaviour {
 	public Texture[] iconTexture;
 	public float panelHeight;
 	public float padding;
+	public GenericFactory unitSpawner;
 	private string amount;
 	
 	void OnGUI(){
@@ -26,7 +27,7 @@ public class CraftingBarActions : MonoBehaviour {
 	protected string calculateAmount(int i){
 		switch (i){
 		case 0:
-			return "" + InventroyManager.instance.getCount(Element.DIRT) % 10;
+			return "" + InventroyManager.instance.getCount(Element.DIRT) / 10;
 			break;
 		case 1:
 			return "" + 0;
@@ -51,7 +52,9 @@ public class CraftingBarActions : MonoBehaviour {
 		switch (i){
 		case 0:
 			if(InventroyManager.instance.getCount(Element.DIRT) >= 10){
-				
+				InventroyManager.instance.removeFromInventory(Element.DIRT, 10);
+				// make a CUTIE
+				unitSpawner.spawnObject();
 			}
 			break;
 		case 1:
