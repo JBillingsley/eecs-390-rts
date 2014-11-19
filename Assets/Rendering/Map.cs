@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Map : MonoBehaviour {
 
@@ -14,6 +15,11 @@ public class Map : MonoBehaviour {
 	public int tileSize = 16;
 	public int chunkSize = 16;
 
+	public int surfaceHeight = 60;
+	public int surfaceRandomness = 2;
+
+	public List<TileCluster> rects = new List<TileCluster>();
+
 	private int[] directions = new int[] {
 		Direction.TOPLEFT,
 		Direction.TOP,
@@ -27,16 +33,22 @@ public class Map : MonoBehaviour {
 
 	
 	public void Awake(){
+
 		Chunk.init (this);
 		name = name + Util.pair(getWidth(), getHeight());
 		map = new ulong[h*chunkSize, w*chunkSize];
 		dirtyChunks = new bool[h, w];
 		for (int x = 0; x < w*chunkSize; x++){
-			for (int y = 60 + (int)(Random.value * 2); y >= 0; y--)
+			for (int y = surfaceHeight + (int)(Random.value * surfaceRandomness); y >= 0; y--)
 				setByte(new IVector2(x, y), FOREGROUND_ID, randomTile()); //Change this line!!!!!!
-			for (int y = 61 + (int)(Random.value * 2); y >= 0; y--)
+			for (int y = surfaceHeight + 1 + (int)(Random.value * surfaceRandomness); y >= 0; y--)
  				setByte(new IVector2(x, y), BACKGROUND_ID, (byte)1);
 		}
+
+		foreach(TileCluster tc in rects){
+			populateCluster(tc);
+		}
+
 		for (int y = 0; y < h*chunkSize; y++)
 			for (int x = 0; x < w*chunkSize; x++)
 				updateTileSpec(new IVector2(x, y));
@@ -48,6 +60,16 @@ public class Map : MonoBehaviour {
 			byte b = (byte)(Random.value * 9 + 2);
 			if (TileSpecList.getTileSpec(b).weight >= i)
 				return b;
+		}
+	}
+
+	public void populateCluster(TileCluster t){
+		for(int x = t.x; x < t.x + t.width; x++){
+			for(int y = t.y; y < t.y + t.height; y++){
+				if(Random.value < t.likeliness){
+					setByte(new IVector2(x,y),FOREGROUND_ID,(byte)t.tileType);
+				}
+			}
 		}
 	}
 
