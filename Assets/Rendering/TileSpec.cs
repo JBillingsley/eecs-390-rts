@@ -13,7 +13,7 @@ public class TileSpec {
 	public bool diggable;
 	[Range (1, 256)]
 	public int durability;
-	[Range (1, 16)]
+	[Range (0, 16)]
 	public int weight;
 
 	[SerializeField]

@@ -10,4 +10,4 @@ terrain/rockiron.png 512 512
 terrain/grassno.png 512 512
 terrain/rockno.png 512 512
 terrain/grassgem.png 512 512
-terrain/watertile.png 256 256
+terrain/stonetower.png 512 512
