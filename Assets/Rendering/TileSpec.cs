@@ -11,9 +11,11 @@ public class TileSpec {
 	public int index;
 	public bool solid;
 	public bool diggable;
+	public Element resource;
+	public int resourceQuantity;
 	[Range (1, 256)]
 	public int durability;
-	[Range (0, 16)]
+	[Range (0, 32)]
 	public int weight;
 
 	[SerializeField]

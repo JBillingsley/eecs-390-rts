@@ -55,8 +55,8 @@ public class Map : MonoBehaviour {
 	}
 
 	public byte randomTile(int x, int y){
-		int i = (int)(Random.value * 16);
 		while(true){
+			int i = (int)(Random.value * 32);
 			byte b = (byte)(Random.value * 9 + 2);
 			if (TileSpecList.getTileSpec(b).weight >= i){
 				if((int)b <= 3){
@@ -71,7 +71,8 @@ public class Map : MonoBehaviour {
 		for(int x = t.x; x < t.x + t.width; x++){
 			for(int y = t.y; y < t.y + t.height; y++){
 				if(Random.value < t.likeliness){
-					setByte(new IVector2(x,y),FOREGROUND_ID,(byte)t.tileType);
+					byte layerID = (byte)(t.background?(BACKGROUND_ID):FOREGROUND_ID);
+					setByte(new IVector2(x,y),layerID,(byte)t.tileType);
 				}
 			}
 		}

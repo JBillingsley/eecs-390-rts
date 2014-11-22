@@ -11,5 +11,7 @@ public struct TileCluster
 
 	public int tileType;
 	public float likeliness;
+
+	public bool background;
 }
 
