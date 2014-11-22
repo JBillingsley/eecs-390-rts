@@ -95,7 +95,7 @@ public class UnitSelector : MonoBehaviour {
 		if(!addSelect){
 			foreach(Character u in selected){
 				//Make changes to the unit for being unselected
-				//u.changeSelection(false);
+				u.changeSelection(false);
 			}
 			selected = new List<Character>();
 		}
@@ -131,8 +131,6 @@ public class UnitSelector : MonoBehaviour {
 		if(!addSelect){
 			foreach(Character u in selected){
 				if(u){
-					
-					//unSelect the units
 					u.changeSelection(false);
 				}
 			}
@@ -146,7 +144,7 @@ public class UnitSelector : MonoBehaviour {
 			Vector2 v = Camera.main.WorldToScreenPoint(u.transform.position);
 			Vector2 w = Camera.main.WorldToScreenPoint(u.transform.position + u.transform.localScale);
 			if(new Rect(v.x,v.y,(w-v).x,(w-v).y).Contains(mousePos)){
-				selected.Add (u);
+				addToSelection(u);
 				return;
 			}
 		}

@@ -69,6 +69,8 @@ public class Character : AnimatedEntity {
 
 		selected = false;
 		this.transform.localScale = new Vector3(size,size,size);
+
+		this.right = Random.value>.5f;
 	}
 	
 	// Update is called once per frame

@@ -3,10 +3,13 @@ using System.Collections;
 
 public class Unit : NPC {
 
+	public GameObject selectionArrow;
+
 	// Update is called once per frame
 	void Update(){
 		act ();
 		move ();
+		selectionArrow.SetActive(selected);
 	}
 
 	protected override void attack(){
