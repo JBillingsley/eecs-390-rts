@@ -14,8 +14,8 @@ public class TileSpec {
 	public Element resource;
 	[Range (0, 8)]
 	public int resourceQuantity;
-	[Range (1, 256)]
-	public int durability;
+	[Range (1, 255)]
+	public byte durability;
 	[Range (0, 32)]
 	public int weight;
 

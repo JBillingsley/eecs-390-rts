@@ -85,7 +85,8 @@ public class Map : MonoBehaviour {
 	public const int BACKGROUND_ID = 1;
 	public const int FOREGROUND_CONTEXT = 2;
 	public const int BACKGROUND_CONTEXT = 3;
-	public const int NAVIGATION_MAP = 4;
+	public const int DURABILITY = 4;
+	public const int NAVIGATION_MAP = 5;
 
 	public bool isForegroundSolid(IVector2 v){
 		return getForeground(v).solid;
@@ -122,8 +123,6 @@ public class Map : MonoBehaviour {
 		switch(renderMode){
 			case NAVMESH:
 				return 0;
-			case BACKGROUND:
-				return 0;
 			default:
 				return getByte(v, BACKGROUND_CONTEXT);
 		}
@@ -133,7 +132,7 @@ public class Map : MonoBehaviour {
 			case NAVMESH:
 				return (!isForegroundSolid(v) && isForegroundSolid(v + Direction.getDirection(Direction.BOTTOM)))? TileSpecList.getTileSpec(0) : TileSpecList.getTileSpec(1);
 			case BACKGROUND:
-				return getBackground(v);
+				return TileSpecList.getTileSpec(0);
 			default:
 				return getForeground(v);
 		}
@@ -201,6 +200,9 @@ public class Map : MonoBehaviour {
 	}
 
 	public void updateTileSpec(IVector2 v){
+		if (!inBounds(v))
+			return;
+
 		map [v.y,v.x] &= 0xFFFF;
 		bool[] b = new bool[directions.Length];
 	
@@ -222,6 +224,11 @@ public class Map : MonoBehaviour {
 			return;
 		setByte (v, FOREGROUND_ID, foreground);
 		setByte (v, BACKGROUND_ID, background);
+		TileSpec t = TileSpecList.getTileSpec(foreground);
+		byte d = 1;
+		if (t != null)
+			d = t.durability;
+		setByte (v, DURABILITY, d);
 		for (int x = -1; x <= 1; x++)
 			for (int y = -1; y <= 1; y++){
 				IVector2 vi = v + new IVector2(x, y);
