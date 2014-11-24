@@ -11,43 +11,69 @@ public class TileSpecDrawer : PropertyDrawer {
 	
 	public static float calculateHeight(SerializedProperty prop){
 		float h = EditorUtil.row;
-		if (!prop.FindPropertyRelative ("folded").boolValue)
-			h += Mathf.Max(4 * EditorUtil.row, TileSpec.previewSize((TileContext)prop.FindPropertyRelative("context").enumValueIndex) + EditorUtil.padding);
+		if (!prop.FindPropertyRelative ("folded").boolValue) {
+			SerializedProperty context = prop.FindPropertyRelative ("context");
+			float p = TileSpec.previewSize((TileContext)context.enumValueIndex);
+			h += Mathf.Max (p + EditorUtil.padding, 2 * EditorUtil.row) + 3 * EditorUtil.row;
+		}
 		return h;
 	}
 	
 	public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label) {
 		
 		SerializedProperty name = prop.FindPropertyRelative ("name");
-		SerializedProperty context = prop.FindPropertyRelative ("context");
-		SerializedProperty index = prop.FindPropertyRelative ("index");
-		SerializedProperty solid = prop.FindPropertyRelative ("solid");
-		SerializedProperty weight = prop.FindPropertyRelative ("weight");
 
 		SerializedProperty folded = prop.FindPropertyRelative ("folded");
 		bool fold = folded.boolValue;
 		
-		if (name == null || context == null || index == null)
+		if (name == null)
 			return;
 
 		EditorUtil.folder (pos.x + EditorGUI.indentLevel * 12, pos.y, folded);
 		EditorUtil.textField (new Rect (pos.x + EditorUtil.buttonSize, pos.y, pos.width - 2 * EditorUtil.buttonSize, EditorUtil.height), name, !fold, "Tile Name");
 
 		EditorGUI.indentLevel++;
+		SerializedProperty context = prop.FindPropertyRelative ("context");
 		if (!fold){
-			float preview = TileSpec.previewSize((TileContext)context.enumValueIndex);
-			float h = Mathf.Max (preview, 3 * EditorUtil.row);
+			float p = TileSpec.previewSize((TileContext)context.enumValueIndex);
+			float h = Mathf.Max (p + EditorUtil.padding, 2 * EditorUtil.row);
+			float w = pos.width;
+
+			//
+			EditorGUIUtility.labelWidth = 100;
+
 			EditorGUI.BeginChangeCheck();
-			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h / 2 - EditorUtil.row/2, pos.width - preview - EditorUtil.padding, EditorUtil.height), context, new GUIContent("Context"));
-			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h / 2 + EditorUtil.row/2, pos.width - preview - EditorUtil.padding, EditorUtil.height), index, new GUIContent("Index"));
+
+			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h/2, w - p - EditorUtil.padding, EditorUtil.height), context, new GUIContent("Context"));
+			SerializedProperty index = prop.FindPropertyRelative ("index");
+			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h/2 + EditorUtil.row, w - p - EditorUtil.padding, EditorUtil.height), index, new GUIContent("Index"));
+
 			if (EditorGUI.EndChangeCheck ()) {
 				prop.FindPropertyRelative("view").objectReferenceValue = TileSpec.constructPreview(prop);
 			}
-			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h / 2 + 3 * EditorUtil.row/2, pos.width - preview - EditorUtil.padding, EditorUtil.height), solid, new GUIContent("Solid"));
-			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h / 2 + 5 * EditorUtil.row/2, pos.width - preview - EditorUtil.padding, EditorUtil.height), weight, new GUIContent("Weight"));
-			Rect r = new Rect (pos.x + pos.width - preview, pos.y + EditorUtil.row, preview, preview);
+
+			SerializedProperty weight = prop.FindPropertyRelative ("weight");
+			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h + EditorUtil.row, w/2, EditorUtil.height), weight, new GUIContent("Weight"));
+			SerializedProperty durability = prop.FindPropertyRelative ("durability");
+			EditorGUI.PropertyField (new Rect (pos.x + w/2, pos.y + h + EditorUtil.row, w/2, EditorUtil.height), durability, new GUIContent("Durability"));
+
+			//
+			SerializedProperty solid = prop.FindPropertyRelative ("solid");
+			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h + EditorUtil.row * 2, 130, EditorUtil.height), solid, new GUIContent("Solid"));
+			SerializedProperty diggable = prop.FindPropertyRelative ("diggable");
+			EditorGUI.PropertyField (new Rect (pos.x + w - 130, pos.y + h + EditorUtil.row * 2, 130, EditorUtil.height), diggable, new GUIContent("Diggable"));
+
+			SerializedProperty resource = prop.FindPropertyRelative ("resource");
+			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h + EditorUtil.row * 3, w - 110, EditorUtil.height), resource, new GUIContent("Resource"));
+			SerializedProperty resourceQuantity = prop.FindPropertyRelative ("resourceQuantity");
+			EditorGUI.PropertyField (new Rect (pos.x + w - 130, pos.y + h + EditorUtil.row * 3, 130, EditorUtil.height), resourceQuantity, new GUIContent("Quantity"));
+
+
+			Rect r = new Rect (pos.x + pos.width - p, pos.y + EditorUtil.row + (h - p - EditorUtil.padding)/2, p, p);
 			Texture2D tex = (Texture2D)prop.FindPropertyRelative("view").objectReferenceValue;
 			GUI.Box(r, tex == null? new GUIContent("Error"):new GUIContent(tex));
+			
+			EditorGUIUtility.labelWidth = 0;
 		}
 		EditorGUI.indentLevel--;
 
