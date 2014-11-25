@@ -39,10 +39,10 @@ public class Map : MonoBehaviour {
 		map = new ulong[h*chunkSize, w*chunkSize];
 		dirtyChunks = new bool[h, w];
 		for (int x = 0; x < w*chunkSize; x++){
-			for (int y = surfaceHeight + (int)(Random.value * surfaceRandomness); y >= 0; y--)
+			for (int y = surfaceHeight + (int)(Random.value * surfaceRandomness); y >= 0; y--){
 				setByte(new IVector2(x, y), FOREGROUND_ID, randomTile(x,y)); //Change this line!!!!!!
-			for (int y = surfaceHeight + 1 + (int)(Random.value * surfaceRandomness); y >= 0; y--)
- 				setByte(new IVector2(x, y), BACKGROUND_ID, (byte)1);
+				setByte(new IVector2(x, y), BACKGROUND_ID, (byte)1);
+			}
 		}
 
 		foreach(TileCluster tc in rects){

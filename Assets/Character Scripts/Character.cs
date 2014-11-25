@@ -158,10 +158,11 @@ public class Character : AnimatedEntity {
 
 				//Add new leaves, both open neighbors and ones where you dig.
 				addToLeaves(current,current.GetNeighbors(),branches,leaves,start,end,0);
-				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,10);
+				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,2);
 
+				count ++;
 				//Only do 20 cycles per frame
-				if(count % 60 == 0){
+				if(count % 180 == 0){
 					yield return null;
 				}
 			}
@@ -194,7 +195,7 @@ public class Character : AnimatedEntity {
 		foreach(Vector2 v in positions){
 			//Don't add it if its already in the leaves or branches.
 			if(!ContainsNode(leaves,branches,v)){
-				leaves.Add(new ParentedNode(current,v,hueristic(v,start) + hueristic(v,end) + addedWeight));
+				leaves.Add(new ParentedNode(current,v,hueristic(v,end) + addedWeight));
 			}
 		}
 	}
