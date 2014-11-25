@@ -300,6 +300,8 @@ public class Character : AnimatedEntity {
 		byte d = (byte)(map.getByte (v, Map.DURABILITY) - 1); 
 		if (d == 0){
 			digging = false;
+			TileSpec ts = TileSpecList.getTileSpec(map.getByte(v,Map.FOREGROUND_ID));
+			InventroyManager.instance.addToInventory(ts.resource);
 			map.setTile(v,0,map.getByte(v,Map.BACKGROUND_ID));
 		}
 		else
@@ -307,7 +309,6 @@ public class Character : AnimatedEntity {
 
 		// This element type should be determined by the element being mined
 		Debug.Log ("gathering");
-		InventroyManager.instance.addToInventory(Element.DIRT);
 	}
 
 	//Determines the current movement state and what it should transition to
