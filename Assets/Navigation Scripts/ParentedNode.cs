@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -59,6 +59,7 @@ public class ParentedNode {
 	public Vector2[] GetDigNeighbors(){
 		
 		List<Vector2> neighbors = new List<Vector2>();
+		List<Vector2> goodNeighbors = new List<Vector2>();
 		IVector2 pos = new IVector2(location.x,location.y);
 
 		neighbors.Add (new IVector2(location.x - 1, location.y));
@@ -66,6 +67,14 @@ public class ParentedNode {
 		neighbors.Add (new IVector2(location.x, location.y -1));
 		neighbors.Add (new IVector2(location.x, location.y + 1));
 
-		return neighbors.ToArray();
+		foreach(IVector2 v in neighbors){
+			byte b = m.getByte(v,Map.FOREGROUND_ID);
+			TileSpec t = TileSpecList.getTileSpec(b);
+			if(t.diggable){
+				goodNeighbors.Add(v);
+			}
+		}
+
+		return goodNeighbors.ToArray();
 	}
 }

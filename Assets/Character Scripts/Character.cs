@@ -107,6 +107,12 @@ public class Character : AnimatedEntity {
 				//...Go back to start of the loop.
 				goto reset;
 			}
+
+			if(!TileSpecList.getTileSpec(map.getByte(destination,Map.FOREGROUND_ID)).diggable){
+				lastDest = destination;
+				path = new Route();
+				goto reset;
+			}
 			waitTime = .1f;
 			Vector2 start = position;
 			Vector2 end = new IVector2(destination.x ,destination.y);
