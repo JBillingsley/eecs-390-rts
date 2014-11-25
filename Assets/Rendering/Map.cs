@@ -40,8 +40,8 @@ public class Map : MonoBehaviour {
 		dirtyChunks = new bool[h, w];
 		for (int x = 0; x < w*chunkSize; x++){
 			for (int y = surfaceHeight + (int)(Random.value * surfaceRandomness); y >= 0; y--){
-				setByte(new IVector2(x, y), FOREGROUND_ID, randomTile(x,y)); //Change this line!!!!!!
-				setByte(new IVector2(x, y), BACKGROUND_ID, (byte)1);
+				setTile(new IVector2(x, y), randomTile(x,y), (byte)1); //Change this line!!!!!!
+				//setByte(new IVector2(x, y), BACKGROUND_ID, (byte)1);
 			}
 		}
 

@@ -298,17 +298,20 @@ public class Character : AnimatedEntity {
 
 	protected void mine(IVector2 v){
 		byte d = (byte)(map.getByte (v, Map.DURABILITY) - 1); 
+		Debug.Log ("gathering" + d);
 		if (d == 0){
 			digging = false;
 			TileSpec ts = TileSpecList.getTileSpec(map.getByte(v,Map.FOREGROUND_ID));
 			InventroyManager.instance.addToInventory(ts.resource);
 			map.setTile(v,0,map.getByte(v,Map.BACKGROUND_ID));
 		}
-		else
+		else{
 			map.setByte(v, Map.DURABILITY, d);
-
+			//digTimer = digTime;
+			digging = true;
+		}
 		// This element type should be determined by the element being mined
-		Debug.Log ("gathering");
+
 	}
 
 	//Determines the current movement state and what it should transition to
