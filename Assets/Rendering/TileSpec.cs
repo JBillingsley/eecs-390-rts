@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,9 +12,10 @@ public class TileSpec {
 	public bool solid;
 	public bool diggable;
 	public Element resource;
+	[Range (0, 8)]
 	public int resourceQuantity;
-	[Range (1, 256)]
-	public int durability;
+	[Range (1, 255)]
+	public byte durability;
 	[Range (0, 32)]
 	public int weight;
 

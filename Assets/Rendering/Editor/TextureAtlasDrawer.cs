@@ -28,10 +28,14 @@ public class TextureAtlasDrawer : PropertyDrawer {
 		bool fold = folded.boolValue;
 		if (name == null || width == null || height == null)
 			return;
+
+		EditorGUIUtility.labelWidth = 80;
+
 		EditorUtil.folder (pos.x + EditorGUI.indentLevel * 12, pos.y, folded);
-		
+				SerializedProperty context = prop.FindPropertyRelative ("context");
+
 		EditorGUI.indentLevel++;
-		EditorUtil.textField (new Rect (pos.x, pos.y, pos.width - EditorUtil.texSize - padding, EditorUtil.height), name, !fold);
+		EditorUtil.textField (new Rect (pos.x + EditorUtil.buttonSize, pos.y, pos.width - EditorUtil.texSize - padding, EditorUtil.height), name, !fold);
 		if (!fold){
 			EditorGUI.PropertyField (new Rect (pos.x, pos.y + 1*EditorUtil.row, pos.width - EditorUtil.texSize - padding, EditorUtil.height), texture, new GUIContent("Texture"));
 			EditorGUI.PropertyField (new Rect (pos.x, pos.y + 2*EditorUtil.row, pos.width - EditorUtil.texSize - padding, EditorUtil.height), width, new GUIContent("Width"));
@@ -39,6 +43,8 @@ public class TextureAtlasDrawer : PropertyDrawer {
 			GUI.Box (new Rect ( pos.x + pos.width - EditorUtil.texSize, pos.y, EditorUtil.texSize, EditorUtil.texSize), (Texture2D)texture.objectReferenceValue);
 		}
 		EditorGUI.indentLevel--;
+
+		EditorGUIUtility.labelWidth = 0;
 
 		prop.serializedObject.ApplyModifiedProperties ();
 	}

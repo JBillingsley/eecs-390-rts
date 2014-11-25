@@ -25,7 +25,7 @@ public class Character : AnimatedEntity {
 	public float jumpSpeed = 10;
 	public float gravity = 9.81f;
 	public float landingDelay = 5;
-	public float digTime = 4f;
+	public float digTime = 0.25f;
 	private float digTimer = 0;
 
 	public float weight;
@@ -74,7 +74,7 @@ public class Character : AnimatedEntity {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	new void FixedUpdate () {
 		base.FixedUpdate();
 		move ();
 	}
@@ -290,9 +290,14 @@ public class Character : AnimatedEntity {
 		}
 	}
 
-	protected void mine(IVector2 iDest){
-		digging = false;
-		map.setTile(iDest,0,map.getByte(iDest,Map.BACKGROUND_ID));
+	protected void mine(IVector2 v){
+		byte d = (byte)(map.getByte (v, Map.DURABILITY) - 1); 
+		if (d == 0){
+			digging = false;
+			map.setTile(v,0,map.getByte(v,Map.BACKGROUND_ID));
+		}
+		else
+			map.setByte(v, Map.DURABILITY, d);
 
 		// This element type should be determined by the element being mined
 		Debug.Log ("gathering");

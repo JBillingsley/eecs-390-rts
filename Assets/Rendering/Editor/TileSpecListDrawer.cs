@@ -25,7 +25,6 @@ public class TileSpecListDrawer : PropertyDrawer {
 	
 	public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label) {
 		pos.y += renderTileset(pos, prop);
-
 		renderTileSpecs (pos, prop);
 	}
 	
@@ -46,7 +45,6 @@ public class TileSpecListDrawer : PropertyDrawer {
 	private float renderTileSpecs(Rect pos, SerializedProperty prop){
 		SerializedProperty folded = prop.FindPropertyRelative ("tileSpecFolded");
 		bool fold = folded.boolValue;
-
 
 		EditorUtil.folder (pos.x + EditorGUI.indentLevel * 12, pos.y, folded);
 		EditorGUI.LabelField (new Rect (pos.x + EditorUtil.buttonSize, pos.y, pos.width - 2 * EditorUtil.buttonSize, EditorUtil.height), new GUIContent("Tiles"));
@@ -75,6 +73,7 @@ public class TileSpecListDrawer : PropertyDrawer {
 			EditorUtil.foldLines(pos.x + EditorGUI.indentLevel * 12, pos.y, h);
 			EditorGUI.indentLevel--;
 		}
+
 		prop.serializedObject.ApplyModifiedProperties();
 		return ay;
 	}
