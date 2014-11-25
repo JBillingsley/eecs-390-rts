@@ -8,7 +8,7 @@ public class CityInteractScript : MonoBehaviour {
 	public bool playerInRange = false;
 	
 	void OnMouseDown(){
-			textActive = !textActive;
+			textActive = true;
 			textBox.GetComponent<TextPopupScript>().enabled = textActive;
 	}
 	
@@ -19,6 +19,9 @@ public class CityInteractScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			textActive = false;
+			textBox.GetComponent<TextPopupScript>().enabled = textActive;
+		}
 	}
 }
