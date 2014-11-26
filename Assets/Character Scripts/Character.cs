@@ -281,7 +281,7 @@ public class Character : AnimatedEntity {
 		if(digging){
 			this.currentState = movementState.DIGGING;
 			if(v.y < -.25){
-				jump(.8f);
+				jump(.75f);
 				emitParticles();
 			}
 			//If it is done digging

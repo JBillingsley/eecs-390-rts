@@ -49,16 +49,23 @@ public class Map : MonoBehaviour {
 			populateCluster(tc);
 		}
 
+		//Generate based on objets in the area.
+		foreach (MapAdjuster ma in GameObject.FindObjectsOfType<MapAdjuster>()){
+			ma.activate();
+		}
+
 		for (int y = 0; y < h*chunkSize; y++)
 			for (int x = 0; x < w*chunkSize; x++)
 				updateTileSpec(new IVector2(x, y));
+
+
 	}
 
 	public byte randomTile(int x, int y){
 		while(true){
 			int i = (int)(Random.value * 32);
 			byte b = (byte)(Random.value * 9 + 2);
-			if (TileSpecList.getTileSpec(b).weight >= i){
+			if (TileSpecList.getTileSpec(b).weight > i){
 				if((int)b <= 3){
 					b = (byte)(y < surfaceHeight?3:2);
 				}
