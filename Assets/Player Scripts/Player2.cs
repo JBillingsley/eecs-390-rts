@@ -48,7 +48,7 @@ public class Player2 : AnimatedEntity {
 		if (pPhysics.onGround) {
 			moveAmount.y = 0;
 			if (Input.GetAxisRaw("Jump") > .5) {
-				moveAmount.y = jumpHeight;	
+				moveAmount.y = jumpHeight;
 			}
 		}
 

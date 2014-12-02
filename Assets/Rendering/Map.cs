@@ -80,6 +80,7 @@ public class Map : MonoBehaviour {
 				if(Random.value < t.likeliness){
 					byte layerID = (byte)(t.background?(BACKGROUND_ID):FOREGROUND_ID);
 					setByte(new IVector2(x,y),layerID,(byte)t.tileType);
+					updateTileSpec(new IVector2(x,y));
 				}
 			}
 		}
@@ -236,13 +237,14 @@ public class Map : MonoBehaviour {
 		if (t != null)
 			d = t.durability;
 		setByte (v, DURABILITY, d);
-		for (int x = -1; x <= 1; x++)
+		for (int x = -1; x <= 1; x++){
 			for (int y = -1; y <= 1; y++){
 				IVector2 vi = v + new IVector2(x, y);
 				updateTileSpec(vi);
 				if (inBounds(vi))
 					makeDirty(vi.x / chunkSize, vi.y / chunkSize);		
 			}
+		}
 	}
 
 
