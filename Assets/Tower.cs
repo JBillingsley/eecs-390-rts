@@ -13,7 +13,7 @@ public class Tower : MapAdjuster {
 	// Use this for initialization
 	void Start () {
 		towerCluster = new TileCluster();
-		towerCluster.x = -1;
+		towerCluster.x = 1;
 		towerCluster.y = 1;
 		towerCluster.width = 4;
 		towerCluster.height = height;
