@@ -46,7 +46,6 @@ public class UnitSelector : MonoBehaviour {
 
 	void OnGUI(){
 		if(drawSelection){
-			Debug.Log("drawing");
 			Rect r = selectionBox;
 			if (r != null){
 				r.x = Screen.height - r.x;

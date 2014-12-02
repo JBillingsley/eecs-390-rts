@@ -9,6 +9,8 @@ public class CraftingBarActions : MonoBehaviour {
 	public float padding;
 	public GenericFactory unitSpawner;
 	private string amount;
+
+	private Tower tower;
 	
 	void OnGUI(){
 		panelHeight = (Screen.width/1.618f)/20;
@@ -49,27 +51,32 @@ public class CraftingBarActions : MonoBehaviour {
 	}
 	
 	protected void buttonAction(int i){
+		if(tower == null){
+			tower = GameObject.FindObjectOfType<Tower>();
+		}
 		switch (i){
-		case 0:
+		case 0: //Golem 1
 			if(InventroyManager.instance.getCount(Element.DIRT) >= 10){
 				InventroyManager.instance.removeFromInventory(Element.DIRT, 10);
 				// make a CUTIE
 				unitSpawner.spawnObject();
 			}
 			break;
-		case 1:
+		case 1: //Golem 2
 			
 			break;
-		case 2:
+		case 2: //Golem 3
 			//return ;
 			break;
-		case 3:
+		case 3: //Tower 1
+			if(tower != null)
+				tower.increaseHeight();
 			//return ;
 			break;
-		case 4:
+		case 4: //Tower 2
 			//
 			break;
-		case 5:
+		case 5: //Tower 3
 			//
 			break;
 		}

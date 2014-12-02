@@ -298,7 +298,6 @@ public class Character : AnimatedEntity {
 
 	protected void mine(IVector2 v){
 		byte d = (byte)(map.getByte (v, Map.DURABILITY) - 1); 
-		Debug.Log ("gathering" + d);
 		if (d == 0){
 			digging = false;
 			TileSpec ts = TileSpecList.getTileSpec(map.getByte(v,Map.FOREGROUND_ID));
