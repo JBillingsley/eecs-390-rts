@@ -59,8 +59,10 @@ public class Camera2D : MonoBehaviour {
 
 	private static void showChunk(Map map, short x, short y){
 		int key = (x << 16) + y;
+		Debug.Log (key);
 		if (!chunks.ContainsKey(key)){
-			chunks [(x << 16) + y] = Chunk.makeChunk (map, x, y);
+			Debug.Log ("Building Chunk " + key + ", " + x + "," +y);
+			chunks [key] = Chunk.makeChunk (map, x, y);
 		}
 	}
 

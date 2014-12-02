@@ -36,7 +36,7 @@ public class Chunk : MonoBehaviour {
 
 	public void refresh(){
 		if (map.isDirty (x, y)){
-			map.unDirty(x, y);
+			Debug.Log ("Refresh:" + x + "," + y);
 			MeshFilter rFilter = renderData.GetComponent<MeshFilter>();
 			rFilter.sharedMesh.uv = makeTextures(x, y);
 			rFilter.sharedMesh.RecalculateBounds();
@@ -46,14 +46,15 @@ public class Chunk : MonoBehaviour {
 			cFilter.sharedMesh.RecalculateBounds();
 			cCollider.sharedMesh = null;
 			cCollider.sharedMesh = cFilter.sharedMesh;
+			map.unDirty(x, y);
 		}
 	}
 
 	public void destroy(){
-		map.makeDirty (x, y);
+		/*map.makeDirty (x, y);
 		Destroy(renderData.GetComponent<MeshFilter>().sharedMesh);
 		Destroy(colliderData.GetComponent<MeshFilter>().sharedMesh);
-		Destroy(gameObject);
+		Destroy(gameObject);*/
 	}
 
 	/*********************************************************************************************/

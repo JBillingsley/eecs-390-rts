@@ -41,6 +41,7 @@ public class Map : MonoBehaviour {
 		for (int x = 0; x < w*chunkSize; x++){
 			for (int y = surfaceHeight + (int)(Random.value * surfaceRandomness); y >= 0; y--){
 				setTile(new IVector2(x, y), randomTile(x,y), (byte)1); //Change this line!!!!!!
+				//setByte (new IVector2(x,y), FOREGROUND_ID, (byte)randomTile(x,y));
 				//setByte(new IVector2(x, y), BACKGROUND_ID, (byte)1);
 			}
 		}
@@ -54,10 +55,15 @@ public class Map : MonoBehaviour {
 			ma.activate();
 		}
 
-		for (int y = 0; y < h*chunkSize; y++)
-			for (int x = 0; x < w*chunkSize; x++)
+		for (int y = 0; y < h*chunkSize; y++){
+			for (int x = 0; x < w*chunkSize; x++){
 				updateTileSpec(new IVector2(x, y));
+			}
+		}
 
+		for(int i = 0; i < h; i++)
+			for(int j = 0; j < w; j++)
+				makeDirty(j,i);
 
 	}
 
@@ -265,6 +271,7 @@ public class Map : MonoBehaviour {
 	/********************/
 
 	public void makeDirty(int x, int y){
+		//Debug.Log (x + "," + y);
 		dirtyChunks [y, x] = true;
 	}
 
