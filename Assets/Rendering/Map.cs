@@ -217,7 +217,7 @@ public class Map : MonoBehaviour {
 		if (!inBounds(v))
 			return;
 
-		map [v.y,v.x] &= 0xFFFF;
+		map [v.y,v.x] &= 0x00FF0000FFFF;
 		bool[] b = new bool[directions.Length];
 	
 		for (int i = 0; i < directions.Length; i++)
