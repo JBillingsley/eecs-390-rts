@@ -11,6 +11,14 @@ public class CraftingBarActions : MonoBehaviour {
 	private string amount;
 
 	private Tower tower;
+
+	int DIRT_GOLEM_COST = 10;
+	int ROCK_GOLEM_COST = 10;
+	int SUPER_GOLEM_COST = 10;
+
+	int DIRT_TOWER_COST = 10;
+	int CLAY_TOWER_COST = 10;
+	int STONE_TOWER_COST = 10;
 	
 	void OnGUI(){
 		panelHeight = (Screen.width/1.618f)/20;
@@ -29,7 +37,7 @@ public class CraftingBarActions : MonoBehaviour {
 	protected string calculateAmount(int i){
 		switch (i){
 		case 0:
-			return "" + InventroyManager.instance.getCount(Element.DIRT) / 10;
+			return "" + InventroyManager.instance.getCount(Element.DIRT) / DIRT_GOLEM_COST;
 			break;
 		case 1:
 			return "" + 0;
@@ -38,7 +46,7 @@ public class CraftingBarActions : MonoBehaviour {
 			return "" + 0;
 			break;
 		case 3:
-			return "" + 0;
+			return "" + InventroyManager.instance.getCount(Element.DIRT) / DIRT_TOWER_COST;
 			break;
 		case 4:
 			return "" + 0;
@@ -56,8 +64,8 @@ public class CraftingBarActions : MonoBehaviour {
 		}
 		switch (i){
 		case 0: //Golem 1
-			if(InventroyManager.instance.getCount(Element.DIRT) >= 10){
-				InventroyManager.instance.removeFromInventory(Element.DIRT, 10);
+			if(InventroyManager.instance.getCount(Element.DIRT) >= DIRT_GOLEM_COST){
+				InventroyManager.instance.removeFromInventory(Element.DIRT, DIRT_GOLEM_COST);
 				// make a CUTIE
 				unitSpawner.spawnObject();
 			}
@@ -69,9 +77,10 @@ public class CraftingBarActions : MonoBehaviour {
 			//return ;
 			break;
 		case 3: //Tower 1
-			if(tower != null)
+			if(tower != null && InventroyManager.instance.getCount(Element.DIRT) >= DIRT_TOWER_COST){
+				InventroyManager.instance.removeFromInventory(Element.DIRT, DIRT_TOWER_COST);			
 				tower.increaseHeight();
-			//return ;
+			}
 			break;
 		case 4: //Tower 2
 			//
