@@ -276,8 +276,6 @@ public class Character : AnimatedEntity {
 
 	//Handles the character digging.
 	public void handleDigging(Vector2 dest,Vector2 v){
-		IVector2 iDest = new IVector2(dest.x,dest.y);
-		//Check the digging boolean
 		if(digging){
 			this.currentState = movementState.DIGGING;
 			if(v.y < -.25){
@@ -286,19 +284,19 @@ public class Character : AnimatedEntity {
 			}
 			//If it is done digging
 			if((digTimer -= Time.fixedDeltaTime) <= 0){
-				mine (iDest);
+				mine (dest);
 			}
 		}
 		//Detect if it needs to start digging
-		else if(map.getForeground(iDest).solid){
+		else if(map.isForegroundSolid(dest)){
 			digTimer = digTime;
 			digging = true;
 		}
 	}
 
 	protected void mine(IVector2 v){
-		byte d = (byte)(map.getByte (v, Map.DURABILITY) - 1); 
-		Debug.Log ("gathering" + d);
+		byte d = map.getByte (v, Map.DURABILITY);
+		Debug.Log (d);
 		if (d == 0){
 			digging = false;
 			TileSpec ts = TileSpecList.getTileSpec(map.getByte(v,Map.FOREGROUND_ID));
@@ -306,9 +304,8 @@ public class Character : AnimatedEntity {
 			map.setTile(v,0,map.getByte(v,Map.BACKGROUND_ID));
 		}
 		else{
-			map.setByte(v, Map.DURABILITY, d);
-			//digTimer = digTime;
-			digging = true;
+			map.setByte(v, Map.DURABILITY, (byte)(d - 1));
+			digTimer = digTime;
 		}
 		// This element type should be determined by the element being mined
 
