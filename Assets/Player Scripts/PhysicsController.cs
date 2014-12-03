@@ -77,7 +77,7 @@ public class PhysicsController : MonoBehaviour {
 			
 			Physics.Raycast(ray,out hit,Mathf.Abs (deltax)+gap,collisionMask);
 			
-			Debug.DrawRay(new Vector3(ray.origin.x,ray.origin.y,0),new Vector3(ray.direction.x,ray.direction.y,0));
+			//Debug.DrawRay(new Vector3(ray.origin.x,ray.origin.y,0),new Vector3(ray.direction.x,ray.direction.y,0));
 			
 			if(hit.collider != null){
 				float dist = Vector2.Distance( o,hit.point);

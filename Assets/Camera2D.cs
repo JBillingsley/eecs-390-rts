@@ -18,7 +18,7 @@ public class Camera2D : MonoBehaviour {
 		zoom = zoom + (targetZoom - zoom) * 0.1f;
 		camera.orthographicSize = tileHeight()/2f;
 
-		chunkManagement();
+	//	chunkManagement();
 	}
 
 	public void move(Vector2 delta){
