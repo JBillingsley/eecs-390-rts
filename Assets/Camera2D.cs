@@ -13,6 +13,9 @@ public class Camera2D : MonoBehaviour {
 	public float cameraSpeed = 0.5f;
 
 	private static Dictionary<int, Chunk> chunks = new Dictionary<int, Chunk>();
+
+	private Transform lockonTarget;
+	private bool lockedOn;
 	
 	void Update () {
 		zoom = zoom + (targetZoom - zoom) * 0.1f;
@@ -78,4 +81,12 @@ public class Camera2D : MonoBehaviour {
 		return (int)(Screen.height * zoom / (map.tileSize * map.chunkSize));
 	}
 
+	private void lockOn(Transform t){
+		lockonTarget = t;
+		lockedOn = true;
+	}
+
+	private void unLock(){
+		lockedOn = false;
+	}
 }
