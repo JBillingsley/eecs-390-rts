@@ -14,8 +14,8 @@ public class Camera2D : MonoBehaviour {
 
 	private static Dictionary<int, Chunk> chunks = new Dictionary<int, Chunk>();
 
-	private Transform lockonTarget;
-	private bool lockedOn;
+	public Transform lockonTarget;
+	public bool lockedOn;
 	
 	void Update () {
 		zoom = zoom + (targetZoom - zoom) * 0.1f;
@@ -58,6 +58,11 @@ public class Camera2D : MonoBehaviour {
 			chunks[key].destroy();
 			chunks.Remove(key);
 		}
+	}
+
+	public void focus ()
+	{
+		this.transform.position = new Vector3(lockonTarget.position.x + .5f,lockonTarget.position.y +.5f,this.transform.position.z);
 	}
 
 	private static void showChunk(Map map, short x, short y){

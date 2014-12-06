@@ -7,14 +7,6 @@ public class Enemy : NPC {
 		act ();
 		move ();
 	}
-
-	void OnControllerColliderHit(ControllerColliderHit col){
-		if(col.gameObject.tag == "Unit"){
-			Debug.Log ("collision");
-			characterTarget = col.gameObject.GetComponent<Unit>();
-			myState = State.ATTACKING;
-		}
-	}
 	
 	protected override void attack(){
 		if(!characterTarget){
