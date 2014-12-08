@@ -46,7 +46,7 @@ MonoBehaviour:
     y: -1
     width: 6
     height: 2
-    tileType: 9
+    tileType: No
     likeliness: 1
     background: 0
   - description: Air
@@ -61,11 +61,12 @@ MonoBehaviour:
     x: 0
     y: -1
     width: 6
-    height: 10
-    tileType: 0
+    height: 2
+    tileType: 1
     likeliness: 1
     background: 1
   height: 1
+  type: 2
   towerCluster:
     description: 
     x: 0

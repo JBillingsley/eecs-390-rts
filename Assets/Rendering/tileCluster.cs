@@ -11,7 +11,7 @@ public struct TileCluster
 	public int width;
 	public int height;
 
-	public int tileType;
+	public string tileType;
 	public float likeliness;
 
 	public bool background;

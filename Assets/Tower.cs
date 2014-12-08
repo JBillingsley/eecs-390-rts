@@ -11,9 +11,9 @@ public class Tower : MapAdjuster {
 	public TileCluster towerCluster = new TileCluster();
 
 	static int AIR = 0;
-	static int TOWER_STONE = 11;
-	static int TOWER_CLAY = 12;
-	static int TOWER_WOOD = 13;
+	static string TOWER_STONE = "Stone Tower";
+	static string TOWER_CLAY = "Clay Tower";
+	static string TOWER_WOOD = "Wood Tower";
 
 	// Use this for initialization
 	void Start () {
@@ -34,7 +34,7 @@ public class Tower : MapAdjuster {
 	}
 
 	public void eraseTower(){
-		towerCluster.tileType = AIR;
+		towerCluster.tileType = "air";
 		draw ();
 	}
 
@@ -58,13 +58,13 @@ public class Tower : MapAdjuster {
 		for(int x = t.x; x < t.x + t.width; x++){
 			for(int y = t.y; y < t.y + t.height + 2; y++){
 				if(Random.value < t.likeliness){
-					m.setTile(new IVector2(pos.x + x, pos.y + y),(byte)0,(byte)towerCluster.tileType);
+					m.setTile(new IVector2(pos.x + x, pos.y + y),(byte)0,(byte)TileSpecList.getTileSpecInt(towerCluster.tileType));
 				}
 			}
 		}
 	}
 	
-	public int towerType(){
+	public string towerType(){
 		switch(type){
 		case TowerType.WOOD:
 			return TOWER_WOOD;

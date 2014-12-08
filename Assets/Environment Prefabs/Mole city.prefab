@@ -85,7 +85,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 55, y: 52, z: 11}
+  m_LocalPosition: {x: 60, y: 14, z: 11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400004}
@@ -292,7 +292,7 @@ MonoBehaviour:
     y: -1
     width: 21
     height: 8
-    tileType: 9
+    tileType: No
     likeliness: 1
     background: 0
   - description: Empty inside
@@ -300,7 +300,7 @@ MonoBehaviour:
     y: 0
     width: 19
     height: 6
-    tileType: 0
+    tileType: Air
     likeliness: 1
     background: 0
   - description: Cave Background
@@ -308,15 +308,15 @@ MonoBehaviour:
     y: 0
     width: 19
     height: 6
-    tileType: 1
+    tileType: Back
     likeliness: 1
     background: 1
   - description: Cave Entrance
-    x: 8
+    x: -10
     y: 0
-    width: 5
+    width: 25
     height: 3
-    tileType: 0
+    tileType: Air
     likeliness: 1
     background: 0
 --- !u!114 &11400006

@@ -36,4 +36,12 @@ public class TileSpecList{
 				return t;
 		return null;
 	}
+	public static int getTileSpecInt (string name){
+		for(int i = 0; i < list.tilespecs.Count; i++){
+			if(list.tilespecs[i].name.Equals(name)){
+				return i;
+			}
+		}
+		return 0;
+	}
 }

@@ -82,8 +82,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.5, z: .0998535156}
-  m_LocalScale: {x: .25, y: .25, z: 1}
+  m_LocalPosition: {x: 0, y: 2, z: .0998535156}
+  m_LocalScale: {x: .200000003, y: .200000003, z: 1}
   m_Children:
   - {fileID: 400000}
   m_Father: {fileID: 400002}
@@ -112,25 +112,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clusters:
-  - x: -2
+  - description: ground
+    x: -2
     y: -1
     width: 4
     height: 1
-    tileType: 9
+    tileType: No
     likeliness: 1
     background: 0
-  - x: -2
+  - description: Air
+    x: -2
     y: 0
     width: 4
     height: 3
-    tileType: 0
+    tileType: Air
     likeliness: 1
     background: 0
-  - x: -2
+  - description: Back Air
+    x: -2
     y: 0
     width: 4
     height: 3
-    tileType: 0
+    tileType: Air
     likeliness: 1
     background: 1
 --- !u!198 &19800000
