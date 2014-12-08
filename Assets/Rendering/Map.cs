@@ -225,7 +225,7 @@ public class Map : MonoBehaviour {
 	}
 
 	public bool unnavigable(IVector2 v){
-		return getForeground(v).index != TileSpecList.getTileSpecInt("Ladder") && 
+		return getForeground(v) != TileSpecList.getTileSpec("Ladder") && 
 			(isForegroundSolid(v) || !isForegroundSolid(v + Direction.getDirection(Direction.BOTTOM)));
 	}
 

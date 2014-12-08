@@ -10,8 +10,6 @@ public class TileRender {
 	public int index;
 
 	[SerializeField]
-	private bool folded;
-	[SerializeField]
 	private Texture2D view;
 
 

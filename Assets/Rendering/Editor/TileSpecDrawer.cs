@@ -12,9 +12,10 @@ public class TileSpecDrawer : PropertyDrawer {
 	public static float calculateHeight(SerializedProperty prop){
 		float h = EditorUtil.row;
 		if (!prop.FindPropertyRelative ("folded").boolValue) {
-			SerializedProperty context = prop.FindPropertyRelative ("context");
-			float p = TileSpec.previewSize((TileContext)context.enumValueIndex);
-			h += Mathf.Max (p + EditorUtil.padding, 2 * EditorUtil.row) + 3 * EditorUtil.row;
+			SerializedProperty renders = prop.FindPropertyRelative("renders");
+			for (int i = 0; i < renders.arraySize; i++)
+				h += TileRenderDrawer.calculateHeight(renders.GetArrayElementAtIndex(i));
+			h += 4 * EditorUtil.row;
 		}
 		return h;
 	}
@@ -26,8 +27,6 @@ public class TileSpecDrawer : PropertyDrawer {
 		SerializedProperty folded = prop.FindPropertyRelative ("folded");
 		bool fold = folded.boolValue;
 		
-		if (name == null)
-			return;
 
 		EditorUtil.folder (pos.x + EditorGUI.indentLevel * 12, pos.y, folded);
 		EditorUtil.textField (new Rect (pos.x + EditorUtil.buttonSize, pos.y, pos.width - 2 * EditorUtil.buttonSize, EditorUtil.height), name, !fold, "Tile Name");
@@ -35,23 +34,32 @@ public class TileSpecDrawer : PropertyDrawer {
 		EditorGUI.indentLevel++;
 		SerializedProperty context = prop.FindPropertyRelative ("context");
 		if (!fold){
-			float p = TileSpec.previewSize((TileContext)context.enumValueIndex);
-			float h = Mathf.Max (p + EditorUtil.padding, 2 * EditorUtil.row);
+			SerializedProperty renders = prop.FindPropertyRelative("renders");
 			float w = pos.width;
+			float h = EditorUtil.row;
+
+			if (EditorUtil.plus(pos.x + 12 * EditorGUI.indentLevel + EditorUtil.buttonSize, pos.y + EditorUtil.row, "Add Tile Render Data")){
+				renders.GetArrayElementAtIndex(renders.arraySize++);
+			}
+			if (EditorUtil.minus(pos.x + 12 * EditorGUI.indentLevel , pos.y + EditorUtil.row, "Remove Tile Render Data")){
+				if (renders.arraySize > 1)
+					renders.GetArrayElementAtIndex(renders.arraySize--);
+			}
+			if (renders.arraySize == 0){
+				renders.arraySize++;
+			}
+			for (int i = 0; i < renders.arraySize; i++){
+				SerializedProperty render = renders.GetArrayElementAtIndex(i);
+				EditorGUI.PropertyField (new Rect (pos.x, pos.y + h + EditorUtil.row, w, h), render, GUIContent.none);
+				h += TileRenderDrawer.calculateHeight(render);
+			}
+			//
+
 
 			//
+
 			EditorGUIUtility.labelWidth = 100;
-
-			EditorGUI.BeginChangeCheck();
-
-			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h/2, w - p - EditorUtil.padding, EditorUtil.height), context, new GUIContent("Context"));
-			SerializedProperty index = prop.FindPropertyRelative ("index");
-			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h/2 + EditorUtil.row, w - p - EditorUtil.padding, EditorUtil.height), index, new GUIContent("Index"));
-
-			if (EditorGUI.EndChangeCheck ()) {
-				prop.FindPropertyRelative("view").objectReferenceValue = TileSpec.constructPreview(prop);
-			}
-
+		
 			SerializedProperty weight = prop.FindPropertyRelative ("weight");
 			EditorGUI.PropertyField (new Rect (pos.x, pos.y + h + EditorUtil.row, w/2, EditorUtil.height), weight, new GUIContent("Weight"));
 			SerializedProperty durability = prop.FindPropertyRelative ("durability");
@@ -69,10 +77,6 @@ public class TileSpecDrawer : PropertyDrawer {
 			EditorGUI.PropertyField (new Rect (pos.x + w - 130, pos.y + h + EditorUtil.row * 3, 130, EditorUtil.height), resourceQuantity, new GUIContent("Quantity"));
 
 
-			Rect r = new Rect (pos.x + pos.width - p, pos.y + EditorUtil.row + (h - p - EditorUtil.padding)/2, p, p);
-			Texture2D tex = (Texture2D)prop.FindPropertyRelative("view").objectReferenceValue;
-			GUI.Box(r, tex == null? new GUIContent("Error"):new GUIContent(tex));
-			
 			EditorGUIUtility.labelWidth = 0;
 		}
 		EditorGUI.indentLevel--;

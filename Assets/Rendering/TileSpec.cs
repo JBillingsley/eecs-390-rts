@@ -7,8 +7,12 @@ using System.Collections.Generic;
 public class TileSpec {
 
 	public string name = "Tile Name";
-	public TileContext context;
-	public int index;
+//	public TileContext context;
+//	public int index;
+
+	[SerializeField]
+	private List<TileRender> renders = new List<TileRender>();
+
 	public bool solid;
 	public bool diggable;
 	public Element resource;
@@ -24,6 +28,14 @@ public class TileSpec {
 	[SerializeField]
 	private Texture2D view;
 
+
+	public TileRender getRender(int index){
+		if (renders.Count < 1){
+			renders.Add(new TileRender());
+		}
+		int i = index % renders.Count;
+		return renders [i];
+	}
 
 	public static Texture2D constructPreview(SerializedProperty spec){
 		TextureAtlas atlas = TileSpecList.list.tileset;
@@ -93,16 +105,7 @@ public class TileSpec {
 	}
 
 	
-	public int getTexID(byte adj){
-		switch (context){
-		case TileContext.PartialContext:
-			return index + getPartialContext(adj);
-		case TileContext.FullContext:
-			return index + getFullContext (adj);
-		}
-		return index;
-	}
-	
+
 	public static int getPartialContext(byte adj){
 		return 4 * grey(adj, 0x40, 0x04) + grey(adj, 0x01, 0x10);
 	}
@@ -149,71 +152,7 @@ public class TileSpec {
 		return id;
 	}
 
-	public void getCollisionIndices(int i, int off, byte adj, List<int> list){
-		if (context == TileContext.None){
-			list.Add(i + 1);
-			list.Add(i + 1 + off);
-			list.Add(i + 2);
-			list.Add(i + 1 + off);
-			list.Add(i + 2 + off);
-			list.Add(i + 2);
-			
-			list.Add(i + 2);
-			list.Add(i + 2 + off);
-			list.Add(i + 3);
-			list.Add(i + 2 + off);
-			list.Add(i + 3 + off);
-			list.Add(i + 3);
-			
-			list.Add(i + 3);
-			list.Add(i + 3 + off);
-			list.Add(i + 0);
-			list.Add(i + 3 + off);
-			list.Add(i + 0 + off);
-			list.Add(i + 0);
-			
-			list.Add(i + 0);
-			list.Add(i + 0 + off);
-			list.Add(i + 1);
-			list.Add(i + 0 + off);
-			list.Add(i + 1 + off);
-			list.Add(i + 1);
-			return;
-		}
-		if (mask (adj, 0x40)){
-			list.Add(i + 1);
-			list.Add(i + 1 + off);
-			list.Add(i + 2);
-			list.Add(i + 1 + off);
-			list.Add(i + 2 + off);
-			list.Add(i + 2);
-		}
-		if (mask (adj, 0x10)){
-			list.Add(i + 2);
-			list.Add(i + 2 + off);
-			list.Add(i + 3);
-			list.Add(i + 2 + off);
-			list.Add(i + 3 + off);
-			list.Add(i + 3);
-		}
-		if (mask (adj, 0x04)){
-			list.Add(i + 3);
-			list.Add(i + 3 + off);
-			list.Add(i + 0);
-			list.Add(i + 3 + off);
-			list.Add(i + 0 + off);
-			list.Add(i + 0);
-		}
-		if (mask (adj, 0x01)){
-			list.Add(i + 0);
-			list.Add(i + 0 + off);
-			list.Add(i + 1);
-			list.Add(i + 0 + off);
-			list.Add(i + 1 + off);
-			list.Add(i + 1);
-		}
-		return;	}
-	
+
 	private static int grey(byte val, byte lmask, byte rmask){
 		return mask(val, lmask) ? (mask(val, rmask) ? 1 : 2) : (mask(val, rmask) ? 0 : 3);
 	}

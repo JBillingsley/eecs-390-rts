@@ -308,7 +308,7 @@ public class Character : AnimatedEntity {
 	//****************************************************************************//
 
 	void walkcase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
-		if(v.y > .25f || map.getForeground(currentpos).index == LADDERINDEX){
+		if(v.y > .25f || map.getForeground(currentpos) == TileSpecList.getTileSpec(LADDERINDEX)){
 			laddercase(currentpos,dest,node,v);
 			return;
 		}
@@ -323,7 +323,7 @@ public class Character : AnimatedEntity {
 	}
 	void laddercase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
 		Debug.Log ("Laddercase");
-		if(map.getForeground(currentpos).index != TileSpecList.getTileSpecInt("Ladder")){
+		if(map.getForeground(currentpos) != TileSpecList.getTileSpec("Ladder")){
 			//ladderTile(dest);
 			ladderTile(currentpos);
 		}
@@ -333,7 +333,7 @@ public class Character : AnimatedEntity {
 	void ladderTile(IVector2 t){
 		currentState = movementState.CLIMBING;
 		TileSpec ts = map.getForeground(t);
-		if(!ts.solid && ts.index != LADDERINDEX){
+		if(!ts.solid && ts != TileSpecList.getTileSpec(LADDERINDEX)){
 			map.setTile(t,(byte)LADDERINDEX,(byte)1);
 		}
 	}

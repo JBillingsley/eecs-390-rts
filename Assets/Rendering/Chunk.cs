@@ -164,7 +164,7 @@ public class Chunk : MonoBehaviour {
 			for (int x = 0; x < map.chunkSize; x++) {
 				IVector2 v = new IVector2(cx*map.chunkSize + x, cy*map.chunkSize + y);
 				TileSpec tile = map.getRenderForeground(v);
-				int texID = tile.getTexID(map.getRenderContext(v));
+				int texID = tile.getRender(Map.hash(v.x, v.y)).getTexID(map.getRenderContext(v));
 				Vector2[] tex = map.tileset.getTex(texID);
 				textures [i*4] = tex[0];
 				textures [i*4+1] = tex[1];
@@ -177,7 +177,7 @@ public class Chunk : MonoBehaviour {
 			for (int x = 0; x < map.chunkSize; x++) {
 				IVector2 v = new IVector2(cx*map.chunkSize + x, cy*map.chunkSize + y);
 				TileSpec tile = map.getRenderBackground(v);
-				int texID = tile.getTexID(map.getBackgroundRenderContext(v));
+				int texID = tile.getRender(Map.hash(v.x, v.y)).getTexID(map.getBackgroundRenderContext(v));
 				Vector2[] tex = map.tileset.getTex(texID);
 				textures [i*4] = tex[0];
 				textures [i*4+1] = tex[1];
@@ -199,7 +199,7 @@ public class Chunk : MonoBehaviour {
 				v = new IVector2(cx*map.chunkSize + x, cy*map.chunkSize + y);
 				TileSpec tile = map.getForeground(v);
 				if (tile.solid)
-					tile.getCollisionIndices(4*i, off, (byte)~map.getRenderContext(v), indices);
+					tile.getRender(Map.hash(v.x, v.y)).getCollisionIndices(4*i, off, (byte)~map.getRenderContext(v), indices);
 			}
 		}
 		return indices.ToArray();
