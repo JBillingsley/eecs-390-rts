@@ -84,6 +84,11 @@ public class Map : MonoBehaviour {
 		}
 	}
 
+	public static int hash(int x, int y){
+		return (int) Mathf.Pow(x,3) + y * 37 - x*y;
+	}
+
+
 	public void populateCluster(TileCluster t){
 		for(int x = t.x; x < t.x + t.width; x++){
 			for(int y = t.y; y < t.y + t.height; y++){
