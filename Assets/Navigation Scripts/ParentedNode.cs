@@ -38,11 +38,12 @@ public class ParentedNode {
 		int[] dirs = new int[]{Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT, Direction.TOPLEFT, Direction.TOPRIGHT, Direction.BOTTOMLEFT, Direction.BOTTOMRIGHT};
 
 		bool[] passability = Direction.extractByte(dirs, (byte)(~m.getByte(pos, Map.NAVIGATION_MAP)));
+		bool[] ladder = Direction.extractByte(dirs, (byte)(m.getByte(pos, Map.LADDER_MAP)));
 		bool[] solid = Direction.extractByte(dirs, (byte)(~m.getByte(pos, Map.FOREGROUND_CONTEXT)));
 		IVector2[] directions = Direction.getDirections(dirs);
 
 		for (int i = 0; i < 4; i++){
-			if(passability[i])
+			if(passability[i] || ladder[i])
 				neighbors.Add (pos + directions[i]);
 		}
 		for (int i = 4; i < 6; i++){

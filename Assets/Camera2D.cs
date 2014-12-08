@@ -13,12 +13,15 @@ public class Camera2D : MonoBehaviour {
 	public float cameraSpeed = 0.5f;
 
 	private static Dictionary<int, Chunk> chunks = new Dictionary<int, Chunk>();
+
+	public Transform lockonTarget;
+	public bool lockedOn;
 	
 	void Update () {
 		zoom = zoom + (targetZoom - zoom) * 0.1f;
 		camera.orthographicSize = tileHeight()/2f;
 
-		chunkManagement();
+	//	chunkManagement();
 	}
 
 	public void move(Vector2 delta){
@@ -57,6 +60,11 @@ public class Camera2D : MonoBehaviour {
 		}
 	}
 
+	public void focus ()
+	{
+		this.transform.position = new Vector3(lockonTarget.position.x + .5f,lockonTarget.position.y +.5f,this.transform.position.z);
+	}
+
 	private static void showChunk(Map map, short x, short y){
 		int key = (x << 16) + y;
 		Debug.Log (key);
@@ -78,4 +86,12 @@ public class Camera2D : MonoBehaviour {
 		return (int)(Screen.height * zoom / (map.tileSize * map.chunkSize));
 	}
 
+	private void lockOn(Transform t){
+		lockonTarget = t;
+		lockedOn = true;
+	}
+
+	private void unLock(){
+		lockedOn = false;
+	}
 }

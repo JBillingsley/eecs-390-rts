@@ -79,7 +79,6 @@ public class Player : AnimatedEntity {
 
 	void OnGUI(){
 		if(drawSelection){
-			Debug.Log("drawing");
 			Rect r = selectionBox;
 			if (r != null){
 				r.x = Screen.height - r.x;
@@ -198,7 +197,6 @@ public class Player : AnimatedEntity {
 	//Add the unit to the selection list
 	void addToSelection(Character u){
 		selected.Add(u);
-		Debug.Log ("adding unit");
 		//Select the unit
 		u.changeSelection(true);
 	}
@@ -232,7 +230,6 @@ public class Player : AnimatedEntity {
 		else{
 			currentMovement.y -= gravity * Time.fixedDeltaTime;
 		}
-		Debug.Log (currentMovement);
 		this.rigidbody.AddForce(currentMovement);
 	}
 

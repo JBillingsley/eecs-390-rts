@@ -61,9 +61,13 @@ public class Map : MonoBehaviour {
 			}
 		}
 
-		for(int i = 0; i < h; i++)
-			for(int j = 0; j < w; j++)
-				makeDirty(j,i);
+		for (int i = 0; i < h; i++)
+			for (int j = 0; j < w; j++) {
+				makeDirty (j, i);
+				Chunk.makeChunk(this, (short)i, (short)j);
+			}
+
+
 
 	}
 
@@ -101,6 +105,7 @@ public class Map : MonoBehaviour {
 	public const int BACKGROUND_CONTEXT = 3;
 	public const int DURABILITY = 4;
 	public const int NAVIGATION_MAP = 5;
+	public const int LADDER_MAP = 6;
 
 	public bool isForegroundSolid(IVector2 v){
 		return getForeground(v).solid;
@@ -165,7 +170,8 @@ public class Map : MonoBehaviour {
 
 	public const byte TERRAIN = 0;
 	public const byte NAVMESH = 1;
-	public const byte BACKGROUND = 2;
+	public const byte LADDERMESH = 2;
+	public const byte BACKGROUND = 3;
 	public byte renderMode = NAVMESH;
 	public void setRenderMode(byte mode){
 		if (renderMode == mode)
@@ -213,6 +219,15 @@ public class Map : MonoBehaviour {
 		map [v.y, v.x] = (map [v.y, v.x] & ~((ulong)0xFF << (i * 8))) | ((ulong)data << (i * 8));
 	}
 
+	public bool unnavigable(IVector2 v){
+		return isForegroundSolid(v) || !isForegroundSolid(v + Direction.getDirection(Direction.BOTTOM));
+	}
+
+	public bool ladderable(IVector2 v){
+		return !isForegroundSolid (v) && getBackground (v) != TileSpecList.getTileSpec (0);
+	}
+
+
 	public void updateTileSpec(IVector2 v){
 		if (!inBounds(v))
 			return;
@@ -229,8 +244,13 @@ public class Map : MonoBehaviour {
 		setByte(v, BACKGROUND_CONTEXT, Direction.packByte(directions, b));
 
 		for (int i = 0; i < directions.Length; i++)
-			b[i] = isForegroundSolid(v + Direction.getDirection(directions[i])) || !isForegroundSolid(v + Direction.getDirection(directions[i]) + Direction.getDirection(Direction.BOTTOM));
+			b[i] = unnavigable(v + Direction.getDirection(directions[i]));
 		setByte(v, NAVIGATION_MAP, Direction.packByte(directions, b));
+
+		for (int i = 0; i < directions.Length; i++)
+			b[i] = ladderable(v + Direction.getDirection(directions[i]));
+		setByte(v, LADDER_MAP, Direction.packByte(directions, b));
+
 	}
 
 	public void setTile(IVector2 v, byte foreground, byte background){

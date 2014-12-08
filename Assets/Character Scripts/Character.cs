@@ -55,6 +55,7 @@ public class Character : AnimatedEntity {
 		um = GameObject.FindObjectOfType<UnitManager>();
 		em = GameObject.FindObjectOfType<EnemyManager>();
 
+
 		currentMovement = new Vector2(0,0);
 
 		map = GameObject.FindObjectOfType<Map>();
@@ -72,11 +73,32 @@ public class Character : AnimatedEntity {
 
 		this.right = Random.value>.5f;
 	}
-	
+
+	private static Vector3 off = new Vector2(0.5f, 0.5f);
 	// Update is called once per frame
 	new void FixedUpdate () {
 		base.FixedUpdate();
 		move ();
+		if (path != null && currentPathIndex < path.length) {
+			Vector2 s = transform.position;
+			Vector2 d = path.locations[currentPathIndex]+off;
+			Debug.DrawLine(s, d, destColor(d));
+			for(int i = currentPathIndex; i < path.length - 1; i++){
+				Vector2 src = path.locations[i]+off;
+				Vector2 dst = path.locations[i+1]+off;
+				Debug.DrawLine(src, dst, destColor(dst));
+			}
+		}
+	}
+
+	public Color destColor(Vector2 dest){
+		if (map.isForegroundSolid(dest))
+			return Color.blue;
+		if (!map.unnavigable(dest))
+			return Color.yellow;
+		if (map.ladderable(dest))
+			return Color.green;
+		return Color.black;
 	}
 
 	public void findPath(Vector2 v){

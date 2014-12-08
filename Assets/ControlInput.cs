@@ -16,7 +16,12 @@ public class ControlInput : MonoBehaviour {
 			delta.x -= 1;
 		if (Input.GetKey(KeyCode.RightArrow))
 			delta.x += 1;
-		camerax.move (delta);
+		if (Input.GetAxis("focus") > .5){
+			camerax.focus();
+		}
+		else{
+			camerax.move (delta);
+		}
 
 		if (Input.GetKey(KeyCode.KeypadMinus))
 			camerax.zoomIn();
