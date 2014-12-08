@@ -41,13 +41,15 @@ public class Character : AnimatedEntity {
 	protected Vector2 knockback;
 	Vector2 lastPosition;
 
-	public enum movementState {WALKING,JUMPING,LANDING,IDLE,DIGGING};
+	public enum movementState {WALKING,JUMPING,CLIMBING,IDLE,DIGGING};
 	public movementState currentState;
 	public bool digging = false;
 
 	protected Map map;
 
 	public ParticleSystem particles;
+
+	public bool rePath;
 
 	// Use this for initialization
 	protected void Start () {
@@ -124,11 +126,13 @@ public class Character : AnimatedEntity {
 			yield return new WaitForSeconds(waitTime);
 
 			//If the destination hasn't changed...
-			if(lastDest == destination){
-				waitTime = Mathf.Clamp(waitTime + .01f,.01f,.1f);
+			if(lastDest == destination && !rePath){
+				waitTime = Mathf.Clamp(waitTime + .01f,.01f,.5f);
 				//...Go back to start of the loop.
 				goto reset;
 			}
+
+			rePath = false;
 
 			if(!TileSpecList.getTileSpec(map.getByte(destination,Map.FOREGROUND_ID)).diggable){
 				lastDest = destination;
@@ -147,17 +151,6 @@ public class Character : AnimatedEntity {
 
 			//If the character has to dig
 			Route digRoute = new Route();
-			/*if(map.getForeground(endTile).solid){
-				digging = true;
-				digRoute = pathToNearestAir(endTile);
-				digRoute.reverseRoute();
-				if(digRoute.length > 0){
-					endTile = digRoute.locations[0];
-				}
-			}
-			else{
-				digging = false;
-			}*/
 
 			//Add current position to the leaves
 			leaves.Add (new ParentedNode(null,position,0));
@@ -185,13 +178,15 @@ public class Character : AnimatedEntity {
 				}
 
 				//Add new leaves, both open neighbors and ones where you dig.
-				addToLeaves(current,current.GetNeighbors(),branches,leaves,start,end,0);
-				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,1);
+				addToLeaves(current,current.GetNeighbors(),branches,leaves,start,end,0,ParentedNode.Type.WALK);
+				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,1,ParentedNode.Type.DIG);
+				addToLeaves(current,current.GetLadderNeighbors(),branches,leaves,start,end,3,ParentedNode.Type.LADDER);
 
 				count ++;
 				//Only do 20 cycles per frame
 				if(count % 180 == 0){
-					yield return null;
+					destination = lastDest;
+					goto reset;
 				}
 			}
 
@@ -218,13 +213,15 @@ public class Character : AnimatedEntity {
 
 	//Add the specified nodes as leaves, ensuring that they are parented to current and not in branches or leaves.
 	private void addToLeaves(ParentedNode current, Vector2[] positions, List<ParentedNode> branches,
-	                        List<ParentedNode> leaves, Vector2 start, Vector2 end, int addedWeight){
+	                        List<ParentedNode> leaves, Vector2 start, Vector2 end, int addedWeight, ParentedNode.Type t){
 		//Get the neighbors and add them to leaves, parented to the current node.
 		foreach(Vector2 v in positions){
 			//Don't add it if its already in the leaves or branches.
 			if(!ContainsNode(leaves,branches,v)){
 				int d = map.getByte(v,Map.DURABILITY);
-				leaves.Add(new ParentedNode(current,v,hueristic(v,end) + addedWeight + d));
+				ParentedNode p = new ParentedNode(current,v,hueristic(v,end) + addedWeight + d);
+				p.type = t;
+				leaves.Add(p);
 			}
 		}
 	}
@@ -256,10 +253,23 @@ public class Character : AnimatedEntity {
 
 			Vector2 currentpos = new Vector2(this.transform.position.x + size/2,this.transform.position.y);
 			Vector2 dest = path.locations[currentPathIndex];
+			ParentedNode node = path.nodes[currentPathIndex];
 			Vector2 v = dest - (Vector2)this.transform.position;
 
 			bool shouldDig = map.isForegroundSolid(dest);
 			bool ladder = !shouldDig && map.ladderable(dest);
+
+			switch(node.type){
+			case ParentedNode.Type.WALK:
+				walkcase(currentpos,dest,node,v);
+				break;
+			case ParentedNode.Type.DIG:
+				digcase(currentpos,dest,node,v);
+				break;
+			case ParentedNode.Type.LADDER:
+				laddercase(currentpos,dest,node,v);
+				break;
+			}
 
 			if (shouldDig){
 				Vector3 a = (Vector3)currentpos + new Vector3(0.2f, 0.7f, -5);
@@ -274,16 +284,8 @@ public class Character : AnimatedEntity {
 				Debug.DrawLine(c, d, col);
 				Debug.DrawLine(d, a, col);
 			}
-			//should dig for dig state!!!!!
+
 			currentMovement.x = ((Mathf.Abs(v.x) < .05)?0:Mathf.Sign(v.normalized.x) * moveSpeed);
-
-			handleKnockback();
-
-			handleDigging(dest,v);
-
-			if(v.y > .25f && (Mathf.Abs(v.x) > 0 && cc.velocity.x == 0)){// || (lastPosition - currentpos).magnitude == 0){
-				jump ();
-			}
 
 			if(v.magnitude < .25f){
 				position = path.locations[currentPathIndex];
@@ -295,22 +297,43 @@ public class Character : AnimatedEntity {
 		else{
 			currentMovement.x = 0;
 		}
+		applyGravity();
+		cc.Move(currentMovement * Time.fixedDeltaTime);
+
+	}
+
+	//****************************************************************************//
+
+	void walkcase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
+		if(v.y > .25f && (Mathf.Abs(v.x) > .1f && cc.velocity.x == 0)){// || (lastPosition - currentpos).magnitude == 0){
+			jump ();
+		}
+	}
+	void digcase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
+		handleDigging(dest,v);
+	}
+	void laddercase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
+		if(v.y > .25f && (Mathf.Abs(v.x) < .1f)){
+			map.setTile(dest,(byte)TileSpecList.getTileSpecInt("Ladder"),(byte)1);
+			map.setTile(currentpos,(byte)TileSpecList.getTileSpecInt("Ladder"),(byte)1);
+			Debug.Log ("Ladder");
+		}
+	}
+
+	//****************************************************************************//
+
+	void applyGravity(){
+		if(currentState == movementState.CLIMBING){
+			return;
+		}
 		if(!cc.isGrounded || currentMovement.y > 1){
 			currentMovement.y -= gravity * Time.fixedDeltaTime;
 		}
 		else{
 			currentMovement.y = 0;
 		}
-		cc.Move(currentMovement * Time.fixedDeltaTime);
-
 	}
 
-	//If we have knockback velocity, manage it.
-	public void handleKnockback(){
-		if(knockback.magnitude > .2f){
-			knockback = Vector2.Lerp(knockback,Vector2.zero,5*Time.fixedDeltaTime);
-		}
-	}
 
 	//Handles the character digging.
 	public void handleDigging(Vector2 dest,Vector2 v){
@@ -371,13 +394,8 @@ public class Character : AnimatedEntity {
 					counter = (int)landingDelay;
 				}
 				break;
-			case movementState.LANDING:
-				counter --;
-				if(counter == 0){
-					particles.Emit(25);
-					currentState = movementState.WALKING;
-					animater.animationID = 1;
-				}
+			case movementState.CLIMBING:
+				//TODO Set animation
 				break;
 			case movementState.WALKING:
 				animater.animationID = 1;

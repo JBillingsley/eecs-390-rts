@@ -10,6 +10,9 @@ public class ParentedNode {
 	public Vector2 location;
 	public float weight;
 
+	public enum Type {WALK,DIG,LADDER};
+	public Type type;
+
 	public ParentedNode(ParentedNode parent,Vector2 node, float weight){
 		this.parent = parent;
 		this.weight = weight;
@@ -76,6 +79,25 @@ public class ParentedNode {
 			}
 		}
 
+		return goodNeighbors.ToArray();
+	}
+
+	public Vector2[] GetLadderNeighbors(){
+		
+		List<Vector2> neighbors = new List<Vector2>();
+		List<Vector2> goodNeighbors = new List<Vector2>();
+		IVector2 pos = new IVector2(location.x,location.y);
+
+		neighbors.Add (new IVector2(location.x, location.y + 1));
+		
+		foreach(IVector2 v in neighbors){
+			byte b = m.getByte(v,Map.FOREGROUND_ID);
+			TileSpec t = TileSpecList.getTileSpec(b);
+			if(m.unnavigable(v) && m.ladderable(v)){
+				goodNeighbors.Add(v);
+			}
+		}
+		
 		return goodNeighbors.ToArray();
 	}
 }
