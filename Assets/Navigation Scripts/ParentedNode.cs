@@ -71,7 +71,7 @@ public class ParentedNode {
 		foreach(IVector2 v in neighbors){
 			byte b = m.getByte(v,Map.FOREGROUND_ID);
 			TileSpec t = TileSpecList.getTileSpec(b);
-			if(t.diggable){
+			if(t.diggable && t.solid){
 				goodNeighbors.Add(v);
 			}
 		}

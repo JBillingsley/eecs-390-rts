@@ -186,7 +186,7 @@ public class Character : AnimatedEntity {
 
 				//Add new leaves, both open neighbors and ones where you dig.
 				addToLeaves(current,current.GetNeighbors(),branches,leaves,start,end,0);
-				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,2);
+				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,5);
 
 				count ++;
 				//Only do 20 cycles per frame
@@ -223,7 +223,8 @@ public class Character : AnimatedEntity {
 		foreach(Vector2 v in positions){
 			//Don't add it if its already in the leaves or branches.
 			if(!ContainsNode(leaves,branches,v)){
-				leaves.Add(new ParentedNode(current,v,hueristic(v,end) + addedWeight));
+				int d = map.getByte(v,Map.DURABILITY);
+				leaves.Add(new ParentedNode(current,v,hueristic(v,end) + addedWeight + d));
 			}
 		}
 	}
