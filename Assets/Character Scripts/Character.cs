@@ -332,13 +332,17 @@ public class Character : AnimatedEntity {
 		currentState = movementState.DIGGING;
 	}
 	void laddercase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
-		Debug.Log ("Laddercase");
-		if(map.getForeground(currentpos).index != TileSpecList.getTileSpecInt("Ladder")){
-
+		bool currentLadder = map.getForeground(currentpos).index != LADDERINDEX;
+		bool nextLadder = map.getForeground(dest).index != LADDERINDEX;
+		if(nextLadder && currentpos.x == dest.x){
 			ladderTile(currentpos);
-			if(dest.x == currentpos.x){
-				ladderTile(dest);
-			}
+		}
+		else if(currentLadder && currentpos.x == dest.x){
+			ladderTile(dest);
+		}
+		if(dest.x == currentpos.x){
+			ladderTile (currentpos);
+			ladderTile(dest);
 		}
 		lastType = ParentedNode.Type.LADDER;
 		currentMovement.y = Mathf.Sign(v.y) * moveSpeed;
