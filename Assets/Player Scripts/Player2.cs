@@ -20,7 +20,7 @@ public class Player2 : AnimatedEntity {
 
 	private PhysicsController pPhysics;
 
-	public enum movementState {WALKING,JUMPING,LANDING,IDLE,DIGGING};
+	public enum movementState {WALKING,JUMPING,IDLE,CLIMBING};
 	public movementState currentState;
 	// Use this for initialization
 	void Start () {
@@ -84,13 +84,6 @@ public class Player2 : AnimatedEntity {
 					animater.animationID = 1;
 				}
 				break;
-			case movementState.LANDING:
-				counter --;
-				if(counter == 0){
-					currentState = movementState.WALKING;
-					animater.animationID = 1;
-				}
-				break;
 			case movementState.WALKING:
 				if(!pPhysics.onGround && moveAmount.y != 0){
 					currentState = movementState.JUMPING;
@@ -101,6 +94,8 @@ public class Player2 : AnimatedEntity {
 						animater.animationID = 2;
 					}
 				}
+				break;
+			case movementState.CLIMBING:
 				break;
 			}
 			

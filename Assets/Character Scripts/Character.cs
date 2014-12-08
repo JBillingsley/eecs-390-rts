@@ -186,7 +186,7 @@ public class Character : AnimatedEntity {
 
 				//Add new leaves, both open neighbors and ones where you dig.
 				addToLeaves(current,current.GetNeighbors(),branches,leaves,start,end,0);
-				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,5);
+				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,1);
 
 				count ++;
 				//Only do 20 cycles per frame
