@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: 36f7488ad4193534d9e2e6bc8b6f71e1
+guid: 628709b2519085b43a1a061ad1b6ab64
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: CasteAway_Emblem-03
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -28,7 +27,7 @@ TextureImporter:
     filterMode: -1
     aniso: 16
     mipBias: -1
-    wrapMode: 1
+    wrapMode: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
