@@ -14,6 +14,7 @@ public class ParentedNode {
 	public Type type;
 
 	public ParentedNode(ParentedNode parent,Vector2 node, float weight){
+		m = GameObject.FindObjectOfType<Map>();
 		this.parent = parent;
 		this.weight = weight;
 		if(parent != null){
@@ -29,7 +30,7 @@ public class ParentedNode {
 	}
 
 	public Vector2[] GetNeighbors(){
-
+		/*
 		List<Vector2> neighbors = new List<Vector2>();
 		IVector2 pos = new IVector2(location.x,location.y);
 
@@ -38,11 +39,13 @@ public class ParentedNode {
 		}
 
 
+
 		int[] dirs = new int[]{Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT, Direction.TOPLEFT, Direction.TOPRIGHT, Direction.BOTTOMLEFT, Direction.BOTTOMRIGHT};
 
 		bool[] passability = Direction.extractByte(dirs, (byte)(~m.getByte(pos, Map.NAVIGATION_MAP)));
 		bool[] ladder = Direction.extractByte(dirs, (byte)(m.getByte(pos, Map.LADDER_MAP)));
 		bool[] solid = Direction.extractByte(dirs, (byte)(~m.getByte(pos, Map.FOREGROUND_CONTEXT)));
+
 		IVector2[] directions = Direction.getDirections(dirs);
 
 		for (int i = 4; i < 6; i++){
@@ -57,7 +60,30 @@ public class ParentedNode {
 			if(passability[i] || ladder[i])
 				neighbors.Add (pos + directions[i]);
 		}
-		return neighbors.ToArray();
+		return neighbors.ToArray();*/
+
+		List<Vector2> neighbors = new List<Vector2>();
+		List<Vector2> goodNeighbors = new List<Vector2>();
+		IVector2 pos = new IVector2(location.x,location.y);
+
+		neighbors.Add (new IVector2(location.x - 1, location.y));
+		neighbors.Add (new IVector2(location.x + 1, location.y));
+		neighbors.Add (new IVector2(location.x, location.y -1));
+		neighbors.Add (new IVector2(location.x, location.y + 1));
+
+		neighbors.Add (new IVector2(location.x - 1, location.y - 1));
+		neighbors.Add (new IVector2(location.x + 1, location.y - 1));
+		neighbors.Add (new IVector2(location.x - 1, location.y + 1));
+		neighbors.Add (new IVector2(location.x + 1, location.y + 1));
+
+		foreach(IVector2 v in neighbors){
+		
+			TileSpec t = m.getForeground(v);
+			if(!t.solid && !m.unnavigable(v)){
+				goodNeighbors.Add(v);
+			}
+		}
+		return goodNeighbors.ToArray();
 	}
 
 	public Vector2[] GetDigNeighbors(){
@@ -72,8 +98,7 @@ public class ParentedNode {
 		neighbors.Add (new IVector2(location.x, location.y + 1));
 
 		foreach(IVector2 v in neighbors){
-			byte b = m.getByte(v,Map.FOREGROUND_ID);
-			TileSpec t = TileSpecList.getTileSpec(b);
+			TileSpec t = m.getForeground(v);
 			if(t.diggable && t.solid){
 				goodNeighbors.Add(v);
 			}
@@ -88,12 +113,22 @@ public class ParentedNode {
 		List<Vector2> goodNeighbors = new List<Vector2>();
 		IVector2 pos = new IVector2(location.x,location.y);
 
+		neighbors.Add (new IVector2(location.x - 1, location.y));
+		neighbors.Add (new IVector2(location.x + 1, location.y));
+		neighbors.Add (new IVector2(location.x, location.y -1));
 		neighbors.Add (new IVector2(location.x, location.y + 1));
+		neighbors.Add (new IVector2(location.x - 1, location.y - 1));
+		neighbors.Add (new IVector2(location.x + 1, location.y - 1));
+		neighbors.Add (new IVector2(location.x - 1, location.y + 1));
+		neighbors.Add (new IVector2(location.x + 1, location.y + 1));
 		
 		foreach(IVector2 v in neighbors){
 			byte b = m.getByte(v,Map.FOREGROUND_ID);
-			TileSpec t = TileSpecList.getTileSpec(b);
-			if(m.unnavigable(v) && m.ladderable(v)){
+			TileSpec t = m.getForeground(v);
+			if((m.unnavigable(v) && m.ladderable(v))){
+				goodNeighbors.Add(v);
+			}
+			else if(t.index == TileSpecList.getTileSpecInt("Ladder")){
 				goodNeighbors.Add(v);
 			}
 		}

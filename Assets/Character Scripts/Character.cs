@@ -53,6 +53,8 @@ public class Character : AnimatedEntity {
 
 	static int LADDERINDEX;
 
+	public ParentedNode.Type lastType;
+
 	// Use this for initialization
 	protected void Start () {
 		//Here be dragons
@@ -182,8 +184,8 @@ public class Character : AnimatedEntity {
 
 				//Add new leaves, both open neighbors and ones where you dig.
 				addToLeaves(current,current.GetNeighbors(),branches,leaves,start,end,0,ParentedNode.Type.WALK);
-				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,1,ParentedNode.Type.DIG);
-				addToLeaves(current,current.GetLadderNeighbors(),branches,leaves,start,end,3,ParentedNode.Type.LADDER);
+				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,5,ParentedNode.Type.DIG);
+				addToLeaves(current,current.GetLadderNeighbors(),branches,leaves,start,end,2,ParentedNode.Type.LADDER);
 
 				count ++;
 				//Only do 20 cycles per frame
@@ -259,6 +261,10 @@ public class Character : AnimatedEntity {
 			ParentedNode node = path.nodes[currentPathIndex];
 			Vector2 v = dest - (Vector2)this.transform.position;
 
+			if(v.magnitude > 2){
+				rePath = true;
+			}
+
 			bool shouldDig = map.isForegroundSolid(dest);
 			bool ladder = !shouldDig && map.ladderable(dest);
 
@@ -298,6 +304,7 @@ public class Character : AnimatedEntity {
 			//transform.Translate(v.normalized * moveSpeed* Time.deltaTime);
 		}
 		else{
+			lastType = ParentedNode.Type.WALK;
 			currentMovement.x = 0;
 		}
 		applyGravity();
@@ -308,11 +315,12 @@ public class Character : AnimatedEntity {
 	//****************************************************************************//
 
 	void walkcase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
-		if(v.y > .25f || map.getForeground(currentpos).index == LADDERINDEX){
+		if(onLadder()){
 			laddercase(currentpos,dest,node,v);
 			return;
 		}
 		currentState = movementState.WALKING;
+		lastType = ParentedNode.Type.WALK;
 		if(v.y > .25f && (Mathf.Abs(v.x) > .1f && cc.velocity.x == 0)){// || (lastPosition - currentpos).magnitude == 0){
 			jump ();
 			currentState = movementState.JUMPING;
@@ -320,28 +328,39 @@ public class Character : AnimatedEntity {
 	}
 	void digcase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
 		handleDigging(dest,v);
+		lastType = ParentedNode.Type.DIG;
+		currentState = movementState.DIGGING;
 	}
 	void laddercase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
 		Debug.Log ("Laddercase");
 		if(map.getForeground(currentpos).index != TileSpecList.getTileSpecInt("Ladder")){
-			//ladderTile(dest);
+
 			ladderTile(currentpos);
+			if(dest.x == currentpos.x){
+				ladderTile(dest);
+			}
 		}
+		lastType = ParentedNode.Type.LADDER;
 		currentMovement.y = Mathf.Sign(v.y) * moveSpeed;
 	}
 
 	void ladderTile(IVector2 t){
 		currentState = movementState.CLIMBING;
 		TileSpec ts = map.getForeground(t);
-		if(!ts.solid && ts.index != LADDERINDEX){
+		if(!ts.solid && ts.index != LADDERINDEX && map.ladderable(t)){
 			map.setTile(t,(byte)LADDERINDEX,(byte)1);
 		}
+	}
+
+	bool onLadder(){
+		return map.getForeground(new IVector2(this.transform.position.x,this.transform.position.y)).index == TileSpecList.getTileSpecInt("Ladder") || 
+			lastType == ParentedNode.Type.LADDER;
 	}
 
 	//****************************************************************************//
 
 	void applyGravity(){
-		if(currentState == movementState.CLIMBING){
+		if(currentState == movementState.CLIMBING || onLadder()){
 			return;
 		}
 		if(!cc.isGrounded || currentMovement.y > 1){
@@ -413,11 +432,14 @@ public class Character : AnimatedEntity {
 				}
 				break;
 			case movementState.CLIMBING:
+				if(!onLadder()){
+					currentState = movementState.WALKING;
+				}
 				//TODO Set animation
 				break;
 			case movementState.WALKING:
 				animater.animationID = 1;
-				if(currentMovement.x == 0){
+				if(currentMovement.magnitude < .1f){
 					currentState = movementState.IDLE;
 				}
 				break;
