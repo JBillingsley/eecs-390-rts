@@ -12,7 +12,6 @@ public class TileRender {
 	[SerializeField]
 	private Texture2D view;
 
-
 	public static Texture2D constructPreview(SerializedProperty spec){
 		TextureAtlas atlas = TileSpecList.list.tileset;
 

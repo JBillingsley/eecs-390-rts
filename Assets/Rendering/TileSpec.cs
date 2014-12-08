@@ -25,8 +25,6 @@ public class TileSpec {
 
 	[SerializeField]
 	private bool folded;
-	[SerializeField]
-	private Texture2D view;
 
 
 	public TileRender getRender(int index){

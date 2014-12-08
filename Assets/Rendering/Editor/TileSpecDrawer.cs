@@ -39,7 +39,7 @@ public class TileSpecDrawer : PropertyDrawer {
 			float h = EditorUtil.row;
 
 			if (EditorUtil.plus(pos.x + 12 * EditorGUI.indentLevel + EditorUtil.buttonSize, pos.y + EditorUtil.row, "Add Tile Render Data")){
-				renders.GetArrayElementAtIndex(renders.arraySize++);
+				TileRender.construct(renders.GetArrayElementAtIndex(renders.arraySize++));
 			}
 			if (EditorUtil.minus(pos.x + 12 * EditorGUI.indentLevel , pos.y + EditorUtil.row, "Remove Tile Render Data")){
 				if (renders.arraySize > 1)
