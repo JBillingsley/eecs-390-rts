@@ -13,3 +13,4 @@ terrain/grassgem.png 512 512
 terrain/stonetower3.png 512 512
 terrain/claytower.png 512 512
 terrain/woodtower.png 512 512
+terrain/ladder.png 128 128

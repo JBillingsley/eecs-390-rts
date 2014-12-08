@@ -74,13 +74,13 @@ public class Character : AnimatedEntity {
 		this.right = Random.value>.5f;
 	}
 
-	private static Vector3 off = new Vector2(0.5f, 0.5f);
+	private static Vector3 off = new Vector3(0.5f, 0.5f, -5);
 	// Update is called once per frame
 	new void FixedUpdate () {
 		base.FixedUpdate();
 		move ();
 		if (path != null && currentPathIndex < path.length) {
-			Vector2 s = transform.position;
+			Vector2 s = transform.position+off;
 			Vector2 d = path.locations[currentPathIndex]+off;
 			Debug.DrawLine(s, d, destColor(d));
 			for(int i = currentPathIndex; i < path.length - 1; i++){
@@ -93,7 +93,7 @@ public class Character : AnimatedEntity {
 
 	public Color destColor(Vector2 dest){
 		if (map.isForegroundSolid(dest))
-			return Color.blue;
+			return Color.cyan;
 		if (!map.unnavigable(dest))
 			return Color.yellow;
 		if (map.ladderable(dest))
@@ -255,11 +255,26 @@ public class Character : AnimatedEntity {
 		if(path != null && currentPathIndex < path.locations.Count){
 
 			Vector2 currentpos = new Vector2(this.transform.position.x + size/2,this.transform.position.y);
+			Vector2 dest = path.locations[currentPathIndex];
+			Vector2 v = dest - (Vector2)this.transform.position;
 
-			Vector3 dest = path.locations[currentPathIndex];
+			bool shouldDig = map.isForegroundSolid(dest);
+			bool ladder = !shouldDig && map.ladderable(dest);
 
-			Vector3 v = dest - this.transform.position;
+			if (shouldDig){
+				Vector3 a = (Vector3)currentpos + new Vector3(0.2f, 0.7f, -5);
+				Vector3 b = (Vector3)currentpos + new Vector3(0.2f, 0.3f, -5);
+				Vector3 c = (Vector3)currentpos + new Vector3(-0.2f, 0.3f, -5);
+				Vector3 d = (Vector3)currentpos + new Vector3(-0.2f, 0.7f, -5);
 
+				Color col = Color.cyan;
+
+				Debug.DrawLine(a, b, col);
+				Debug.DrawLine(b, c, col);
+				Debug.DrawLine(c, d, col);
+				Debug.DrawLine(d, a, col);
+			}
+			//should dig for dig state!!!!!
 			currentMovement.x = ((Mathf.Abs(v.x) < .05)?0:Mathf.Sign(v.normalized.x) * moveSpeed);
 
 			handleKnockback();

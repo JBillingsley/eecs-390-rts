@@ -36,7 +36,6 @@ public class Chunk : MonoBehaviour {
 
 	public void refresh(){
 		if (map.isDirty (x, y)){
-			Debug.Log ("Refresh:" + x + "," + y);
 			MeshFilter rFilter = renderData.GetComponent<MeshFilter>();
 			rFilter.sharedMesh.uv = makeTextures(x, y);
 			rFilter.sharedMesh.RecalculateBounds();

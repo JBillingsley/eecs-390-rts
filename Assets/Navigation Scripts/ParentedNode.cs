@@ -42,16 +42,16 @@ public class ParentedNode {
 		bool[] solid = Direction.extractByte(dirs, (byte)(~m.getByte(pos, Map.FOREGROUND_CONTEXT)));
 		IVector2[] directions = Direction.getDirections(dirs);
 
-		for (int i = 0; i < 4; i++){
-			if(passability[i] || ladder[i])
-				neighbors.Add (pos + directions[i]);
-		}
 		for (int i = 4; i < 6; i++){
 			if(passability[i] && solid[0])
 				neighbors.Add (pos + directions[i]);
 		}
 		for (int i = 6; i < 8; i++){
 			if(passability[i] && solid[i - 4])
+				neighbors.Add (pos + directions[i]);
+		}
+		for (int i = 0; i < 4; i++){
+			if(passability[i] || ladder[i])
 				neighbors.Add (pos + directions[i]);
 		}
 		return neighbors.ToArray();
