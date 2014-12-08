@@ -6,12 +6,13 @@ using System.Collections.Generic;
 public class Route {
 
 	public int length;
-	//public List<NavigationNode> nodes;
+	public List<ParentedNode> nodes;
 	public List<Vector3> locations;
 
 	public Route(){
 		length = 0;
 		locations = new List<Vector3>();
+		nodes = new List<ParentedNode>();
 	}
 
 	/// <summary>
@@ -21,9 +22,12 @@ public class Route {
 	public Route(ParentedNode p){
 		length = 0;
 		locations = new List<Vector3>();
+		nodes = new List<ParentedNode>();
 		ParentedNode n = p;
 		while(n.parent != null){
 			locations.Insert(0,n.location);
+			nodes.Insert(0,n);
+			Debug.Log (n.type);
 			n = n.parent;
 		}
 		length = locations.Count;

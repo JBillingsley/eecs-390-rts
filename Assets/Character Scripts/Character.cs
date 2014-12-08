@@ -51,12 +51,15 @@ public class Character : AnimatedEntity {
 
 	public bool rePath;
 
+	static int LADDERINDEX;
+
 	// Use this for initialization
 	protected void Start () {
 		//Here be dragons
 		um = GameObject.FindObjectOfType<UnitManager>();
 		em = GameObject.FindObjectOfType<EnemyManager>();
 
+		LADDERINDEX = TileSpecList.getTileSpecInt("Ladder");
 
 		currentMovement = new Vector2(0,0);
 
@@ -305,18 +308,33 @@ public class Character : AnimatedEntity {
 	//****************************************************************************//
 
 	void walkcase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
+		if(v.y > .25f || map.getForeground(currentpos).index == LADDERINDEX){
+			laddercase(currentpos,dest,node,v);
+			return;
+		}
+		currentState = movementState.WALKING;
 		if(v.y > .25f && (Mathf.Abs(v.x) > .1f && cc.velocity.x == 0)){// || (lastPosition - currentpos).magnitude == 0){
 			jump ();
+			currentState = movementState.JUMPING;
 		}
 	}
 	void digcase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
 		handleDigging(dest,v);
 	}
 	void laddercase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
-		if(v.y > .25f && (Mathf.Abs(v.x) < .1f)){
-			map.setTile(dest,(byte)TileSpecList.getTileSpecInt("Ladder"),(byte)1);
-			map.setTile(currentpos,(byte)TileSpecList.getTileSpecInt("Ladder"),(byte)1);
-			Debug.Log ("Ladder");
+		Debug.Log ("Laddercase");
+		if(map.getForeground(currentpos).index != TileSpecList.getTileSpecInt("Ladder")){
+			//ladderTile(dest);
+			ladderTile(currentpos);
+		}
+		currentMovement.y = Mathf.Sign(v.y) * moveSpeed;
+	}
+
+	void ladderTile(IVector2 t){
+		currentState = movementState.CLIMBING;
+		TileSpec ts = map.getForeground(t);
+		if(!ts.solid && ts.index != LADDERINDEX){
+			map.setTile(t,(byte)LADDERINDEX,(byte)1);
 		}
 	}
 
@@ -399,13 +417,8 @@ public class Character : AnimatedEntity {
 				break;
 			case movementState.WALKING:
 				animater.animationID = 1;
-				if(!cc.isGrounded && currentMovement.y != 0){
-					currentState = movementState.JUMPING;
-				}
-				else{
-					if(currentMovement.x == 0){
-						currentState = movementState.IDLE;
-					}
+				if(currentMovement.x == 0){
+					currentState = movementState.IDLE;
 				}
 				break;
 			case movementState.DIGGING:

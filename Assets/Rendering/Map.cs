@@ -220,7 +220,8 @@ public class Map : MonoBehaviour {
 	}
 
 	public bool unnavigable(IVector2 v){
-		return isForegroundSolid(v) || !isForegroundSolid(v + Direction.getDirection(Direction.BOTTOM));
+		return getForeground(v).index != TileSpecList.getTileSpecInt("Ladder") && 
+			(isForegroundSolid(v) || !isForegroundSolid(v + Direction.getDirection(Direction.BOTTOM)));
 	}
 
 	public bool ladderable(IVector2 v){
