@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class BackgroundScript : MonoBehaviour {
 	
@@ -8,6 +9,7 @@ public class BackgroundScript : MonoBehaviour {
 	float camHalfHeight;
 	Vector3 initPosition;
 	float randomSpeedFactor;
+
 	
 	// Use this for initialization
 	void Start () {
@@ -15,6 +17,7 @@ public class BackgroundScript : MonoBehaviour {
 		camHalfHeight = Camera.main.orthographicSize;
 		initPosition = new Vector3(xOffset, -(Camera.main.transform.position.y + renderer.bounds.size.y), 0f);
 		transform.position = initPosition;
+		
 	}
 	
 	// Update is called once per frame

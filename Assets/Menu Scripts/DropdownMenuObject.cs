@@ -6,6 +6,19 @@ public class DropdownMenuObject : MonoBehaviour {
 	public bool menuIsDown = false;
 	public GameObject[] dropdownMenu;
 	public DropdownMenuObject[] otherMenus;
+	public GameObject targetToSwap;
+	public GameObject targetToTurnOff;
+	
+	public void sceneSwitch(){
+		targetToSwap.SetActive(true);
+		targetToTurnOff.SetActive(false);
+	}
+	
+	public void mouseDown(){
+		menuIsDown = true;
+		toggleMenuDropdown();
+		collapseOtherMenus();
+	}
 	
 	void OnMouseDown(){
 		menuIsDown = !menuIsDown;
@@ -15,7 +28,7 @@ public class DropdownMenuObject : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		toggleMenuDropdown();
+		//toggleMenuDropdown();
 	}
 	
 	// Update is called once per frame
