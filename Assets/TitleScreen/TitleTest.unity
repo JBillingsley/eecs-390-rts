@@ -1423,10 +1423,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuIsDown: 0
-  dropdownMenu:
-  - {fileID: 1565591666}
-  otherMenus:
-  - {fileID: 954536561}
+  dropdownMenu: []
+  otherMenus: []
   targetToSwap: {fileID: 1277822566}
   targetToTurnOff: {fileID: 1565591666}
 --- !u!114 &513887267
@@ -3155,10 +3153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuIsDown: 0
-  dropdownMenu:
-  - {fileID: 1277822566}
-  otherMenus:
-  - {fileID: 513887266}
+  dropdownMenu: []
+  otherMenus: []
   targetToSwap: {fileID: 1565591666}
   targetToTurnOff: {fileID: 1277822566}
 --- !u!114 &954536562
@@ -6066,6 +6062,22 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11400010, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: otherMenus.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: otherMenus.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400010, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: dropdownMenu.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: dropdownMenu.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 22400126, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6150,6 +6162,50 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400010, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: otherMenus.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400010, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: dropdownMenu.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: dropdownMenu.Array.data[1]
+      value: 
+      objectReference: {fileID: 1277822566}
+    - target: {fileID: 11400012, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: dropdownMenu.Array.data[2]
+      value: 
+      objectReference: {fileID: 1277822566}
+    - target: {fileID: 11400012, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: dropdownMenu.Array.data[3]
+      value: 
+      objectReference: {fileID: 1277822566}
+    - target: {fileID: 11400012, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: dropdownMenu.Array.data[4]
+      value: 
+      objectReference: {fileID: 1277822566}
+    - target: {fileID: 11400012, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: dropdownMenu.Array.data[5]
+      value: 
+      objectReference: {fileID: 1277822566}
+    - target: {fileID: 11400012, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: dropdownMenu.Array.data[6]
+      value: 
+      objectReference: {fileID: 1277822566}
+    - target: {fileID: 11400012, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: dropdownMenu.Array.data[7]
+      value: 
+      objectReference: {fileID: 1277822566}
+    - target: {fileID: 11400012, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: dropdownMenu.Array.data[8]
+      value: 
+      objectReference: {fileID: 1277822566}
+    - target: {fileID: 11400012, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
+      propertyPath: dropdownMenu.Array.data[9]
+      value: 
+      objectReference: {fileID: 1277822566}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 17e8296d69b80434eb56fce2fa0ebf5c, type: 2}
   m_RootGameObject: {fileID: 1717006635}
