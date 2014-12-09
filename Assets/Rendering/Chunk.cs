@@ -132,10 +132,10 @@ public class Chunk : MonoBehaviour {
 		}
 		for (int y = 0; y < chunkSize; y++) {
 			for (int x = 0; x < chunkSize; x++) {
-				vertices [i*4] = new Vector3 (x, y, 1);
-				vertices [i*4+1] = new Vector3 (x, y+1, 1);
-				vertices [i*4+2] = new Vector3 (x+1, y+1, 1);
-				vertices [i*4+3] = new Vector3 (x+1, y, 1);
+				vertices [i*4] = new Vector3 (x, y, -0.01f);
+				vertices [i*4+1] = new Vector3 (x, y+1, -0.01f);
+				vertices [i*4+2] = new Vector3 (x+1, y+1, -0.01f);
+				vertices [i*4+3] = new Vector3 (x+1, y, -0.01f);
 				i++;
 			}
 		}

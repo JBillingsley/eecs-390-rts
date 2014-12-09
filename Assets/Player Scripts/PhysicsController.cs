@@ -8,7 +8,7 @@ public class PhysicsController : MonoBehaviour {
 
 	private BoxCollider myCollider;
 	private Vector2 s;
-	private Vector2 c;
+	private Vector3 c;
 
 	public bool onGround;
 	public bool onWall;
@@ -47,13 +47,13 @@ public class PhysicsController : MonoBehaviour {
 			}
 			float x = p.x + (c.x - s.x/2 + i * s.x) * transform.localScale.x;
 			float y = p.y + c.y + (dir * (s.y/2)) * transform.localScale.y;
-			Vector2 o = new Vector2(x,y);
+			Vector3 o = new Vector3(x,y,c.z);
 			
 			ray = new Ray(o,new Vector2(0,dir));
 		
 			Physics.Raycast(ray,out hit,Mathf.Abs (deltay)+gap,collisionMask);
 
-			Debug.DrawRay(new Vector3(ray.origin.x,ray.origin.y,0),new Vector3(ray.direction.x,ray.direction.y,0));
+			Debug.DrawRay(new Vector3(ray.origin.x,ray.origin.y,c.z),new Vector3(ray.direction.x,ray.direction.y,0));
 			 
 			if(hit.collider != null){
 				float dist = Vector2.Distance( o,hit.point);
@@ -77,7 +77,7 @@ public class PhysicsController : MonoBehaviour {
 			float x = p.x + c.x + (dir * s.x/2); //* transform.localScale.x; //Only works because i flip local scale.
 			float y = p.y + c.y - s.y/2 + (i * (s.y));// * transform.localScale.y;
 
-			Vector2 o = new Vector2(x,y);
+			Vector3 o = new Vector3(x,y,c.z);
 			
 			ray = new Ray(o,new Vector2(dir,0));
 			
@@ -110,7 +110,7 @@ public class PhysicsController : MonoBehaviour {
 
 			ray = new Ray(origin,playerDirection.normalized);
 			Physics.Raycast(ray,out hit,Mathf.Abs (deltay)+gap,collisionMask);
-			Debug.DrawRay(new Vector3(ray.origin.x,ray.origin.y,0),new Vector3(ray.direction.x,ray.direction.y,0));
+			Debug.DrawRay(new Vector3(ray.origin.x,ray.origin.y,c.z),new Vector3(ray.direction.x,ray.direction.y,0));
 
 			if(hit.collider != null){
 				float dist = Vector2.Distance( ray.origin,hit.point);

@@ -90,31 +90,42 @@ public class Player2 : AnimatedEntity {
 
 		int counter = 0;
 		while(true){
+			if(pPhysics.climbing){
+				currentState = movementState.CLIMBING;
+			}
+
 			switch(currentState){
 			case movementState.IDLE:
+				animater.animationID = 0;
 				if(moveAmount.x != 0){
 					currentState = movementState.WALKING;
-					animater.animationID = 1;
+				}
+				if(!pPhysics.onGround && moveAmount.y != 0){
+					currentState = movementState.JUMPING;
 				}
 				break;
 			case movementState.JUMPING:
+				animater.animationID = 2;
 				if(pPhysics.onGround){
 					currentState = movementState.WALKING;
-					animater.animationID = 1;
 				}
 				break;
 			case movementState.WALKING:
+				animater.animationID = 1;
 				if(!pPhysics.onGround && moveAmount.y != 0){
 					currentState = movementState.JUMPING;
 				}
 				else{
 					if(moveAmount.x == 0){
 						currentState = movementState.IDLE;
-						animater.animationID = 2;
 					}
 				}
 				break;
 			case movementState.CLIMBING:
+				animater.animationID = 3;
+				if(!pPhysics.climbing){
+					currentState = movementState.WALKING;
+				}
 				break;
 			}
 			
