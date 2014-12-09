@@ -59,7 +59,6 @@ public class CraftingReqs : MonoBehaviour {
 				min = i;
 			}
 		}
-		Debug.Log(min);
 		return min;
 	}
 	

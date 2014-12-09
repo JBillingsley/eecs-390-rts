@@ -26,7 +26,6 @@ public class AnimationsetDrawer : PropertyDrawer {
 		}
 		return h + EditorUtil.padding;
 	}
-	/*
 	public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label) {
 		
 		SerializedProperty name = prop.FindPropertyRelative ("name");
@@ -42,8 +41,9 @@ public class AnimationsetDrawer : PropertyDrawer {
 		EditorUtil.textField (new Rect (pos.x + EditorUtil.buttonSize, pos.y, pos.width - 2 * EditorUtil.buttonSize, EditorUtil.height), name, !fold, "Animation Set Name");
 
 		if (!fold){
-			if (EditorUtil.plus(pos.x + pos.width - EditorUtil.buttonSize, pos.y, "New Animation"))
-				Animation.construct(animations.GetArrayElementAtIndex(animations.arraySize++));
+			if (EditorUtil.plus(pos.x + pos.width - EditorUtil.buttonSize, pos.y, "New Animation")){
+				//Animation.construct(animations.GetArrayElementAtIndex(animations.arraySize++));
+			}
 		}
 	
 		EditorGUI.indentLevel++;
@@ -80,7 +80,7 @@ public class AnimationsetDrawer : PropertyDrawer {
 
 			}
 
-			/*Draw Animations*//*
+			//Draw Animations
 			float ay = EditorUtil.row + EditorUtil.texSize + EditorUtil.padding;
 			float[] h = new float[animations.arraySize];
 			for (int i = 0; i < animations.arraySize; i++) {
@@ -103,7 +103,7 @@ public class AnimationsetDrawer : PropertyDrawer {
 		EditorGUI.indentLevel--;
 
 		prop.serializedObject.ApplyModifiedProperties ();
-	}*/
+	}
 
 	private GUIContent getPreview(TextureAtlas tileset, int index, SerializedProperty sequence){
 		if (tileset == null)
