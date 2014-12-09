@@ -30,12 +30,15 @@ public class TowerHotBarScript : MonoBehaviour {
 	}
 	
 	public void upgradeTower(){
-		if(reqs[count].updateResources() > 0 && count < reqs.Length - 1){
+		if(reqs[count].updateResources() > 0 && count < reqs.Length - 1 && tower.type < Tower.TowerType.STONE){
 			reqs[count].makeDude();
 			count += 1;
 			otherButton.count += 1;
 			transform.GetComponent<TowerImageRotator>().rotateSprites(count);
-			tower.type = (Tower.TowerType)count;
+			tower.type = tower.type+1;
+			tower.increaseHeight();
+			tower.decreaseHeight();
+			
 		}
 	}
 }

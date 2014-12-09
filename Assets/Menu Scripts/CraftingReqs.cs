@@ -24,6 +24,7 @@ public class CraftingReqs : MonoBehaviour {
 	}
 	
 	public void buttonAction(){
+		Debug.Log("button pressed");
 		if(updateResources() > 0){
 			makeDude();
 		}
@@ -42,26 +43,31 @@ public class CraftingReqs : MonoBehaviour {
 	
 	public int updateResources(){
 		int[] reqAmts = new int[requirements.Count];
-		
+		//Debug.Log("the req length is " + requirements.Count);
 		for(int i = 0; i < requirements.Count; i++){
 			reqAmts[i] = calcRequirementAmt(requirements[i].type);
+			//Debug.Log("for requirement " + i + " the calc requirement is " + reqAmts[i]);
 		}
 		return findMin(reqAmts);
 	}
 	
 	public int findMin(int[] values){
-		int min = 0;
+		int min = 100000000;
+		//Debug.Log("the length of values is " + values.Length);
 		foreach(int i in values){
 			if(i < min){
 				min = i;
 			}
 		}
+		Debug.Log(min);
 		return min;
 	}
 	
 	public int calcRequirementAmt(Element type){
 		foreach(Reqs req in requirements){
+			//Debug.Log("comparing " + type + " and " + req.type);
 			if(req.type == type){
+				//Debug.Log("sucess: amt is " + InventroyManager.instance.getCount(type) / req.amount);
 				return InventroyManager.instance.getCount(type) / req.amount;
 			}
 		}
