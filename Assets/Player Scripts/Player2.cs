@@ -20,8 +20,11 @@ public class Player2 : AnimatedEntity {
 
 	private PhysicsController pPhysics;
 
+	private bool climbing;
+
 	public enum movementState {WALKING,JUMPING,IDLE,CLIMBING};
 	public movementState currentState;
+
 	// Use this for initialization
 	void Start () {
 		pPhysics = GetComponent<PhysicsController>();
@@ -37,10 +40,14 @@ public class Player2 : AnimatedEntity {
 			targetSpeed = 0;
 			currentSpeed = 0;
 		}
-		
+
+		if(climbing
 		moveAmount.y -= gravity * Time.fixedDeltaTime;
 
 		targetSpeed = speed * Input.GetAxisRaw("Horizontal");
+
+		float climb = Input.GetAxisRaw("Vertical");
+
 		currentSpeed = IncrementSpeed(currentSpeed,targetSpeed,acceleration);
 		
 		moveAmount.x = currentSpeed;
@@ -50,6 +57,10 @@ public class Player2 : AnimatedEntity {
 			if (Input.GetAxisRaw("Jump") > .5) {
 				moveAmount.y = jumpHeight;
 			}
+		}
+
+		if(Mathf.Abs(climb) > .1f){
+			pPhysics.grab();
 		}
 
 		pPhysics.move(moveAmount * Time.fixedDeltaTime);

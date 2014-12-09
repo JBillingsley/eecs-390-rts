@@ -12,17 +12,23 @@ public class PhysicsController : MonoBehaviour {
 
 	public bool onGround;
 	public bool onWall;
+	public bool climbing;
 
 	private float gap = .01f;
 	public float verticalGap = 0f;
 
 	Ray ray;
 	RaycastHit hit;
+	
+	private Map map;
+
+	IVector2 position;
 
 	void Start(){
 		myCollider = GetComponent<BoxCollider>();
 		s = myCollider.bounds.size;
 		c = myCollider.center;
+		map = GameObject.FindObjectOfType<Map>();
 	}
 
 	//Moves the player the given amount, within constraints
@@ -126,5 +132,14 @@ public class PhysicsController : MonoBehaviour {
 		}
 
 		transform.Translate (new Vector3(deltax,deltay,0));
+		position = (IVector2)((Vector2)transform.position);
+	}
+
+	public void grab ()
+	{
+		int i = TileSpecList.getTileSpecInt("Ladder");
+		if(map.getForeground(position).index == i){
+			onGround = true;
+		}
 	}
 }
