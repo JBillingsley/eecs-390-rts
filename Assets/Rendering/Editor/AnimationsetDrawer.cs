@@ -13,6 +13,14 @@ public class AnimationsetDrawer : PropertyDrawer {
 		return calculateHeight (prop);
 	}
 
+	public static void construct(SerializedProperty prop){
+		prop.FindPropertyRelative("name").stringValue = "Animation Set Name";         
+		SerializedProperty animations = prop.FindPropertyRelative ("animations");
+		animations.arraySize = 1;
+		AnimationDrawer.construct (animations.GetArrayElementAtIndex(0));
+		prop.serializedObject.ApplyModifiedProperties();
+	}
+
 	public static float calculateHeight(SerializedProperty prop){
 		float h = EditorUtil.row;
 		SerializedProperty animations = prop.FindPropertyRelative ("animations");
@@ -42,7 +50,7 @@ public class AnimationsetDrawer : PropertyDrawer {
 
 		if (!fold){
 			if (EditorUtil.plus(pos.x + pos.width - EditorUtil.buttonSize, pos.y, "New Animation")){
-				Animation.construct(animations.GetArrayElementAtIndex(animations.arraySize++));
+				AnimationDrawer.construct(animations.GetArrayElementAtIndex(animations.arraySize++));
 			}
 		}
 	

@@ -8,6 +8,12 @@ public class TileSpecDrawer : PropertyDrawer {
 	public override float GetPropertyHeight (SerializedProperty prop, GUIContent label) {
 		return calculateHeight(prop);
 	}
+
+	public static void construct(SerializedProperty prop){
+		prop.FindPropertyRelative("name").stringValue = "Tile Name";       
+		prop.serializedObject.ApplyModifiedProperties();
+	}
+
 	
 	public static float calculateHeight(SerializedProperty prop){
 		float h = EditorUtil.row;

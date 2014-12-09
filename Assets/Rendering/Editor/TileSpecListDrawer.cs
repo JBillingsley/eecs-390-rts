@@ -52,7 +52,7 @@ public class TileSpecListDrawer : PropertyDrawer {
 
 		SerializedProperty tilespecs = prop.FindPropertyRelative ("tilespecs");
 		if (EditorUtil.plus(pos.x + pos.width - EditorUtil.buttonSize, pos.y, "New Tile Specification"))
-			TileSpec.construct(tilespecs.GetArrayElementAtIndex(tilespecs.arraySize++));
+			TileSpecDrawer.construct(tilespecs.GetArrayElementAtIndex(tilespecs.arraySize++));
 		
 		float ay = EditorUtil.row;
 		if (!fold){

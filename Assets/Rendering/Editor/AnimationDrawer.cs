@@ -12,6 +12,15 @@ public class AnimationDrawer : PropertyDrawer {
 	public override float GetPropertyHeight (SerializedProperty prop, GUIContent label) {
 		return calculateHeight (prop);
 	}
+
+	public static void construct(SerializedProperty prop){
+		prop.FindPropertyRelative("name").stringValue = "Animation Name";
+		SerializedProperty sequence = prop.FindPropertyRelative ("tileSequence");
+		sequence.arraySize = 1;
+		sequence.GetArrayElementAtIndex (0).intValue = 0;
+		prop.FindPropertyRelative ("frameSkip").intValue = 1;
+		prop.serializedObject.ApplyModifiedProperties();
+	}
 	
 	public static float calculateHeight(SerializedProperty prop){
 		SerializedProperty tileSequence = prop.FindPropertyRelative ("tileSequence");

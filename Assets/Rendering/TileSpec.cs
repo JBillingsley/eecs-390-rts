@@ -163,12 +163,5 @@ public class TileSpec {
 	}
 
 
-	public static void construct(SerializedProperty prop){
-		prop.FindPropertyRelative("name").stringValue = "Tile Name";
-//		prop.FindPropertyRelative ("view").objectReferenceValue = null;
-	//	prop.serializedObject.ApplyModifiedProperties();
-	//	prop.FindPropertyRelative ("view").objectReferenceValue = TileSpec.constructPreview(prop);         
-		prop.serializedObject.ApplyModifiedProperties();
-	}
-	
+
 }

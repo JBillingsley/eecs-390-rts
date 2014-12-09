@@ -23,12 +23,6 @@ public class AnimationSet {
 		return TextureAtlasList.getTextureAtlas(textureAtlasID);
 	}
 
-	public static void construct(SerializedProperty prop){
-		prop.FindPropertyRelative("name").stringValue = "Animation Set Name";         
-		SerializedProperty animations = prop.FindPropertyRelative ("animations");
-		animations.arraySize = 1;
-		Animation.construct (animations.GetArrayElementAtIndex(0));
-		prop.serializedObject.ApplyModifiedProperties();
-	}
+
 
 }

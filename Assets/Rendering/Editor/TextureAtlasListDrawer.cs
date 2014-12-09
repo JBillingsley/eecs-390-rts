@@ -34,7 +34,7 @@ public class TextureAtlasListDrawer : PropertyDrawer {
 		
 		SerializedProperty textureAtlases = prop.FindPropertyRelative ("textureAtlases");
 		if (EditorUtil.plus(pos.x + pos.width - EditorUtil.buttonSize, pos.y, "New Texture Atlas"))
-			TextureAtlas.construct(textureAtlases.GetArrayElementAtIndex(textureAtlases.arraySize++));
+			TextureAtlasDrawer.construct(textureAtlases.GetArrayElementAtIndex(textureAtlases.arraySize++));
 		float ay = EditorUtil.row;
 		if (textureAtlases == null)
 			return ay;

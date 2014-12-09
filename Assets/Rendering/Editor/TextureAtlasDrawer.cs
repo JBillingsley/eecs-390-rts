@@ -10,6 +10,13 @@ public class TextureAtlasDrawer : PropertyDrawer {
 	public override float GetPropertyHeight (SerializedProperty prop, GUIContent label) {
 		return calculateHeight(prop);
 	}
+
+	public static void construct(SerializedProperty prop){
+		prop.FindPropertyRelative("name").stringValue = "TextureAtlas Name";
+		prop.FindPropertyRelative("width").intValue = 1;
+		prop.FindPropertyRelative("height").intValue = 1;
+		prop.serializedObject.ApplyModifiedProperties();
+	}
 	
 	public static float calculateHeight(SerializedProperty prop){
 		if (prop.FindPropertyRelative ("folded").boolValue)

@@ -36,7 +36,7 @@ public class AnimationSetListDrawer : PropertyDrawer {
 		
 		SerializedProperty animationsets = prop.FindPropertyRelative ("animationsets");
 		if (EditorUtil.plus(pos.x + pos.width - EditorUtil.buttonSize, pos.y, "New Animation Set"))
-			AnimationSet.construct(animationsets.GetArrayElementAtIndex(animationsets.arraySize++));
+			AnimationsetDrawer.construct(animationsets.GetArrayElementAtIndex(animationsets.arraySize++));
 		
 		float ay = EditorUtil.row;
 		if (animationsets == null)
