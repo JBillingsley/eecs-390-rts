@@ -308,7 +308,7 @@ public class Character : AnimatedEntity {
 	//****************************************************************************//
 
 	void walkcase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
-		if(v.y > .25f || map.getForeground(currentpos) == TileSpecList.getTileSpec(LADDERINDEX)){
+		if((v.y > .25f && Mathf.Abs(v.x) < .1f) || map.getForeground(currentpos) == TileSpecList.getTileSpec(LADDERINDEX)){
 			laddercase(currentpos,dest,node,v);
 			return;
 		}
@@ -322,10 +322,11 @@ public class Character : AnimatedEntity {
 		handleDigging(dest,v);
 	}
 	void laddercase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
-		Debug.Log ("Laddercase");
-		if(map.getForeground(currentpos) != TileSpecList.getTileSpec("Ladder")){
-			//ladderTile(dest);
+		bool s = map.getForeground(currentpos) == TileSpecList.getTileSpec("Ladder");
+		bool f = map.getForeground(currentpos) == TileSpecList.getTileSpec("Ladder");
+		if(currentpos.x == dest.x){
 			ladderTile(currentpos);
+			ladderTile(dest);
 		}
 		currentMovement.y = Mathf.Sign(v.y) * moveSpeed;
 	}

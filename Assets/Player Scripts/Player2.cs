@@ -50,6 +50,12 @@ public class Player2 : AnimatedEntity {
 
 		if(pPhysics.climbing){
 			moveAmount.y = climb;
+			if(!pPhysics.onLadder() ){//|| Mathf.Abs(currentSpeed) > .25){
+				pPhysics.ungrab();
+				if (Input.GetAxisRaw("Jump") > .5) {
+					moveAmount.y = jumpHeight;
+				}
+			}
 		}
 		else if (pPhysics.onGround) {
 			moveAmount.y = 0;

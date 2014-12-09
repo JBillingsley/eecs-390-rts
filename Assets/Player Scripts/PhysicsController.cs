@@ -132,13 +132,15 @@ public class PhysicsController : MonoBehaviour {
 		}
 
 		transform.Translate (new Vector3(deltax,deltay,0));
-		position = (IVector2)((Vector2)transform.position);
+		position = (IVector2)((Vector2)transform.position + new Vector2(.5f,.5f));
 	}
-
+	public bool onLadder(){
+		return map.getForeground(position) == TileSpecList.getTileSpec("Ladder");
+	}
 	public void grab ()
 	{
 		int i = TileSpecList.getTileSpecInt("Ladder");
-		if(map.getForeground(position) == TileSpecList.getTileSpec("Ladder")){
+		if(onLadder()){
 			climbing = true;
 		}
 	}
