@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor;
+//using UnityEditor;
 
 [System.Serializable]
 public class TextureAtlas {
@@ -90,12 +90,12 @@ public class TextureAtlas {
 		float h = texture.height / height;
 		return w / h;
 	}
-
+/*
 	public static void construct(SerializedProperty prop){
 		prop.FindPropertyRelative("name").stringValue = "TextureAtlas Name";
 		prop.FindPropertyRelative("width").intValue = 1;
 		prop.FindPropertyRelative("height").intValue = 1;
 		prop.serializedObject.ApplyModifiedProperties();
-	}
+	}*/
 
 }

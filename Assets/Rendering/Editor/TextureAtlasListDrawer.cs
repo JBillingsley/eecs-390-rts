@@ -22,9 +22,9 @@ public class TextureAtlasListDrawer : PropertyDrawer {
 	}
 	
 	public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label) {
-		renderTextureAtlass (pos, prop);
+//		renderTextureAtlass (pos, prop);
 	}
-	
+	/*
 	private float renderTextureAtlass(Rect pos, SerializedProperty prop){
 		SerializedProperty folded = prop.FindPropertyRelative ("textureAtlasFolded");
 		bool fold = folded.boolValue;
@@ -60,5 +60,5 @@ public class TextureAtlasListDrawer : PropertyDrawer {
 			EditorGUI.indentLevel--;
 		}
 		return ay;
-	}
+	}*/
 }

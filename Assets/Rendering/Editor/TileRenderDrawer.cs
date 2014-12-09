@@ -14,7 +14,7 @@ public class TileRenderDrawer : PropertyDrawer {
 		float p = TileSpec.previewSize((TileContext)context.enumValueIndex);
 		return Mathf.Max (p + EditorUtil.padding, 2 * EditorUtil.row + 3);
 	}
-	
+	/*
 	public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label) {
 		SerializedProperty context = prop.FindPropertyRelative ("context");
 		SerializedProperty index = prop.FindPropertyRelative ("index");
@@ -45,6 +45,6 @@ public class TileRenderDrawer : PropertyDrawer {
 
 		prop.serializedObject.ApplyModifiedProperties ();
 	}
-
+*/
 
 }

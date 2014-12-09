@@ -36,7 +36,7 @@ public class TileSpecListDrawer : PropertyDrawer {
 			SerializedProperty tilespecs = prop.FindPropertyRelative ("tilespecs");
 			for (int i = 0; i < tilespecs.arraySize; i++) {
 				SerializedProperty tilespec = tilespecs.GetArrayElementAtIndex(i);
-				tilespec.FindPropertyRelative("view").objectReferenceValue = TileSpec.constructPreview(tilespec);
+//				tilespec.FindPropertyRelative("view").objectReferenceValue = TileSpec.constructPreview(tilespec);
 			}
 		}
 		return TextureAtlasDrawer.calculateHeight (tileset);
@@ -51,8 +51,8 @@ public class TileSpecListDrawer : PropertyDrawer {
 		
 
 		SerializedProperty tilespecs = prop.FindPropertyRelative ("tilespecs");
-		if (EditorUtil.plus(pos.x + pos.width - EditorUtil.buttonSize, pos.y, "New Tile Specification"))
-			TileSpec.construct(tilespecs.GetArrayElementAtIndex(tilespecs.arraySize++));
+	//	if (EditorUtil.plus(pos.x + pos.width - EditorUtil.buttonSize, pos.y, "New Tile Specification"))
+//			TileSpec.construct(tilespecs.GetArrayElementAtIndex(tilespecs.arraySize++));
 		
 		float ay = EditorUtil.row;
 		if (!fold){

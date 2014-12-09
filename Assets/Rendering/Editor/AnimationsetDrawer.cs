@@ -26,7 +26,7 @@ public class AnimationsetDrawer : PropertyDrawer {
 		}
 		return h + EditorUtil.padding;
 	}
-	
+	/*
 	public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label) {
 		
 		SerializedProperty name = prop.FindPropertyRelative ("name");
@@ -80,7 +80,7 @@ public class AnimationsetDrawer : PropertyDrawer {
 
 			}
 
-			/*Draw Animations*/
+			/*Draw Animations*//*
 			float ay = EditorUtil.row + EditorUtil.texSize + EditorUtil.padding;
 			float[] h = new float[animations.arraySize];
 			for (int i = 0; i < animations.arraySize; i++) {
@@ -103,7 +103,7 @@ public class AnimationsetDrawer : PropertyDrawer {
 		EditorGUI.indentLevel--;
 
 		prop.serializedObject.ApplyModifiedProperties ();
-	}
+	}*/
 
 	private GUIContent getPreview(TextureAtlas tileset, int index, SerializedProperty sequence){
 		if (tileset == null)

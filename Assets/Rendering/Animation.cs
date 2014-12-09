@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System.Collections;
 
 [System.Serializable]
@@ -11,7 +11,7 @@ public class Animation {
 	public int frameSkip = 1;
 	[SerializeField]
 	private bool folded;
-
+/*
 	public static void construct(SerializedProperty prop){
 		prop.FindPropertyRelative("name").stringValue = "Animation Name";
 		SerializedProperty sequence = prop.FindPropertyRelative ("tileSequence");
@@ -20,6 +20,6 @@ public class Animation {
 		prop.FindPropertyRelative ("frameSkip").intValue = 1;
 		prop.serializedObject.ApplyModifiedProperties();
 	}
-
+*/
 
 }

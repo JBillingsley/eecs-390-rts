@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -34,7 +34,7 @@ public class TileSpec {
 		int i = index % renders.Count;
 		return renders [i];
 	}
-
+/*
 	public static Texture2D constructPreview(SerializedProperty spec){
 		TextureAtlas atlas = TileSpecList.list.tileset;
 
@@ -66,7 +66,7 @@ public class TileSpec {
 		spec.serializedObject.ApplyModifiedProperties ();
 		return tex;
 	}
-
+*/
 	private static Texture2D fillTexture(Texture2D texture, int width, int height, TextureAtlas atlas, int[] indices){
 		int w = (int)atlas.pixelWidth();
 		int h = (int)atlas.pixelHeight();
@@ -163,7 +163,7 @@ public class TileSpec {
 		return (val & mask) == mask ? 1 : 0;
 	}
 
-
+/*
 	public static void construct(SerializedProperty prop){
 		prop.FindPropertyRelative("name").stringValue = "Tile Name";
 //		prop.FindPropertyRelative ("view").objectReferenceValue = null;
@@ -172,5 +172,5 @@ public class TileSpec {
 		prop.serializedObject.ApplyModifiedProperties();
 	}
 
-
+*/
 }

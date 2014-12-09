@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System.Collections;
 
 [System.Serializable]
@@ -22,13 +22,13 @@ public class AnimationSet {
 	public TextureAtlas getTileset(){
 		return TextureAtlasList.getTextureAtlas(textureAtlasID);
 	}
-
+/*
 	public static void construct(SerializedProperty prop){
 		prop.FindPropertyRelative("name").stringValue = "Animation Set Name";         
 		SerializedProperty animations = prop.FindPropertyRelative ("animations");
 		animations.arraySize = 1;
 		Animation.construct (animations.GetArrayElementAtIndex(0));
 		prop.serializedObject.ApplyModifiedProperties();
-	}
+	}*/
 
 }
