@@ -11,6 +11,7 @@ public class Reqs {
 public class CraftingReqs : MonoBehaviour {
 	
 	public List<Reqs> requirements;
+	public GenericFactory unitSpawner;
 	
 	// Use this for initialization
 	void Start () {
@@ -33,7 +34,10 @@ public class CraftingReqs : MonoBehaviour {
 			InventroyManager.instance.removeFromInventory(req.type, req.amount);
 		}
 		// call the spawn dude function
-		Debug.Log("I GOT A DUDE SPAWNED DUDE");
+		if(unitSpawner != null){
+			unitSpawner.spawnObject();
+			Debug.Log("Spawned a cutie");
+		}
 	}
 	
 	public int updateResources(){
