@@ -40,10 +40,6 @@ public class Player2 : AnimatedEntity {
 			targetSpeed = 0;
 			currentSpeed = 0;
 		}
-
-		if(climbing
-		moveAmount.y -= gravity * Time.fixedDeltaTime;
-
 		targetSpeed = speed * Input.GetAxisRaw("Horizontal");
 
 		float climb = Input.GetAxisRaw("Vertical");
@@ -52,11 +48,17 @@ public class Player2 : AnimatedEntity {
 		
 		moveAmount.x = currentSpeed;
 
-		if (pPhysics.onGround) {
+		if(pPhysics.climbing){
+			moveAmount.y = climb;
+		}
+		else if (pPhysics.onGround) {
 			moveAmount.y = 0;
 			if (Input.GetAxisRaw("Jump") > .5) {
 				moveAmount.y = jumpHeight;
 			}
+		}
+		else{
+			moveAmount.y -= gravity * Time.fixedDeltaTime;
 		}
 
 		if(Mathf.Abs(climb) > .1f){

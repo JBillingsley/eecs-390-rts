@@ -138,8 +138,12 @@ public class PhysicsController : MonoBehaviour {
 	public void grab ()
 	{
 		int i = TileSpecList.getTileSpecInt("Ladder");
-		if(map.getForeground(position).index == i){
-			onGround = true;
+		if(map.getForeground(position) == TileSpecList.getTileSpec("Ladder")){
+			climbing = true;
 		}
+	}
+	public void ungrab ()
+	{
+		climbing = false;
 	}
 }
