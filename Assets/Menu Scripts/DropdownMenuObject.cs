@@ -28,7 +28,7 @@ public class DropdownMenuObject : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		//toggleMenuDropdown();
+		toggleMenuDropdown();
 	}
 	
 	// Update is called once per frame
