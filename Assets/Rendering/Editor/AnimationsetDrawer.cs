@@ -42,7 +42,7 @@ public class AnimationsetDrawer : PropertyDrawer {
 
 		if (!fold){
 			if (EditorUtil.plus(pos.x + pos.width - EditorUtil.buttonSize, pos.y, "New Animation")){
-				//Animation.construct(animations.GetArrayElementAtIndex(animations.arraySize++));
+				Animation.construct(animations.GetArrayElementAtIndex(animations.arraySize++));
 			}
 		}
 	

@@ -20,14 +20,14 @@ public class AnimationSetListDrawer : PropertyDrawer {
 		}
 		return h;
 	}
-	/*
+
 	public override void OnGUI (Rect pos, SerializedProperty prop, GUIContent label) {
 
 		renderAnimationsets (pos, prop);
 
 		
-	}*/
-/*
+	}
+
 	private float renderAnimationsets(Rect pos, SerializedProperty prop){
 		SerializedProperty folded = prop.FindPropertyRelative ("animationsetFolded");
 		bool fold = folded.boolValue;
@@ -63,5 +63,5 @@ public class AnimationSetListDrawer : PropertyDrawer {
 			EditorGUI.indentLevel--;
 		}
 		return ay;
-	}*/
+	}
 }

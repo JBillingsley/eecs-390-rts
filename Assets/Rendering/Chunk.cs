@@ -50,10 +50,10 @@ public class Chunk : MonoBehaviour {
 	}
 
 	public void destroy(){
-		/*map.makeDirty (x, y);
+		map.makeDirty (x, y);
 		Destroy(renderData.GetComponent<MeshFilter>().sharedMesh);
 		Destroy(colliderData.GetComponent<MeshFilter>().sharedMesh);
-		Destroy(gameObject);*/
+		Destroy(gameObject);
 	}
 
 	/*********************************************************************************************/

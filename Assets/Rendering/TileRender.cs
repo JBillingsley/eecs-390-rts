@@ -1,5 +1,5 @@
 using UnityEngine;
-//using UnityEditor;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,7 +11,7 @@ public class TileRender {
 
 	[SerializeField]
 	private Texture2D view;
-/*
+
 	public static Texture2D constructPreview(SerializedProperty spec){
 		TextureAtlas atlas = TileSpecList.list.tileset;
 
@@ -43,7 +43,7 @@ public class TileRender {
 		spec.serializedObject.ApplyModifiedProperties ();
 		return tex;
 	}
-*/
+
 	private static Texture2D fillTexture(Texture2D texture, int width, int height, TextureAtlas atlas, int[] indices){
 		int w = (int)atlas.pixelWidth();
 		int h = (int)atlas.pixelHeight();
