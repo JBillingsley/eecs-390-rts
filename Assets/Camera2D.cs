@@ -63,13 +63,26 @@ public class Camera2D : MonoBehaviour {
 	public void focus (){
 		float x = lockonTarget.position.x + .5f;
 		float y = lockonTarget.position.y +.5f;
-		float w = Screen.width / Screen.height * tileHeight();
+		float w = (float)Screen.width / Screen.height * tileHeight();
 		float h = tileHeight();
 		float mw = map.getWidth();
 		float mh = map.getHeight();
 		x = Mathf.Clamp (x, w / 2, mw - w / 2);
 		y = Mathf.Clamp (y, h / 2, mh - h / 2);
 		transform.position = new Vector3(x, y, -10);
+		debugRect (0, mw, 0, mh, Color.red);
+		debugRect (w / 2, mw - w / 2, h / 2, mh - h / 2, Color.cyan);
+		debugRect (0, w, 0, h, Color.green);
+		debugRect (mw - w, mw, 0, h, Color.green);
+		debugRect (mw - w, mw, mh - h, mh, Color.green);
+		debugRect (0, w, mh - h, mh, Color.green);
+	}
+
+	private static void debugRect(float x1, float x2, float y1, float y2, Color c){
+		Debug.DrawLine (new Vector3 (x1, y1, -10), new Vector3 (x1, y2, -10), c);
+		Debug.DrawLine (new Vector3 (x2, y1, -10), new Vector3 (x2, y2, -10), c);
+		Debug.DrawLine (new Vector3 (x1, y1, -10), new Vector3 (x2, y1, -10), c);
+		Debug.DrawLine (new Vector3 (x1, y2, -10), new Vector3 (x2, y2, -10), c);
 	}
 
 	private static void showChunk(Map map, short x, short y){
