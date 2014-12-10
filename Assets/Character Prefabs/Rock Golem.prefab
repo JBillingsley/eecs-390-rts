@@ -42,7 +42,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 59.6171722, y: 64.2910309, z: -.100000001}
+  m_LocalPosition: {x: 61, y: 65, z: -.100000001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -101,6 +101,7 @@ MonoBehaviour:
   animater:
     animationsetID: 4
     animationID: 2
+  reversed: 0
   right: 0
   position: {x: 0, y: 0}
   moveSpeed: .125
@@ -118,6 +119,9 @@ MonoBehaviour:
   currentState: 0
   digging: 0
   particles: {fileID: 0}
+  rePath: 0
+  canLadder: 1
+  canMine: 1
   myState: 3
   myTeam: 0
   characterTarget: {fileID: 0}

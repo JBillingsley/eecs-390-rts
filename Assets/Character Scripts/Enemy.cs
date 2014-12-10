@@ -3,9 +3,33 @@ using System.Collections;
 
 public class Enemy : NPC {
 
+	public int spawnedTile;
+	private float mineTime = 1;
+
 	void Update(){
 		act ();
 		move ();
+		if(!moving && !pathing){
+			eliminate();
+		}
+	}
+
+	void eliminate(){
+		Destroy(this.gameObject);
+	}
+
+	protected override void mine(IVector2 v){
+		byte d = map.getByte (v, Map.DURABILITY);
+		if (mineTime <= 0){
+			digging = false;
+			TileSpec ts = TileSpecList.getTileSpec(map.getByte(v,Map.FOREGROUND_ID));
+			InventroyManager.instance.addToInventory(ts.resource);
+			map.setTile(v,(byte)spawnedTile,map.getByte(v,Map.BACKGROUND_ID));
+			eliminate();
+		}
+		else{
+			mineTime -= Time.fixedDeltaTime;
+		}
 	}
 	
 	protected override void attack(){

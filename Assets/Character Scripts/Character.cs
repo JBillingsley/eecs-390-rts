@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(Collider2D))]
+//[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(CharacterController))]
 public class Character : AnimatedEntity {
 
@@ -26,7 +26,7 @@ public class Character : AnimatedEntity {
 	public float gravity = 9.81f;
 	public float landingDelay = 5;
 	public float digTime = 0.25f;
-	private float digTimer = 0;
+	protected float digTimer = 0;
 
 	public float weight;
 
@@ -51,7 +51,14 @@ public class Character : AnimatedEntity {
 
 	public bool rePath;
 
+	public bool canLadder;
+	public bool canMine;
+	public int pathsPerFrame = 180;
+
 	static int LADDERINDEX;
+
+	protected bool pathing = true;
+	protected bool moving = true;
 
 	// Use this for initialization
 	protected void Start () {
@@ -130,11 +137,12 @@ public class Character : AnimatedEntity {
 
 			//If the destination hasn't changed...
 			if(lastDest == destination && !rePath){
+				pathing = false;
 				waitTime = Mathf.Clamp(waitTime + .01f,.01f,.5f);
 				//...Go back to start of the loop.
 				goto reset;
 			}
-
+			pathing = true;
 			rePath = false;
 
 			if(!TileSpecList.getTileSpec(map.getByte(destination,Map.FOREGROUND_ID)).diggable){
@@ -182,14 +190,19 @@ public class Character : AnimatedEntity {
 
 				//Add new leaves, both open neighbors and ones where you dig.
 				addToLeaves(current,current.GetNeighbors(),branches,leaves,start,end,0,ParentedNode.Type.WALK);
-				addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,1,ParentedNode.Type.DIG);
-				addToLeaves(current,current.GetLadderNeighbors(),branches,leaves,start,end,3,ParentedNode.Type.LADDER);
+				if(canMine)
+					addToLeaves(current,current.GetDigNeighbors(),branches,leaves,start,end,1,ParentedNode.Type.DIG);
+				if(canLadder)
+					addToLeaves(current,current.GetLadderNeighbors(),branches,leaves,start,end,3,ParentedNode.Type.LADDER);
 
 				count ++;
 				//Only do 20 cycles per frame
-				if(count % 180 == 0){
-					destination = lastDest;
-					goto reset;
+				if(count % pathsPerFrame == 0){
+					yield return new WaitForSeconds(1);
+					if(count > 10000){
+						destination = lastDest;
+						goto reset;
+					}
 				}
 			}
 
@@ -221,8 +234,8 @@ public class Character : AnimatedEntity {
 		foreach(Vector2 v in positions){
 			//Don't add it if its already in the leaves or branches.
 			if(!ContainsNode(leaves,branches,v)){
-				int d = map.getByte(v,Map.DURABILITY);
-				ParentedNode p = new ParentedNode(current,v,hueristic(v,end) + addedWeight + d);
+
+				ParentedNode p = new ParentedNode(current,v,hueristic(v,end) + addedWeight);
 				p.type = t;
 				leaves.Add(p);
 			}
@@ -244,20 +257,26 @@ public class Character : AnimatedEntity {
 	}
 
 	//Provides a hueristic weight based on the distance from the destination.
-	public static float hueristic(Vector3 n, Vector3 destination){
+	public float hueristic(Vector3 n, Vector3 destination){
+		int d = map.getByte((Vector2)n,Map.DURABILITY);
 		float xdif = n.x - destination.x;
 		float ydif = n.y - destination.y;
-		return (Mathf.Abs(xdif)+Mathf.Abs(ydif));
+		return (Mathf.Abs(xdif)+Mathf.Abs(ydif)) + d;
 	}
 
 	//Moves this character along its route.
 	public virtual void move(){
 		if(path != null && currentPathIndex < path.locations.Count){
 
+			moving = true;
+
 			Vector2 currentpos = new Vector2(this.transform.position.x + size/2,this.transform.position.y);
 			Vector2 dest = path.locations[currentPathIndex];
 			ParentedNode node = path.nodes[currentPathIndex];
 			Vector2 v = dest - (Vector2)this.transform.position;
+
+			if(v.magnitude > 1.5f)
+				rePath = true;
 
 			bool shouldDig = map.isForegroundSolid(dest);
 			bool ladder = !shouldDig && map.ladderable(dest);
@@ -298,6 +317,7 @@ public class Character : AnimatedEntity {
 			//transform.Translate(v.normalized * moveSpeed* Time.deltaTime);
 		}
 		else{
+			moving = false;
 			currentMovement.x = 0;
 		}
 		applyGravity();
@@ -308,7 +328,7 @@ public class Character : AnimatedEntity {
 	//****************************************************************************//
 
 	void walkcase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
-		if((v.y > .25f && Mathf.Abs(v.x) < .1f) || map.getForeground(currentpos) == TileSpecList.getTileSpec(LADDERINDEX)){
+		if((v.y > .25f && Mathf.Abs(v.x) < .1f) || map.getForeground(currentpos) == TileSpecList.getTileSpec(LADDERINDEX) && canLadder){
 			laddercase(currentpos,dest,node,v);
 			return;
 		}
@@ -332,6 +352,8 @@ public class Character : AnimatedEntity {
 	}
 
 	void ladderTile(IVector2 t){
+		if(!canLadder)
+			return;
 		currentState = movementState.CLIMBING;
 		TileSpec ts = map.getForeground(t);
 		if(!ts.solid && ts != TileSpecList.getTileSpec(LADDERINDEX)){
@@ -374,9 +396,10 @@ public class Character : AnimatedEntity {
 		}
 	}
 
-	protected void mine(IVector2 v){
+	protected virtual void mine(IVector2 v){
+		if(!canMine)
+			return;
 		byte d = map.getByte (v, Map.DURABILITY);
-		Debug.Log (d);
 		if (d == 0){
 			digging = false;
 			TileSpec ts = TileSpecList.getTileSpec(map.getByte(v,Map.FOREGROUND_ID));

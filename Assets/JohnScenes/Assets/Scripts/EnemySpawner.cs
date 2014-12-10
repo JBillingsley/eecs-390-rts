@@ -3,9 +3,11 @@ using System.Collections;
 
 public class EnemySpawner : MonoBehaviour {
 
-public float lastEnemyTime;
-public float enemySpawnTime;
-public GameObject enemy;
+	public float lastEnemyTime;
+	public float enemySpawnTime;
+	public GenericFactory factory;
+
+	public Vector2 destination;
 
 	// Use this for initialization
 	void Start () {
@@ -15,8 +17,12 @@ public GameObject enemy;
 	// Update is called once per frame
 	void Update () {
 		if(Time.timeSinceLevelLoad - lastEnemyTime > enemySpawnTime){
-			lastEnemyTime = Time.timeSinceLevelLoad;
-			 Instantiate(enemy, transform.position, Quaternion.identity);
+			Vector2 d = new Vector2(Random.Range(0,95),Random.Range(1,60));
+			lastEnemyTime = Time.timeSinceLevelLoad * Util.randomSpread();
+			Enemy e = factory.spawnObject().GetComponent<Enemy>();
+			e.gameObject.SetActive(true);
+			e.transform.position = this.transform.position;
+			e.destination = d;
 		}
 	}
 }

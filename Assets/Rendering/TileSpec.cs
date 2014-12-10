@@ -31,7 +31,7 @@ public class TileSpec {
 		if (renders.Count < 1){
 			renders.Add(new TileRender());
 		}
-		int i = index % renders.Count;
+		int i = Mathf.Abs(index % renders.Count);
 		return renders [i];
 	}
 

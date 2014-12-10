@@ -85,7 +85,7 @@ public class Map : MonoBehaviour {
 	}
 
 	public static int hash(int x, int y){
-		return (int) Mathf.Pow(x,3) + y * 37 - x*y;
+		return (int) Mathf.Pow(x,3) + y * 37 - x*y*x + y*x*y*5 - x*x*y*y*13;
 	}
 
 

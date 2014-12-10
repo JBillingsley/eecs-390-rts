@@ -139,12 +139,13 @@ public class UnitSelector : MonoBehaviour {
 		//Select units by pressing them.
 		
 		foreach(Character u in um.units){
-			
-			Vector2 v = Camera.main.WorldToScreenPoint(u.transform.position);
-			Vector2 w = Camera.main.WorldToScreenPoint(u.transform.position + u.transform.localScale);
-			if(new Rect(v.x,v.y,(w-v).x,(w-v).y).Contains(mousePos)){
-				addToSelection(u);
-				return;
+			if(u != null){
+				Vector2 v = Camera.main.WorldToScreenPoint(u.transform.position);
+				Vector2 w = Camera.main.WorldToScreenPoint(u.transform.position + u.transform.localScale);
+				if(new Rect(v.x,v.y,(w-v).x,(w-v).y).Contains(mousePos)){
+					addToSelection(u);
+					return;
+				}
 			}
 		}
 	}
