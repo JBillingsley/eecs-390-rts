@@ -60,9 +60,16 @@ public class Camera2D : MonoBehaviour {
 		}
 	}
 
-	public void focus ()
-	{
-		this.transform.position = new Vector3(lockonTarget.position.x + .5f,lockonTarget.position.y +.5f,this.transform.position.z);
+	public void focus (){
+		float x = lockonTarget.position.x + .5f;
+		float y = lockonTarget.position.y +.5f;
+		float w = Screen.width / Screen.height * tileHeight();
+		float h = tileHeight();
+		float mw = map.getWidth();
+		float mh = map.getHeight();
+		x = Mathf.Clamp (x, w / 2, mw - w / 2);
+		y = Mathf.Clamp (y, h / 2, mh - h / 2);
+		transform.position = new Vector3(x, y);
 	}
 
 	private static void showChunk(Map map, short x, short y){
