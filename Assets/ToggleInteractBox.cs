@@ -20,6 +20,7 @@ public class ToggleInteractBox : MonoBehaviour {
 	}
 	
 	public void toggle(){
+	Debug.Log("tongling sutf");
 		activeState = !activeState;
 		interactPane.enabled = activeState;
 	}

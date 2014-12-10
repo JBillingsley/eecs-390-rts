@@ -5,23 +5,15 @@ using UnityEngine.UI;
 public class CityManager : MonoBehaviour {
 
 	public InteractionHandler[] cities;
-	private bool[] cityFlags;
-	private int count = 0;
+	public bool[] cityFlags;
+	public int count = 0;
+	public static CityManager instance;
 	
 	public static CityManager _instance;
 	// Use this for initialization
 	void Start () {
-		_instance = this;
+		instance = this;
 		cityFlags = new bool[]{false, false, false};
-	}
-	
-	public static CityManager instance {
-		get {
-			if(instance == null){
-				_instance = GameObject.FindObjectOfType<CityManager>();
-			}
-			return _instance;
-		}
 	}
 	
 	public void updateCityFlag(int city){
