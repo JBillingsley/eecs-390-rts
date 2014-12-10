@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animater:
-    animationsetID: 2
+    animationsetID: 1
     animationID: 2
   reversed: 0
   right: 1
@@ -91,9 +91,9 @@ MonoBehaviour:
   digging: 0
   particles: {fileID: 0}
   rePath: 1
-  canLadder: 1
+  canLadder: 0
   canMine: 1
-  pathsPerFrame: 40
+  pathsPerFrame: 80
   myState: 0
   myTeam: 0
   characterTarget: {fileID: 0}

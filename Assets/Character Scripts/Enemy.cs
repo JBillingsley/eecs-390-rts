@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : NPC {
 
 	public int spawnedTile;
-	private float mineTime = 1;
+	private float mineTime = 3;
 
 	void Update(){
 		act ();

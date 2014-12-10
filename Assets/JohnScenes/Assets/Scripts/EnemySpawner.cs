@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class EnemySpawner : MonoBehaviour {
-
-	public float lastEnemyTime;
+	public float startingOffset;
+	private float lastEnemyTime;
 	public float enemySpawnTime;
 	public GenericFactory factory;
 
@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		lastEnemyTime = Time.timeSinceLevelLoad;
+		lastEnemyTime = Time.timeSinceLevelLoad - startingOffset;
 	}
 	
 	// Update is called once per frame
