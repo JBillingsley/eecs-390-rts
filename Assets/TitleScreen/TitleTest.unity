@@ -1993,6 +1993,7 @@ GameObject:
   - 114: {fileID: 641710795}
   - 95: {fileID: 641710794}
   - 114: {fileID: 641710798}
+  - 114: {fileID: 641710799}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -2084,6 +2085,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 641710799}
+        m_MethodName: openOptions
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &641710796
@@ -2124,11 +2137,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ffc8463cdaec94a82ac0094de01d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuIsDown: 0
+  menuIsDown: 1
   dropdownMenu: []
   otherMenus: []
   targetToSwap: {fileID: 1717006635}
   targetToTurnOff: {fileID: 1504643367}
+--- !u!114 &641710799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 641710792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f147f981617bd2449a5ea16262c08a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  options: {fileID: 1565591666}
 --- !u!1 &642574342
 GameObject:
   m_ObjectHideFlags: 0

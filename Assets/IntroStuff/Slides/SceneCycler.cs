@@ -21,7 +21,7 @@ public class SceneCycler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(count == scenes.Length + 1){
-			Application.LoadLevel("TitleTest");
+			Application.LoadLevel(sceneToLoad);
 		}
 	}
 	
@@ -30,7 +30,7 @@ public class SceneCycler : MonoBehaviour {
 		count = count + 1;
 		if(count >= scenes.Length){
 			if(sceneToLoad != null){
-				Application.LoadLevel("TitleTest");
+				Application.LoadLevel(sceneToLoad);
 			}
 			return;
 		}
