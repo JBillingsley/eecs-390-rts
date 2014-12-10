@@ -13,3 +13,5 @@ EditorBuildSettings:
     path: Assets/TitleScreen/TutorialScene.unity
   - enabled: 1
     path: Assets/meshtest.unity
+  - enabled: 1
+    path: Assets/TitleScreen/EndScene.unity
