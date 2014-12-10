@@ -25,12 +25,19 @@ public class Player2 : AnimatedEntity {
 	public enum movementState {WALKING,JUMPING,IDLE,CLIMBING};
 	public movementState currentState;
 
+	private Vector3 startPosition;
+
+	Map map;
+	private TileSpec currentTile;
+
 	// Use this for initialization
 	void Start () {
 		pPhysics = GetComponent<PhysicsController>();
 		moveAmount = new Vector2();
 		defaultXScale = transform.localScale.x;
 		StartCoroutine(computeState());
+		startPosition = this.transform.position;
+		map = GameObject.FindObjectOfType<Map>();
 	}
 	
 	// Update is called once per frame
@@ -65,6 +72,11 @@ public class Player2 : AnimatedEntity {
 		}
 		else{
 			moveAmount.y -= gravity * Time.fixedDeltaTime;
+			Debug.Log (moveAmount);
+			if(moveAmount.y <= -fallDeathSpeed){
+				Debug.Log (moveAmount);
+				reset();
+			}
 		}
 
 		if(Mathf.Abs(climb) > .1f){
@@ -72,6 +84,10 @@ public class Player2 : AnimatedEntity {
 		}
 
 		pPhysics.move(moveAmount * Time.fixedDeltaTime);
+		currentTile = map.getForeground((Vector2)this.transform.position);
+		if(currentTile == TileSpecList.getTileSpec("Die")){
+			reset();
+		}
 	}
 
 	//Moves the current speed towards the target, by the acceleration amount.
@@ -137,5 +153,9 @@ public class Player2 : AnimatedEntity {
 			}
 			yield return null;
 		}
+	}
+	void reset(){
+		this.transform.position = startPosition;
+		moveAmount = Vector2.zero;
 	}
 }
