@@ -69,7 +69,7 @@ public class Camera2D : MonoBehaviour {
 		float mh = map.getHeight();
 		x = Mathf.Clamp (x, w / 2, mw - w / 2);
 		y = Mathf.Clamp (y, h / 2, mh - h / 2);
-		transform.position = new Vector3(x, y);
+		transform.position = new Vector3(x, y, -10);
 	}
 
 	private static void showChunk(Map map, short x, short y){
