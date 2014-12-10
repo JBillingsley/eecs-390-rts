@@ -87,10 +87,10 @@ MonoBehaviour:
     likeliness: 1
     background: 0
   - description: Back Air
-    x: -2
+    x: -1
     y: 0
-    width: 4
-    height: 3
+    width: 2
+    height: 2
     tileType: Air
     likeliness: 1
     background: 1
