@@ -17,6 +17,7 @@ public class Populator : MonoBehaviour {
 			int x = Random.Range(minx,maxx);
 			int y = Random.Range(miny,maxy);
 			GameObject g = (Instantiate(obj.gameObject) as GameObject);
+			g.transform.position = new Vector2(x,y);
 			g.transform.parent = this.transform;
 		}
 	}

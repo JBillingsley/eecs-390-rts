@@ -51,6 +51,7 @@ public class Map : MonoBehaviour {
 		}
 
 		foreach (Populator p in GameObject.FindObjectsOfType<Populator>()){
+			Debug.Log (p);
 			p.Populate();
 		}
 

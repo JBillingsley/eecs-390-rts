@@ -72,7 +72,7 @@ public class Player2 : AnimatedEntity {
 		}
 		else{
 			moveAmount.y -= gravity * Time.fixedDeltaTime;
-			Debug.Log (moveAmount);
+			//Debug.Log (moveAmount);
 			if(moveAmount.y <= -fallDeathSpeed){
 				Debug.Log (moveAmount);
 				reset();
