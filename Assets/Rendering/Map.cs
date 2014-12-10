@@ -50,6 +50,10 @@ public class Map : MonoBehaviour {
 			populateCluster(tc);
 		}
 
+		foreach (Populator p in GameObject.FindObjectsOfType<Populator>()){
+			p.Populate();
+		}
+
 		//Generate based on objets in the area.
 		foreach (MapAdjuster ma in GameObject.FindObjectsOfType<MapAdjuster>()){
 			ma.activate();

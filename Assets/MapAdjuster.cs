@@ -5,6 +5,24 @@ using System.Collections.Generic;
 public class MapAdjuster : MonoBehaviour {
 
 	public List<TileCluster> clusters = new List<TileCluster>();
+	bool activated = false;
+
+
+	void Start(){
+		try{
+			activate();
+		}
+		catch(UnityException e){
+
+		}
+	}
+
+	void Update(){
+		if(!activated){
+			activated = true;
+			Start();
+		}
+	}
 
 	public void activate(){
 		foreach(TileCluster tc in clusters){
