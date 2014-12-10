@@ -116,6 +116,7 @@ public class Character : AnimatedEntity {
 	public void findPath(Vector2 v){
 		position = new Vector2(Mathf.RoundToInt(this.transform.position.x),Mathf.RoundToInt(this.transform.position.y));
 		destination = new IVector2(v.x,v.y);
+		rePath = true;
 	}
 
 	//Sets the route for this character to follow
@@ -196,6 +197,10 @@ public class Character : AnimatedEntity {
 					addToLeaves(current,current.GetLadderNeighbors(),branches,leaves,start,end,3,ParentedNode.Type.LADDER);
 
 				count ++;
+
+				if(rePath){
+					goto reset;
+				}
 				//Only do 20 cycles per frame
 				if(count % pathsPerFrame == 0){
 					yield return new WaitForSeconds(1);
