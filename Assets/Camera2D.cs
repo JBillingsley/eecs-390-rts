@@ -20,7 +20,7 @@ public class Camera2D : MonoBehaviour {
 	void Update () {
 		zoom = zoom + (targetZoom - zoom) * 0.1f;
 		camera.orthographicSize = tileHeight()/2f;
-
+		focus();
 	//	chunkManagement();
 	}
 
