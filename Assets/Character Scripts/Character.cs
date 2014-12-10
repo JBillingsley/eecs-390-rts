@@ -60,6 +60,8 @@ public class Character : AnimatedEntity {
 	protected bool pathing = true;
 	protected bool moving = true;
 
+	protected float z;
+
 	// Use this for initialization
 	protected void Start () {
 		//Here be dragons
@@ -333,12 +335,13 @@ public class Character : AnimatedEntity {
 	//****************************************************************************//
 
 	void walkcase(IVector2 currentpos,IVector2 dest,ParentedNode node,Vector2 v){
-		if((v.y > .25f && Mathf.Abs(v.x) < .1f) || map.getForeground(currentpos) == TileSpecList.getTileSpec(LADDERINDEX) && canLadder){
+		if((v.y > .25f && Mathf.Abs(v.x) < .1f) || (map.getForeground(currentpos) == TileSpecList.getTileSpec(LADDERINDEX) && canLadder)){
 			laddercase(currentpos,dest,node,v);
 			return;
 		}
 		currentState = movementState.WALKING;
 		if(v.y > .25f && (Mathf.Abs(v.x) > .1f && cc.velocity.x == 0)){// || (lastPosition - currentpos).magnitude == 0){
+			Debug.Log("Jumping");
 			jump ();
 			currentState = movementState.JUMPING;
 		}

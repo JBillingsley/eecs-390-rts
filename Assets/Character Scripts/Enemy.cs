@@ -23,7 +23,6 @@ public class Enemy : NPC {
 		if (mineTime <= 0){
 			digging = false;
 			TileSpec ts = TileSpecList.getTileSpec(map.getByte(v,Map.FOREGROUND_ID));
-			InventroyManager.instance.addToInventory(ts.resource);
 			map.setTile(v,(byte)spawnedTile,map.getByte(v,Map.BACKGROUND_ID));
 			eliminate();
 		}

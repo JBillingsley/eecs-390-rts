@@ -12,6 +12,9 @@ public class Camera2D : MonoBehaviour {
 	public float maxZoom = 2f;
 	public float cameraSpeed = 0.5f;
 
+	public int xend = 1;
+	public int yend = 1;
+
 	private static Dictionary<int, Chunk> chunks = new Dictionary<int, Chunk>();
 
 	public Transform lockonTarget;
@@ -63,8 +66,8 @@ public class Camera2D : MonoBehaviour {
 	public void focus (){
 		float x = lockonTarget.position.x + .5f;
 		float y = lockonTarget.position.y +.5f;
-		float w = (float)Screen.width / Screen.height * tileHeight();
-		float h = tileHeight();
+		float w = (float)Screen.width / Screen.height * tileHeight() + xend * 2;
+		float h = tileHeight() + yend * 2;
 		float mw = map.getWidth();
 		float mh = map.getHeight();
 		x = Mathf.Clamp (x, w / 2, mw - w / 2);
