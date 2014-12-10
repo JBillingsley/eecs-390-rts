@@ -16,8 +16,7 @@ public class Populator : MonoBehaviour {
 		for(int i = 0; i < numberOfObjects; i++){
 			int x = Random.Range(minx,maxx);
 			int y = Random.Range(miny,maxy);
-			GameObject g = Instantiate(obj,Vector2.zero,Quaternion.identity) as GameObject;
-			g.transform.position.Set (x,y,1);
+			GameObject g = Instantiate(obj,new Vector3(x,y,0),Quaternion.identity) as GameObject;
 		}
 	}
 	

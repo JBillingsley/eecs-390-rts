@@ -91,12 +91,14 @@ MonoBehaviour:
   digging: 0
   particles: {fileID: 0}
   rePath: 1
-  canLadder: 0
-  canMine: 0
+  canLadder: 1
+  canMine: 1
+  pathsPerFrame: 40
   myState: 0
   myTeam: 0
   characterTarget: {fileID: 0}
   lastTargetPosition: {x: 0, y: 0, z: 0}
+  spawnedTile: 3
 --- !u!143 &14300000
 CharacterController:
   m_ObjectHideFlags: 1
