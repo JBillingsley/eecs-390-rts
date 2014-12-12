@@ -88,6 +88,10 @@ public class Player2 : AnimatedEntity {
 		if(currentTile == TileSpecList.getTileSpec("Die")){
 			reset();
 		}
+
+		if(Input.GetKey(KeyCode.Home)){
+			reset();
+		}
 	}
 
 	//Moves the current speed towards the target, by the acceleration amount.
